@@ -26,7 +26,7 @@
         width: 30px;
         font-size: 1.5rem;
       }
-
+ 
       p {
         //   border: 1px solid  red;
         display: flex;
@@ -327,7 +327,7 @@
         span:nth-child(4) {
           display: none;
         }
-
+    
         span:nth-child(9) {
           margin-left: 39px;
           margin-top: -75px;
@@ -346,6 +346,11 @@
         span:nth-child(10) {
           display: none;
         }
+        .EmpOn_Second_Head .left, .EmpOn_Second_Head .right {
+          width: 84%;
+          justify-content: center;
+          margin-bottom: 10px;
+      }
       }
     }
   }
@@ -855,3 +860,19 @@
 
 // amruta
 
+@media (max-width: 800px) {
+  .EmpOn_Second_Head {
+      flex-direction: column;
+      height: auto;
+      width: 86% !important;
+  }
+}
+
+
+@media (max-width: 765px) {
+  .EmpOn_Second_Head .left, .EmpOn_Second_Head .right {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: -13px;
+  }
+}
