@@ -1,0 +1,35 @@
+// App.scss
+@import './variables';
+
+.app {
+  display: flex;
+  .sideBar_app{
+    // border: 1px solid red;
+    // width: 300px;
+    height:100% !important;
+    // overflow-y:  !important;
+    // position: relative;
+    z-index: 9;
+  }
+}
+#app_{
+  max-width: 2400px;
+  margin: 0 auto;
+}
+.main-content {
+  flex: 1;
+  transition: margin-left $animation-duration;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.content {
+  // border: 1px solid red;
+  // height: 92.8vh;
+  // margin-left: -171px;
+  overflow-y: auto;
+  // margin-left: 100px;
+
+}
