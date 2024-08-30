@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './DepartmentDetails.scss';
-import Experience from '../../Employee onboarding/EmployeeDetail/Experience.jsx';
-import Education from '../../Employee onboarding/EmployeeDetail/Education.jsx';
-import Documents from '../../Employee onboarding/EmployeeDetail/Documents.jsx';
+// import Experience from '../../Employee onboarding/EmployeeDetail/Experience.jsx';
+// import Education from '../../Employee onboarding/EmployeeDetail/Education.jsx';
+// import Documents from '../../Employee onboarding/EmployeeDetail/Documents.jsx';
 import { IoMdCloseCircleOutline } from "react-icons/io";
 // import Img_user from '../../../assets/user.png'
 import { MdWorkHistory } from "react-icons/md";
@@ -33,8 +33,8 @@ const DepartmentDetails = () => {
                 </div>
                 <div className="profile_card">
                     <div className="img_card">
-                        <div className="progress-circle" >
-                            <img src="" alt="" />
+                    <div className="progress-circle" >
+                            <img src="https://w7.pngwing.com/pngs/564/690/png-transparent-computer-icons-web-browser-new-job-hand-business-silhouette-thumbnail.png" alt="" />
                         </div>
                         <div className="about_user">
                             <h3>UI/UX Designer</h3>
@@ -88,8 +88,8 @@ const DepartmentDetails = () => {
                                 <h4>Created Date</h4>
                                 <p>01-Jan-2024</p>
                             </div>
-                            <div>
-                                <h4>Description</h4>
+                            <div id='DescriptionJOB'>
+                               <h4>Description</h4>
                                 <p>Lorem ipsum dolor sit amet consectetur. Ultrices nunc at sollicitudin leo nunc lorem ac tellus gravida. 
                                     Tellus eu tortor lectus nulla vel egestas massa viverra.</p>
                             </div>

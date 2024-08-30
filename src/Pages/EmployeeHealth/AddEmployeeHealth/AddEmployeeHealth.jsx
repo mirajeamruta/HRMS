@@ -41,7 +41,9 @@ const AddEmployeeHealth = ({ onSubmit }) => {
         gender: '',
         EmergencyContactNumber: '',
         EmergencyContactName: '',
-
+        bloodgroup:'',
+        healthcheckresult:'',
+        coviedeffected:''
     });
 
     const [dropdowns, setDropdowns] = useState({
@@ -170,16 +172,16 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                             <div className="form-group">
                         
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                <div className="dropdown-button" onClick={() => toggleDropdown('employeeId')}>
                                     <div style={{color:"rgb(202 201 201)"}}>{formData.department || "Choose Employee"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    <span id='toggle_selectIcon'> {!dropdowns.employeeId ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
 
                                 </div>
-                                {dropdowns.department && (
+                                {dropdowns.employeeId && (
                                     <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeId', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeId', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeId', '')}></div>
                                     </div>
                                 )}
                             </div>
@@ -212,16 +214,16 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                             <div className="form-group">
                         
                         <div className="dropdown">
-                            <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                            <div className="dropdown-button" onClick={() => toggleDropdown('gender')}>
                                 <div style={{color:"rgb(202 201 201)"}}>{formData.department || "Male"}</div>
-                                <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                <span id='toggle_selectIcon'> {!dropdowns.gender ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
 
                             </div>
-                            {dropdowns.department && (
+                            {dropdowns.gender && (
                                 <div className="dropdown-menu">
-                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
-                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
-                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                    <div className="dropdown-item" onClick={() => selectOption('gender', '')}></div>
+                                    <div className="dropdown-item" onClick={() => selectOption('gender', '')}></div>
+                                    <div className="dropdown-item" onClick={() => selectOption('gender', '')}></div>
                                 </div>
                             )}
                         </div>
@@ -264,16 +266,16 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                         <div className="form-group">
                             <label style={{color:"red"}}>Blood Group*</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
-                                    <div  style={{color:"rgb(202 201 201)"}}>{formData.department || "Select department"}</div>
+                                <div className="dropdown-button" onClick={() => toggleDropdown('bloodgroup')}>
+                                    <div  style={{color:"rgb(202 201 201)"}}>{formData.bloodgroup || "Select department"}</div>
                                     <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
 
                                 </div>
-                                {dropdowns.department && (
+                                {dropdowns.bloodgroup && (
                                     <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('bloodgroup', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('bloodgroup', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('bloodgroup', '')}></div>
                                     </div>
                                 )}
                             </div>
@@ -385,16 +387,16 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                         <div className="form-group">
                             <label>Health Check Results</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
-                                    <div  style={{color:"rgb(202 201 201)"}}>{formData.department || "Choose result"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                <div className="dropdown-button" onClick={() => toggleDropdown('healthcheckresult')}>
+                                    <div  style={{color:"rgb(202 201 201)"}}>{formData.healthcheckresult || "Choose result"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.healthcheckresult ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
 
                                 </div>
-                                {dropdowns.department && (
+                                {dropdowns.healthcheckresult && (
                                     <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Management')}></div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Development')}></div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', 'HR')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('healthcheckresult', 'Management')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('healthcheckresult', 'Development')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('healthcheckresult', 'HR')}></div>
                                     </div>
                                 )}
                             </div>
@@ -404,15 +406,15 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                         <div className="form-group">
                             <label style={{color:"red"}}>COVID Affected*</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                <div className="dropdown-button" onClick={() => toggleDropdown('coviedeffected')}>
                                     <div  style={{color:"rgb(202 201 201)"}}>{formData.department || "No"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    <span id='toggle_selectIcon'> {!dropdowns.coviedeffected ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
 
                                 </div>
-                                {dropdowns.department && (
+                                {dropdowns.coviedeffected && (
                                     <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Yes')}>Yes</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', 'No')}>No</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('coviedeffected', 'Yes')}>Yes</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('coviedeffected', 'No')}>No</div>
 
                                     </div>
                                 )}
