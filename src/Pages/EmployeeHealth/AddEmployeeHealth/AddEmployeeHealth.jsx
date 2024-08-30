@@ -1,0 +1,565 @@
+import { useState } from 'react';
+// import './AddEmloyee.scss';
+// import './NavbarForm.scss';
+import { CiCircleChevRight } from "react-icons/ci";
+import { TfiClose } from "react-icons/tfi";
+import { GrCloudUpload } from "react-icons/gr";
+import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
+import './AddEmployeeHealth.scss';
+
+import { IoMdCloseCircleOutline } from "react-icons/io";
+ 
+
+import { HiUserPlus } from "react-icons/hi2";
+import { CiMenuKebab } from "react-icons/ci";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
+import { FaList } from "react-icons/fa6";
+import { PiCheckSquare } from "react-icons/pi";
+import { GiBackstab, GiNotebook } from "react-icons/gi";
+import { FaPersonWalkingArrowLoopLeft, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { BiRevision } from "react-icons/bi";
+import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
+import { TiArrowUnsorted } from "react-icons/ti";
+import { MdDateRange } from "react-icons/md";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+
+
+
+
+const AddEmployeeHealth = ({ onSubmit }) => {
+    const [fileName, setFileName] = useState('');
+    const [isUploaded, setIsUploaded] = useState(false);
+    const [inconSelect, setInconSelect] = useState(false)
+    const navigate = useNavigate();
+    const [hidImport, setHidImport] = useState(true);
+    const [formData, setFormData] = useState({
+        employeeId: '',
+        department: '',
+        gender: '',
+        EmergencyContactNumber: '',
+        EmergencyContactName: '',
+
+    });
+
+    const [dropdowns, setDropdowns] = useState({
+        gender: false,
+        weight: false,
+        Height: false,
+        Allergies: false,
+        ChronicConditions: false,
+        CurrentMedications: false,
+        LastHealthCheckupDate: false,
+        NextScheduledCheckUpDate: false,
+        HealthCheckResults: false,
+        COVIDAffected: false,
+        COVIDVaccinationStatus: false,
+        ShareCOVIDTestResults: false,
+
+    });
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name);
+            setIsUploaded(true);
+            setFormData(prevState => ({
+                ...prevState,
+                photo: file
+            }));
+        }
+    };
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(formData);
+        setFormData({
+            employeeId: '',
+            department: '',
+            gender: '',
+            EmergencyContactNumber: '',
+            EmergencyContactName: '',
+
+        });
+    };
+
+    const toggleDropdown = (dropdown) => {
+        setDropdowns(prevState => ({
+            ...prevState,
+            [dropdown]: !prevState[dropdown]
+        }));
+    };
+
+    const selectOption = (dropdown, value) => {
+        setFormData(prevState => ({
+            ...prevState,
+            [dropdown]: value
+        }));
+        setDropdowns(prevState => ({
+            ...prevState,
+            [dropdown]: false
+        }));
+    };
+
+    const handleHidImport = () => {
+        setHidImport(!hidImport);
+    };
+    
+    const AddEmployeeHealthDetails=()=>{
+        navigate('/employeehealthdetails');
+    }
+    return (
+        <>
+            <div className="" >
+            <div className="EmpOn_main_container">
+                    <div className="EmpOn_header">
+                        <div className="top-bar">
+                            <h2 className='headerline'>
+                                <div className='span'><HiUserPlus /></div>
+                                Edit UI Designer Designation
+                            </h2>
+                            <div className="Emp_Head_Right">
+                                {/* <div className="addEmp" onClick={AddEmployee}>
+                                    <p><span><IoMdAdd /></span> Add New Employee</p>
+                                </div> */}
+                                {/* <div className="menu_head" onClick={handleHidImport}>
+                                    <div className="div_top"><CiMenuKebab /></div>
+                                    <div className={`bottom_import  ${hidImport ? 'bottom_import_hide' : ''}`}>
+                                        <AiOutlineCloudUpload /> Import
+                                        <input type="file" accept='image/*' />
+                                    </div>
+                                </div> */}
+                                 <div className='close_btn'>
+                        <IoMdCloseCircleOutline />
+                    </div>
+                            </div>
+                            <div className="_div">
+                                <span className="1"></span>
+                                <span className="2"></span>
+                                <span className="3"></span>
+                                <span className="4"></span>
+                                <span className="5"></span>
+                                <span className="6"></span>
+                                <span className="7"></span>
+                                <span className="8"></span>
+                                <span className="9"></span>
+                                <span className="10"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form >
+                    <div className='info1'> <h2>Personal Information</h2></div>
+               
+
+                    <div className="from1">
+                      
+                        <div className="form-group">
+
+                            <label style={{color:"red"}}>Employee Name *</label>
+                            <div className="form-group">
+                        
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                    <div style={{color:"rgb(202 201 201)"}}>{formData.department || "Choose Employee"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                                </div>
+                                {dropdowns.department && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                    </div>
+                                )}
+                            </div>
+
+                        </div>
+                        </div>
+                        <div className="form-group">
+                            <label>Department</label>
+                            <div className="form-group">
+                        
+                        <div className="dropdown">
+                            <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                <div style={{color:"rgb(202 201 201)"}}>{formData.department || "Choose Department"}</div>
+                                <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                            </div>
+                            {dropdowns.department && (
+                                <div className="dropdown-menu">
+                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                </div>
+                            )}
+                        </div>
+
+                    </div>
+                        </div>
+                        <div className="form-group">
+                            <label>Gender</label>
+                            <div className="form-group">
+                        
+                        <div className="dropdown">
+                            <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                <div style={{color:"rgb(202 201 201)"}}>{formData.department || "Male"}</div>
+                                <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                            </div>
+                            {dropdowns.department && (
+                                <div className="dropdown-menu">
+                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                    <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                </div>
+                            )}
+                        </div>
+
+                    </div>
+                        </div>
+                       
+                        <div className="form-group">
+                            <label>Emergency Contact Number</label>
+                            <input
+                                type="text"
+                                name="dob"
+                                  placeholder="Emergency Contact Number"
+                                value={formData.EmergencyContactNumber}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Emergency Contact Name</label>
+                            <input
+                                type="number"
+                                placeholder="Emergency Contact Name"
+                                name="age"
+                                value={formData.EmergencyContactName}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+
+                    </div>
+                    <div className='info2'>
+                        <h2>Health Information</h2>
+                    </div>
+                    <div className="from1 form2">
+
+
+                        <div className="form-group">
+                            <label style={{color:"red"}}>Blood Group*</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                    <div  style={{color:"rgb(202 201 201)"}}>{formData.department || "Select department"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                                </div>
+                                {dropdowns.department && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', '')}></div>
+                                    </div>
+                                )}
+                            </div>
+
+                        </div>
+                        {/* Designation Dropdown */}
+                        {/* <div className="form-group">
+                            <label>Designation</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('designation')}>
+                                    <div>{formData.designation || "Select designation"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.designation ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                                </div>
+                                {dropdowns.designation && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Administration')}>Administration</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Developer')}>Developer</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Manager')}>Manager</div>
+                                    </div>
+                                )}
+                            </div>
+                        </div> */}
+                        <div className="form-group">
+                            <label>weight</label>
+                            <input
+                            placeholder='Enter Weight'
+                                type="number"
+                                name="doj"
+                                value={formData.weight}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>
+                                Height</label>
+                            <input
+                            placeholder='Enter Height'
+                                type="number"
+                                name="doj"
+                                value={formData.height}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Allergies</label>
+                            <input
+                            placeholder='Enter Allergies '
+                                type="text"
+                                name="doj"
+                                value={formData.Allergies}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Chronic Conditions</label>
+                            <input
+                            placeholder='Enter Chronic Conditions'
+                                type="type"
+                                name="doj"
+                                value={formData.ChronicConditions}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Current Medications</label>
+                            <input
+                                type="type"
+                                placeholder='Enter Current Medications'
+                                name="doj"
+                                value={formData.CurrentMedications}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Last Health Checkup Date</label>
+                            <input
+                                type="date"
+                                name="doj"
+                                 placeholder='Choose Date'
+                                value={formData.LastHealthCheckupDate}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Next Scheduled Check-Up Date</label>
+                            <input
+                                type="date"
+                                placeholder='Choose Date'
+                                name="doj"
+                                value={formData.NextScheduledCheckUpDate}
+                                onChange={handleChange}
+                                required
+                                style={{color:"rgb(202 201 201)"}}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Health Check Results</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                    <div  style={{color:"rgb(202 201 201)"}}>{formData.department || "Choose result"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                                </div>
+                                {dropdowns.department && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Management')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Development')}></div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'HR')}></div>
+                                    </div>
+                                )}
+                            </div>
+
+
+                        </div>
+                        <div className="form-group">
+                            <label style={{color:"red"}}>COVID Affected*</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                    <div  style={{color:"rgb(202 201 201)"}}>{formData.department || "No"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                                </div>
+                                {dropdowns.department && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Yes')}>Yes</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'No')}>No</div>
+
+                                    </div>
+                                )}
+                            </div>
+
+
+                        </div>
+                        <div className="form-group">
+                            <label>COVID Vaccination Status</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                    <div  style={{color:"rgb(202 201 201)"}}>{formData.department || "1 st dose"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                                </div>
+                                {dropdowns.department && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('department', '1 st dose')}>1 st dose</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', '2 nd dose')}>2 nd dose</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Both')}> Both</div>
+                                    </div>
+                                )}
+                            </div>
+
+
+                        </div>
+
+
+                        <div className="form-group">
+                            <label>Share COVID Test Results</label>
+                            <div className="file-upload">
+                                <input
+                                    type="file"
+                                    name='photo'
+                                    accept="image/*"
+                                    id="file"
+                                    onChange={handleFileChange}
+                                    required
+                                    style={{color:"rgb(202 201 201)"}}
+                                />
+                                <label htmlFor="file" className="custom-file-upload">
+                                    {!isUploaded && <GrCloudUpload size={20} />}
+                                    <span>{isUploaded ? fileName : 'Uploaddocument'}</span>
+                                </label>
+                            </div>
+                        </div>
+                        {/* Marital Status Dropdown */}
+                        {/* <div className="form-group">
+                            <label>Marital Status</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('maritalStatus')}>
+                                    <div>{formData.maritalStatus || "Select status"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.maritalStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                                </div>
+                                {dropdowns.maritalStatus && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('maritalStatus', 'Single')}>Single</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('maritalStatus', 'Married')}>Married</div>
+                                    </div>
+                                )}
+                            </div>
+                        </div> */}
+                        {/* <div className="form-group">
+                            <label>Date of Exit</label>
+                            <input
+                                type="date"
+                                name="doe"
+                                value={formData.doe}
+                                onChange={handleChange}
+                            />
+                        </div> */}
+                        {/* Employment Type Dropdown */}
+                        {/* <div className="form-group">
+                            <label>Employment Type</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('employmentType')}>
+                                    <div>{formData.employmentType || "Select employment type"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.employmentType ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                </div>
+                                {dropdowns.employmentType && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Part-time')}>Part-time</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Full-time')}>Full-time</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Consultant')}>Consultant</div>
+                                    </div>
+                                )}
+                            </div>
+                        </div> */}
+                        {/* Employee Status Dropdown */}
+                        {/* <div className="form-group">
+                            <label>Employee Status</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('employeeStatus')}>
+                                    <div>{formData.employeeStatus || "Select status"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.employeeStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                </div>
+                                {dropdowns.employeeStatus && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Permanent')}>Permanent</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Probation')}>Probation</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Intern')}>Intern</div>
+                                    </div>
+                                )}
+                            </div>
+                        </div> */}
+                        {/* Source of Hire Dropdown */}
+                        {/* <div className="form-group">
+                            <label>Source of Hire</label>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('sourceOfHire')}>
+                                    <div>{formData.sourceOfHire || "Select source"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.sourceOfHire ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
+                                </div>
+                                {dropdowns.sourceOfHire && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Referral')}>Referral</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Direct')}>Direct</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Campus')}>Campus</div>
+                                    </div>
+                                )}
+                            </div>
+                        </div> */}
+                    </div>
+                    <div id='submitBtn_next_main'>
+                        <div id='submitBtn' >
+                            <div className='div'>
+                                <button type="submit" onClick={AddEmployeeHealthDetails}>Submit </button>
+                                <span><CiCircleChevRight /></span>
+                            </div>
+                            <div className="lineBar"></div>
+                            <div className='x'>
+                                <span> <TfiClose /></span>
+                            </div>
+                        </div>
+                        <div className="form">
+                            <p>Next Page</p>
+                            <span className='not_active'><IoIosArrowDropleft /></span>
+                            <button type='submit'><IoIosArrowDropright /></button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </>
+    );
+};
+export default AddEmployeeHealth;

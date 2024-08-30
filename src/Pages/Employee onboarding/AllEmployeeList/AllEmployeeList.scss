@@ -1,177 +1,6 @@
 @import "../../../styles/variables.scss";
 
-// .EmpOn_main_container {
-//   .top-bar {
-//     position: sticky;
-//     width: 100%;
-//     height: 70px;
-//     display: flex;
-//     box-shadow: 0px 2px 10px 0.1px rgba(0, 0, 0, 0.171);
 
-//     h2 {
-//       padding: 20px;
-//       margin: 0;
-//       width: 100%;
-//       color: #400f6f;
-//       text-align: start;
-//       margin-left: 10px;
-//       display: flex;
-
-//       .span {
-//         width: 30px;
-//         font-size: 1.5rem;
-//       }
-
-//       p {
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         padding: 0px 10px;
-//         border-radius: 50px;
-//         font-size: 11px;
-//         background-color: $lightprimary;
-//         margin-left: 5px;
-//       }
-//     }
-
-//     .Emp_Head_Right {
-//       display: flex;
-//       position: absolute;
-//       right: 0px;
-//       border-radius: 10px;
-//       width: 270px;
-//       margin-top: 15px;
-
-//       .addEmp {
-//         height: 30px;
-//         font-size: 16px;
-//         font-weight: bold;
-//         color: #fff;
-//         z-index: 9;
-//         cursor: pointer;
-//         border-radius: 10px;
-//         padding: 5px 10px;
-//         background-color: $secondary-color;
-
-//         p {
-//           display: flex;
-//           align-items: center;
-//           justify-content: center;
-
-//           span {
-//             font-size: 25px;
-//             margin-top: 2px;
-//             font-weight: bolder;
-//           }
-//         }
-//       }
-
-//       .menu_head {
-//         .div_top {
-//           background-color: $text-color;
-//           cursor: pointer;
-//           border: 2px solid rgba(30, 30, 30, 0.188);
-//           font-size: 26px;
-//           width: 35px;
-//           height: 35px;
-//           margin-left: 10px;
-//           border-radius: 5px;
-//           display: flex;
-//           align-items: center;
-//           justify-content: center;
-//         }
-
-//         .bottom_import {
-//           background-color: $text-color;
-//           padding: 5px 10px;
-//           border-radius: 5px;
-//           position: absolute;
-//           z-index: 999;
-//           right: 25px;
-//           margin-top: 10px;
-//           font-size: 22px;
-//           display: flex;
-//           align-items: center;
-//           justify-content: center;
-//           gap: 5px;
-//           box-shadow: $box-shadow;
-
-//           input {
-//             cursor: pointer;
-//             position: absolute;
-//             opacity: 0;
-//             width: 110px;
-//             background: #000;
-//             height: 30px;
-//           }
-//         }
-
-//         .bottom_import_hide {
-//           display: none;
-//         }
-//       }
-//     }
-
-//     ._div {
-//       z-index: -1;
-//       overflow: hidden;
-//       width: 100%;
-//       height: 70px;
-//       display: flex;
-
-//       span {
-//         transform: rotate(40deg);
-//         background: linear-gradient(
-//           240deg,
-//           rgba(198, 22, 214, 0.072) 6.46%,
-//           rgba(172, 32, 182, 0.118) 10.46%,
-//           rgba(174, 21, 198, 0) 90.2%
-//         );
-//       }
-
-//       // Responsive spans for tablet sizes
-//       @media (max-width: 1300px) {
-//         span:nth-child(6),
-//         span:nth-child(7),
-//         span:nth-child(8) {
-//           display: none;
-//         }
-//       }
-
-//       @media (max-width: 1030px) {
-//         span:nth-child(1),
-//         span:nth-child(2) {
-//           display: none;
-//         }
-//       }
-
-//       @media (max-width: 800px) {
-//         span:nth-child(4),
-//         span:nth-child(5),
-//         span:nth-child(8) {
-//           display: none;
-//         }
-
-//         span:nth-child(9) {
-//           margin-left: 39px;
-//           margin-top: -75px;
-//         }
-//       }
-
-//       @media (max-width: 765px) {
-//         span:nth-child(3),
-//         span:nth-child(9),
-//         span:nth-child(10) {
-//           display: none;
-//         }
-//       }
-
-//       @media (max-width: 500px) {
-//         display: none;
-//       }
-//     }
-//   }
-// }
 .EmpOn_main_container {
   .top-bar {
     position: sticky;
@@ -183,9 +12,9 @@
     // Responsive design for the top-bar
     @media (max-width: 800px) {
       flex-direction: column;
-      height: auto;
+      // height: auto;
       align-items: center;
-      padding: 10px;
+      // padding: 10px;
     }
 
     h2 {
@@ -231,7 +60,7 @@
       margin-top: 15px;
 
       @media (max-width: 800px) {
-        width: 100%;
+        width: 90%;
         justify-content: center;
         position: static;
         margin-top: 10px;
@@ -376,6 +205,9 @@
   margin-top: 30px;
   height: 60px;
   display: flex;
+  margin-top: 10px !important;
+  margin-bottom: -5px !important;
+
 
   .left {
     display: flex;
@@ -392,7 +224,7 @@
         gap: 5px;
         cursor: pointer;
         font-size: 1.1rem;
-        width: 100%;
+        // width: 100%;
         text-align: center;
         align-self: center;
         display: flex;
@@ -428,15 +260,15 @@
 
       .div_box {
         cursor: pointer;
-        font-size: 1.1rem;
-        width: 100%;
+        // font-size: 1.1rem;
+        // width: 100%;
         text-align: center;
         align-self: center;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 7px 2px;
-        border: 1px solid $border;
+        // padding: 7px 2px;
+        // border: 1px solid $border;
         color: $hover-color;
         border-radius: 5px;
       }
@@ -489,64 +321,205 @@
   }
 
   // Responsive adjustments for tablet sizes
-  @media (max-width: 800px) {
-    flex-direction: column;
-    height: auto;
+  // @media (max-width: 800px) {
+  //   flex-direction: column;
+  //   height: auto;
 
-    .left,
-    .right {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    .EmpOn_main_container .top-bar h2 p {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0px -5px;
-      border-radius: 50px;
-      font-size: 9px;
-      background-color: rgba(148, 111, 182, 0.0941176471);
-      margin-left: -85px;
-  }
+  //   .left,
+  //   .right {
+  //     width: 100%;
+  //     margin-bottom: -19px;
+  //   }
+  //   .EmpOn_main_container .top-bar h2 p {
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //     padding: 0px -5px;
+  //     border-radius: 50px;
+  //     font-size: 9px;
+  //     background-color: rgba(148, 111, 182, 0.0941176471);
+  //     margin-left: -85px;
+  // }
 
-    .right {
-      justify-content: center;
-      margin-right: 0;
-    }
+  //   .right {
+  //     justify-content: center;
+  //     margin-right: 0;
+  //   }
     
 
-    .left div {
-      margin-left: 0;
-      margin-right: 0;
-      width: 100%;
-      text-align: center;
-    }
-  }
+  //   .left div {
+  //     margin-left: 0;
+  //     margin-right: 0;
+  //     width: 100%;
+  //     text-align: center;
+  //   }
+  // }
 
-  @media (max-width: 765px) {
-    flex-direction: column;
+  // @media (max-width: 765px) {
+  //   flex-direction: column;
 
-    .left,
-    .right {
-      width: 100%;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
+  //   .left,
+  //   .right {
+  //     width: 100%;
+  //     justify-content: center;
+  //     margin-bottom: 10px;
+  //   }
 
-    .right {
-      margin-right: 0;
-    }
+  //   .right {
+  //     margin-right: 0;
+  //   }
 
-    .left div,
-    .right .divRight .div_box {
-      width: 100%;
-      text-align: center;
-    }
-    .addEmp{
-      margin-left: 55px !important;
-    }
-    .headerline{
-      font-size: 15px;
-    }
+  //   .left div,
+  //   .right .divRight .div_box {
+  //     width: 100%;
+  //     text-align: center;
+  //   }
+  //   .addEmp{
+  //     margin-left: 55px !important;
+  //   }
+  //   .headerline{
+  //     font-size: 15px;
+  //   }
+  // }
+}
+@media (max-width: 1355px) {
+  .EmpOn_main_container .top-bar ._div {
+      display: none !important;
   }
 }
+
+.EmpOn_Second_Head .left div {
+  margin-left: 15px !important;
+  margin-right: 3px !important;
+}
+
+
+
+
+@media (max-width: 1505px) {
+  .EmpOn_Second_Head .right {
+      margin-top: 18px;
+  }
+}
+
+
+
+
+.EmpOn_Second_Head .left div div span {
+  margin-top: 2px;
+}
+
+
+
+@media (max-width: 1035px) {
+  .allEmployeeList .employee-table {
+      margin-top: 12px !important;
+      overflow-x: auto !important;
+  }
+}
+
+
+@media (max-width: 1505px) {
+  .allEmployeeList .employee-table {
+      margin: 20px auto;
+      overflow-x: auto !important;
+  }
+}
+
+
+
+.allEmployeeList .employee-table table {
+  width: 97%;
+  border-collapse: collapse;
+  border-radius: 10px !important;
+}
+
+@media (max-width: 765px) {
+  .EmpOn_Second_Head .left, .EmpOn_Second_Head .right {
+      width: 99% !important;
+      justify-content: center;
+      margin-bottom: -13px;
+  }
+}
+
+
+@media (max-width: 1505px) {
+  .EmpOn_Second_Head {
+      flex-direction: column;
+  }
+}
+
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: #888; 
+// }
+
+@media (max-width: 1505px) {
+
+
+  .allEmployeeList {
+    margin-top: 29px;
+    height: 60px;
+    padding: 10px;
+}
+
+
+
+  .EmpOn_Second_Head .right {
+      margin-top: 10px
+  }
+}
+
+
+
+
+@media (max-width: 1035px) {
+  .EmpOn_Second_Head .left {
+      display:grid!important;
+      height: fit-content!important;
+      grid-template-columns: repeat(3,1fr)!important;
+      width: 78vw !important;
+      gap: 10px
+  }
+
+  .allEmployeeList .employee-table {
+      margin-top: 65px!important;
+      overflow-x: auto
+  }
+
+  .allEmployeeList .employee-table table {
+      // min-width: 100%;
+      margin: 0 auto
+  }
+}
+
+@media (max-width: 1355px) {
+  .allEmployeeList .employee-table table {
+      min-width:1340px!important;
+      margin: 0 auto;
+      overflow-x: auto!important
+  }
+
+  .EmpOn_main_container .top-bar ._div {
+      display: none!important
+  }
+
+  #allEmp {
+      width: 100%;
+      height: 100%
+  }
+}
+
+
+// .allEmployeeList {
+//   margin-top: 29px;
+//   height: 60px;
+//   padding: 10px;
+// }
+
+
+::-webkit-scrollbar-track {
+  background-color: #6a0b85;
+}
+
+

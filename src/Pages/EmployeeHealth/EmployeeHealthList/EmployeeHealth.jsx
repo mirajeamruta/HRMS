@@ -13,22 +13,22 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import './Department.scss';
+import './EmployeeHealth.scss';
 
-const Department = () => {
+const EmployeeHealth = () => {
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
-        { deptName: "Manning", deptHead: "Sunil Bhadouriya", parentDept: "HSEQ" },
-        { deptName: "IT", deptHead: "Nandan Raikwar", parentDept: "Operations" },
-        { deptName: "HSEQ", deptHead: "Vikas Tiwari", parentDept: "IT" },
-        { deptName: "Operations", deptHead: "Paartho Ghosh", parentDept: "Manning" },
-        { deptName: "Engineering", deptHead: "Rahul Choudary", parentDept: "Engineering" },
-        { deptName: "Maintenance", deptHead: "Jayshri Tiwari", parentDept: "Operations" },
-        { deptName: "Operations", deptHead: "Shalini Jain", parentDept: "Maintenance" },
-        { deptName: "Human Resources", deptHead: "Viswas Patel", parentDept: "IT" },
-        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
-        { deptName: "Manning", deptHead: "Mamta Lodhi", parentDept: "Human Resources" },
-        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
+        { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024",overall:"Healthy",allerig:"Soy",chorninc:"Lorem ipsum dolor sit amet c..."},
+        { deptName: "Nandan Raikwar", deptHead: "Operations", parentDept: "14-Apr-2024" ,overall:"Healthy",allerig:"Milk",chorninc   :"Lorem ipsum dolor sit amet c"},
+        { deptName: "Vishwas Patel", deptHead: "Operations", parentDept: "14-Apr-2024",overall:"UnHealthy",allerig:"Pollen",chorninc   :"Lorem ipsum dolor sit amet c" },
+        { deptName: "Paartho Ghosh", deptHead: "Engineering", parentDept: "14-Apr-2024" ,overall:"UnHealthy",allerig:"Latex",chorninc   :"Lorem ipsum dolor sit amet c"},
+        { deptName: "Vikas Tiwari", deptHead: "Maintenance", parentDept: "14-Apr-2024" ,overall:"UnHealthy",allerig:"Insect stings (e.g., bee stings)",chorninc   :"Lorem ipsum dolor sit amet c"},
+        { deptName: "Lalita Thakur", deptHead: "HSEQ", parentDept: "14-Apr-2024",overall:"Healthy",allerig:"Penicillin",chorninc   :"Lorem ipsum dolor sit amet c" },
+        { deptName: "Mamta Lodhi", deptHead: "Shalini Jain", parentDept: "14-Apr-2024",overall:"Healthy",allerig:"Sulfa drugs",chorninc   :"Lorem ipsum dolor sit amet c" },
+        { deptName: "M. S. Subramaniam", deptHead: "Human Resources", parentDept: "14-Apr-2024T",overall:"Healthy",allerig:"Pet dander",chorninc   :"Lorem ipsum dolor sit amet c" },
+        { deptName: "Amardeep Singh", deptHead: "IT", parentDept: "14-Apr-2024",overall:"Healthy",allerig:"Grass",chorninc   :"Lorem ipsum dolor sit amet c" },
+        { deptName: "Shalini Jain", deptHead: "IT", parentDept: "14-Apr-2024",overall:"Healthy" ,allerig:"Cockroach allergens",chorninc   :"Lorem ipsum dolor sit amet c"},
+      
 
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -40,9 +40,11 @@ const Department = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpen, setIsOpen] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
-    const [selectedDepartmentDetails, setSelectedDepartmentDetails] = useState(null);
+    // const [SelectedHealthDetails, setSelectedHealthDetails] = useState(null);
     console.log(selectedDepartment)
     const navigate = useNavigate();
+
+
     const handleHidImport = () => {
         setHidImport(!hidImport);
     };
@@ -141,20 +143,10 @@ const Department = () => {
     };
 
 
-    const handleAddDepartmentClick = () => {
-        setShowPopup(true);
-    };
+   
 
-    const closePopup = () => {
-        setShowPopup(false);
-    };
-
-    const handleDepartmentClick1 = (department) => {
-        setSelectedDepartmentDetails(department);
-    };
-
-    const DepartmentDetails=()=>{
-        navigate('/departmentdetails');
+    const AddEmployeeHealth=()=>{
+        navigate('/addemployeehealth');
     }
     return (
         <div>
@@ -163,11 +155,11 @@ const Department = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Departments list <p>08 total</p>
+                            All Employee Health List <p>92 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={handleAddDepartmentClick}>
-                                <p><span><IoMdAdd /></span> Add New Department</p>
+                            <div className="addEmp" onClick={AddEmployeeHealth}>
+                                <p><span><IoMdAdd /></span>  New Employee Health</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -208,7 +200,7 @@ const Department = () => {
                             <input
                                 type="search"
                                 name="search"
-                                placeholder='Search Department name...'
+                                placeholder='Search employee name, department...'
                                 value={searchQuery}
                                 onChange={handleSearchChange}
                                 onKeyUp={handleFilterChange}
@@ -307,19 +299,25 @@ const Department = () => {
                         <thead>
                             <tr>
                                 <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
-                                <th> <div>Department Name<span><TiArrowUnsorted /></span></div></th>
+                                <th> <div>Employee Name<span><TiArrowUnsorted /></span></div></th>
                                 <th>Department Head</th>
-                                <th>Parent Department</th>
+                                <th>Last Health Check Date</th>
+                                <th>Overall Health Status</th>
+                                <th>Allergies</th>
+                                <th>Chronic Conditions</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index}  onClick={() => handleDepartmentClick1(DepartmentDetails)}>
+                                <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td>{emp.deptName}</td>
                                     <td>{emp.deptHead}</td>
                                     <td>{emp.parentDept}</td>
+                                    <td>{emp.overall}</td>
+                                    <td>{emp.allerig}</td>
+                                    <td>{emp.chorninc}</td>
 
 
 
@@ -328,7 +326,7 @@ const Department = () => {
                         </tbody>
                     </table>
 
-                    {showPopup && (
+                    {/* {showPopup && (
                         <div className="popup-overlay">
                             <div className="popup">
                                 <div className="popup-header">
@@ -356,7 +354,7 @@ const Department = () => {
                                 </div>
                             </div>
                         </div>
-                    )}
+                    )} */}
 
                     <div className="pagination">
                         <div className="rows-per-page">
@@ -399,4 +397,4 @@ const Department = () => {
 
 };
 
-export default Department;
+export default EmployeeHealth;

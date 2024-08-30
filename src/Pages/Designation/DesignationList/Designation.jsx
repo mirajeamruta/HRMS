@@ -13,22 +13,22 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import './Department.scss';
+import './Designation.scss';
 
-const Department = () => {
+const Designation = () => {
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
-        { deptName: "Manning", deptHead: "Sunil Bhadouriya", parentDept: "HSEQ" },
-        { deptName: "IT", deptHead: "Nandan Raikwar", parentDept: "Operations" },
-        { deptName: "HSEQ", deptHead: "Vikas Tiwari", parentDept: "IT" },
-        { deptName: "Operations", deptHead: "Paartho Ghosh", parentDept: "Manning" },
-        { deptName: "Engineering", deptHead: "Rahul Choudary", parentDept: "Engineering" },
-        { deptName: "Maintenance", deptHead: "Jayshri Tiwari", parentDept: "Operations" },
-        { deptName: "Operations", deptHead: "Shalini Jain", parentDept: "Maintenance" },
-        { deptName: "Human Resources", deptHead: "Viswas Patel", parentDept: "IT" },
-        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
-        { deptName: "Manning", deptHead: "Mamta Lodhi", parentDept: "Human Resources" },
-        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
+        { deptName: "UI Designer", deptHead: "Application Development", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "UX Designer", deptHead: "UI/UX Design", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "Chief Financial Officer", deptHead: "Game Client", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "President", deptHead: "QC", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "Chief Operating Officer", deptHead: "Art", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "Head of HR", deptHead: "Game Client", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "Chief Technology Officer", deptHead: "UI/UX Design", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "Director", deptHead: "Backend", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "Project Manager", deptHead: "Backend", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        { deptName: "Delivery Manager", deptHead: "Game Design", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+
 
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -40,9 +40,9 @@ const Department = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpen, setIsOpen] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
-    const [selectedDepartmentDetails, setSelectedDepartmentDetails] = useState(null);
+    const [selectedDepartmentDetails2, setSelectedDepartmentDetails2] = useState(null);
     console.log(selectedDepartment)
-    const navigate = useNavigate();
+
     const handleHidImport = () => {
         setHidImport(!hidImport);
     };
@@ -140,8 +140,7 @@ const Department = () => {
         setShowEmploymentType(false);
     };
 
-
-    const handleAddDepartmentClick = () => {
+    const handleAddDesginationClick = () => {
         setShowPopup(true);
     };
 
@@ -149,12 +148,13 @@ const Department = () => {
         setShowPopup(false);
     };
 
-    const handleDepartmentClick1 = (department) => {
-        setSelectedDepartmentDetails(department);
+    const handleDesignationclick2 = (designation) => {
+        setSelectedDepartmentDetails2(designation);
     };
-
-    const DepartmentDetails=()=>{
-        navigate('/departmentdetails');
+    const navigate = useNavigate();
+    
+    const DesignationDetails=()=>{
+        navigate('/designationdeatils');
     }
     return (
         <div>
@@ -163,16 +163,16 @@ const Department = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Departments list <p>08 total</p>
+                            All Designation list <p>10 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={handleAddDepartmentClick}>
-                                <p><span><IoMdAdd /></span> Add New Department</p>
+                            <div className="addEmp" onClick={handleAddDesginationClick}>
+                                <p><span><IoMdAdd /></span> Add New Designation</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport}>
                                 <div className="div_top"><CiMenuKebab /></div>
                                 <div className={`bottom_import  ${hidImport ? 'bottom_import_hide' : ''}`}>
-                                    <AiOutlineCloudUpload /> Import
+                                    <AiOutlineCloudUpload />
                                     <input type="file" accept='image/*' />
                                 </div>
                             </div>
@@ -208,7 +208,7 @@ const Department = () => {
                             <input
                                 type="search"
                                 name="search"
-                                placeholder='Search Department name...'
+                                placeholder='Search designation name, department...'
                                 value={searchQuery}
                                 onChange={handleSearchChange}
                                 onKeyUp={handleFilterChange}
@@ -216,7 +216,7 @@ const Department = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>    
+                        <div className='div_box' onClick={showFilterHandle}>
                             <span><IoFilterSharp /></span>
                         </div>
 
@@ -233,55 +233,33 @@ const Department = () => {
                                         )}
                                     </div>
                                     <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Employment Type</p>
-                                        {showEmploymentType && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input type="radio" id="permanent" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="permanent">Permanent</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="contract" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="contract">On Contract</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="intern" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="intern">Intern</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="trainee" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="trainee">Trainee</label>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        )}
+                                        <p onClick={handleEmploymentTypeClick}>Date Range</p>
+                                        <div className="dropdown-content date-h">
+                                            <p>Form Date </p>
+                                            <div><MdDateRange /> Select Form date</div>
+                                            <input type="date" />
+                                        </div>
+
                                     </div>
                                     <div className="filter-option">
                                         <p onClick={handleDepartmentClick}>Department</p>
                                         {showDepartment && (
                                             <div className="dropdown-content">
                                                 <ul>
-                                                    <li>
-                                                        <input type="radio" id="all-department" name="department" className="custom-radio" />
-                                                        <label htmlFor="all-department">All Department</label>
-                                                    </li>
+
                                                     <li>
                                                         <input type="radio" id="it" name="department" className="custom-radio" />
-                                                        <label htmlFor="it">IT</label>
+                                                        <label htmlFor="it">Entry</label>
                                                     </li>
                                                     <li>
                                                         <input type="radio" id="hr" name="department" className="custom-radio" />
-                                                        <label htmlFor="hr">HR</label>
+                                                        <label htmlFor="hr">Medium</label>
                                                     </li>
                                                     <li>
                                                         <input type="radio" id="sales" name="department" className="custom-radio" />
-                                                        <label htmlFor="sales">Sales</label>
+                                                        <label htmlFor="sales">Senior</label>
                                                     </li>
-                                                    <li>
-                                                        <input type="radio" id="management" name="department" className="custom-radio" />
-                                                        <label htmlFor="management">Management</label>
-                                                    </li>
+
                                                 </ul>
                                             </div>
                                         )}
@@ -307,15 +285,15 @@ const Department = () => {
                         <thead>
                             <tr>
                                 <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
-                                <th> <div>Department Name<span><TiArrowUnsorted /></span></div></th>
-                                <th>Department Head</th>
-                                <th>Parent Department</th>
+                                <th> <div>Designation Name<span><TiArrowUnsorted /></span></div></th>
+                                <th>Department</th>
+                                <th>Description</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index}  onClick={() => handleDepartmentClick1(DepartmentDetails)}>
+                                <tr key={index} onClick={() => handleDesignationclick2(DesignationDetails)}>
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td>{emp.deptName}</td>
                                     <td>{emp.deptHead}</td>
@@ -327,31 +305,32 @@ const Department = () => {
                             ))}
                         </tbody>
                     </table>
-
                     {showPopup && (
                         <div className="popup-overlay">
-                            <div className="popup">
-                                <div className="popup-header">
-                                    <h3>Add New Department</h3>
-                                    <button onClick={closePopup}><IoIosCloseCircleOutline /></button>
+                            <div className="popup-content">
+                                <div className="add-designation-header">
+                                    <h2>Add New Designation</h2>
+                                    <button className="close-button" onClick={closePopup}>
+                                        <IoIosCloseCircleOutline />
+                                    </button>
                                 </div>
-                                <div className="popup-body">
-                                    <form className='upfom'>
-                                        <label className='redcolor'>Department Name*</label>
-                                        <input type="text" placeholder="Enter Department Name" />
-                                        <label className='blackcolor1'>Department Head</label>
-                                        <input type="text" placeholder="Enter Department Head" />
-                                        <label className='blackcolor2'>Parent Department</label>
-                                        <select>
-                                            <option value="">Choose or search head</option>
-                                            <option value="department1">Department 1</option>
-                                            <option value="department2">Department 2</option>
-                                        
-                                        </select>
-                                        <div className='popupbtn'>
-                                            <button type="submit">Submit</button>
+                                <div className="add-designation-body">
+                                    <form>
+                                        <div className="side-by-side">
+                                            <div>
+                                                <label style={{color:"red"}}>Designation Name *</label>
+                                                <input type="text" id="designname" placeholder="Enter designation name" />
+                                            </div>
+                                            <div>
+                                                <label>Department </label>
+                                                <input type="text" id="designname1" placeholder="Enter department" />
+                                            </div>
                                         </div>
 
+                                        <label>Description</label>
+                                        <textarea placeholder="Enter description"></textarea>
+
+                                        <button type="submit">Submit</button>
                                     </form>
                                 </div>
                             </div>
@@ -369,10 +348,6 @@ const Department = () => {
                                 <option value={100}>100 per page</option>
                             </select>
                         </div>
-
-
-
-
                         <div className="page-navigation">
                             <div className="page-numbers">
                                 {[...Array(totalPages)].map((_, pageIndex) => (
@@ -393,10 +368,7 @@ const Department = () => {
 
             </div>
         </div >
-
-
     );
-
 };
 
-export default Department;
+export default Designation;

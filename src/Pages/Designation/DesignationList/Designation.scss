@@ -26,7 +26,7 @@
         width: 30px;
         font-size: 1.5rem;
       }
- 
+
       p {
         //   border: 1px solid  red;
         display: flex;
@@ -327,7 +327,7 @@
         span:nth-child(4) {
           display: none;
         }
-    
+
         span:nth-child(9) {
           margin-left: 39px;
           margin-top: -75px;
@@ -346,11 +346,6 @@
         span:nth-child(10) {
           display: none;
         }
-        .EmpOn_Second_Head .left, .EmpOn_Second_Head .right {
-          width: 84%;
-          justify-content: center;
-          margin-bottom: 10px;
-      }
       }
     }
   }
@@ -858,152 +853,120 @@
 }
 
 
-// amruta
 
-@media (max-width: 800px) {
-  .EmpOn_Second_Head {
-      flex-direction: column;
-      height: auto;
-      width: 86% !important;
-  }
-}
-
-
-@media (max-width: 765px) {
-  .EmpOn_Second_Head .left, .EmpOn_Second_Head .right {
-      width: 100%;
-      justify-content: center;
-      margin-bottom: -13px;
-  }
-}
-
-
-// pop up form css
-
-
+/* Popup Overlay */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 9999;
 }
 
-.popup {
-  background: #fff;
+/* Popup Content */
+.popup-content {
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 329px;
-  position: relative;
+  width: 587px;
+  height: 303px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-
-.upfom {
-  position: relative;
-  top: -17px;
-}
-
-.popup-header {
-  position: relative;
+/* Header */
+.add-designation-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* border-bottom: 1px solid #ddd; */
-  padding-bottom: 4px;
-  margin-bottom: 21px;
-  background: #f0f0f0;
-  width: 367px;
-  height: 60px;
+  margin-bottom: -10px;
+  width: 627px;
+  height: 67px;
+  border-radius: 6px;
+  top: -20px;
   left: -20px;
-  gap: -1px;
-  top: -19px;
-  border-radius: 10px;
+  gap: 0px;
+  opacity: 0px;
+  background: #f9f9f9;
+  position: relative;
 }
 
-.popup-header h3 {
-  margin: 48px;
+.add-designation-header h2 {
+  margin: 25px;
+  font-size: 19px;
+  color: #400F6F;
 }
 
-.popup-header button {
+.close-button {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 1.5em;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 12px;
 }
 
-.popup-body form {
+/* Form */
+.add-designation-body form {
   display: flex;
   flex-direction: column;
-  margin-left: 26px;
 }
 
-.popup-body form label {
+.add-designation-body form label {
+  margin-top: 10px;
   margin-bottom: 5px;
-  font-weight: 500;
-  font-size: 15px;
+  font-size: 0.9em;
+  color: #555;
 }
 
-.popup-body form input {
-  margin-bottom: 29px;
-  padding: 7px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 85%;
-  background: #f7f7f7;
-  font-size: 14px;
-}
-
-.popup-body form button {
-  background-color: #400F6F;
-  color: #FFFFFF;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 200px;
-  text-align: center;
-  /* justify-content: center; */
-  margin-left: 44px;
-  margin-top: 30px;
-}
-
-
-.redcolor{
-  color: red;
-}
-
-.blackcolor1{
-  color:#2A2A2A;
-}
-
-.blackcolor2{
-  color:#2A2A2A;
-}
-
-/* Styles for input fields */
-input[type="text"] {
-  border: 1px solid #ccc; /* Border color */
-  border-radius: 4px; /* Rounded corners */
-  padding: 8px; /* Padding inside the input */
-  font-size: 14px; /* Font size */
-  width: 100%; /* Full width */
-}
-
-/* Styles for the select dropdown */
-select {
+.add-designation-body form input,
+.add-designation-body form textarea {
+  padding: 9px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 7px;
-  font-size: 14px;
-  width: 90%;
-  background-color: #fff;
-  color: #838080;
-  background: whitesmoke;
+  border-radius: 6px;
+  width: 96%;
+  box-sizing: border-box;
+  background: #fbfbfb;
+}
+
+/* Side by Side Inputs */
+.add-designation-body .side-by-side {
+  display: flex;
+  justify-content: space-between;
+  gap: 9px;
+}
+
+.add-designation-body .side-by-side input {
+  width: calc(100% - 22px);
+}
+
+.add-designation-body form textarea {
+  height: 80px;
+}
+
+.add-designation-body form button[type="submit"] {
+  background-color: #400F6F;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    width: 190px;
+    font-size: 1em;
+    position: relative;
+    left: 200px;
+}
+
+
+
+#designname{
+  margin-top: 10px;
+}
+
+#designname1{
+  margin-top: 10px;
 }
