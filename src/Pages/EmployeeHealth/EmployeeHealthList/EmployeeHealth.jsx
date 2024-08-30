@@ -159,7 +159,7 @@ const EmployeeHealth = () => {
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={AddEmployeeHealth}>
-                                <p><span><IoMdAdd /></span>  New Employee Health</p>
+                                <p><span><IoMdAdd /></span>  NewEmployee Health</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport}>
                                 <div className="div_top"><CiMenuKebab /></div>

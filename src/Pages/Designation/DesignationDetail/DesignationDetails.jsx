@@ -44,8 +44,8 @@ const DesignationDetails = () => {
                 </div>
                 <div className="profile_card">
                     <div className="img_card">
-                        <div className="progress-circle">
-                       
+                    <div className="progress-circle" >
+                            <img src="https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg" alt="" />
                         </div>
                         <div className="about_user">
                             <h3>UI/UX Designer</h3>
@@ -90,9 +90,10 @@ const DesignationDetails = () => {
                             </div>
                             <div className='respo'>
                                 <h4 className="respo-title">Responsibilities</h4>
-                                <p className="respo-text">Lorem ipsum dolor sit amet consectetur. Ultrices nunc at 
-                                    
-                                     tellus gravida. Tellus eu tortor lectus nulla vel egestas massa viverra. </p>
+                                <p>Provide forecasting, reporting, and budgeting support to senior management
+                                  
+                                       
+                                    </p>
                             </div>
 
                         </div>

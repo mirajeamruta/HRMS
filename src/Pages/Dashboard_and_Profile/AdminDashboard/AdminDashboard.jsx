@@ -4,20 +4,19 @@ import { GiAlarmClock } from "react-icons/gi";
 import { FaAngleDown, FaChevronRight, FaRegCalendarAlt } from "react-icons/fa";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import img_emp1 from '../../../assets/emp1.png'
-import { TfiLayoutMenuSeparated } from "react-icons/tfi";
+import { CiMenuKebab } from "react-icons/ci";
 import { RiUser6Line } from "react-icons/ri";
 import { IoMdTrendingDown, IoMdTrendingUp } from "react-icons/io";
 import { MdOutlineInsertChart } from "react-icons/md";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { BarChart } from '@mui/x-charts/BarChart';
 
-import './EmployeeDashboard.scss'
-const EmployeeDashboard = () => {
+
+import './AdminDashboard.scss'
+const AdminDashboard = () => {
     const [time, setTime] = useState('');
     const [currentSlide, setCurrentSlide] = useState(0); // State to track current slide
-
 
     //   Live (*) time  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     useEffect(() => {
@@ -78,7 +77,7 @@ const EmployeeDashboard = () => {
 
     // new join
 
-    // const getTopNewEmployees = employees.slice(0, 4);
+    const getTopNewEmployees = employees.slice(0, 4);
     // new join
     // 
     const settings = {
@@ -89,8 +88,8 @@ const EmployeeDashboard = () => {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
-        arrows: false,  
-        beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex), 
+        arrows: false,  // To hide next/prev buttons
+        beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex), // Track the current slide
         customPaging: (i) => (
             <div
                 style={{
@@ -103,9 +102,10 @@ const EmployeeDashboard = () => {
                 }}
             />
         ),
-        dotsClass: "slick-dots slick-thumb custom-dots",
+        dotsClass: "slick-dots slick-thumb custom-dots", // Custom class for dots
     };
     // 
+    
 
     return (
         <div className='ADMIN_EMP'>
@@ -126,10 +126,10 @@ const EmployeeDashboard = () => {
                         <span><GiAlarmClock /></span>
                         <h2>{time}</h2>
                     </div>
-                    {/* <div className="check_out_time">
+                    <div className="check_out_time">
                         <h3>CHECK OUT TIME</h3>
                         <button>Check Out</button>
-                    </div> */}
+                    </div>
                 </div>
             </div>
             {/* center Cart */}
@@ -137,7 +137,7 @@ const EmployeeDashboard = () => {
                 <div className="Left_cart">
                     <div className="Attendance_Overview">
                         <div className="head">
-                            <h3>My Attendance</h3>
+                            <h3>Attendance Overview</h3>
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={toggleDropdown}>
                                     <div>{selectedOption}</div>
@@ -152,32 +152,27 @@ const EmployeeDashboard = () => {
                                 )}
                             </div>
                         </div>
-                        <div className='TotalWorkingHRS'>
-                            <div className='checkOut'>
-                                <p>Time Active</p>
+                        <div className='Left_right'>
+                            <div className="left">
                                 <div>
-                                    <h2>05hrs 45m</h2>
-                                    <button>check Out</button>
+                                    <span className="present"></span>
+                                    <h3>Present</h3>
+                                </div>
+                                <div>
+                                    <span className="absent"></span>
+                                    <h3>Absent</h3>
+                                </div>
+                                <div>
+                                    <span className="halfday"></span>
+                                    <h3>Half Day</h3>
                                 </div>
                             </div>
-                            <div className="totalWork">
-                                <div>
-                                    <p>Remaining</p>
-                                    <div>
-                                        <h2>03hrs 15m</h2>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p>On Break</p>
-                                    <div>
-                                        <h2>01hrs 20m</h2>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p>Overtime</p>
-                                    <div>
-                                        <h2>00hrs 0m</h2>
-                                    </div>
+                            <div className="right">
+                                <div className="span1"></div>
+                                <div className="span2"></div>
+                                <div className="gauge">
+                                    <span>Total Employees</span>
+                                    <h1>256</h1>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +197,8 @@ const EmployeeDashboard = () => {
                                                     <p>{formatDate(emp.DOB)}</p>
                                                 </div>
                                             </div>
-                                            <p>{emp.email}</p>
+                                            {/* <p>{emp.email}</p> */}
+                                            <img src="https://i.pinimg.com/originals/85/82/1b/85821bd4bbd0fedade2553543bb79ac7.gif" alt=""  />
                                         </div>
                                     )
                                 ))}
@@ -210,20 +206,77 @@ const EmployeeDashboard = () => {
                         </div>
                     </div>
                 </div>
-
-                <div className="chart_Performance_Stats">
-
-                    <BarChart
-                        series={[
-                            { data: [9, 8, 8, 3, 8, 8, 6], stack: 'B', label: 'Assigned Hours', color: '#591AB7' }, 
-                            { data: [8, 7, 8, 4, 8, 1, 8], stack: 'A', label: 'Total Hours Worked', color: '#7C3CE9' },
-                        ]}
-                        xAxis={[
-                            { scaleType: 'band', data: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], },
-                        ]}
-                        style={{ width: '100%', height: '470px' }}
-                    />
-
+                <div className="flex_right">
+                    <div className="center_Cart">
+                        <div className="newEmployee">
+                            <div className="header_newEmp">
+                                <div className='number_new_hire'>
+                                    <h3>New Employee </h3>
+                                    <div>
+                                        <h2>04</h2>
+                                        <h3>New Hires</h3>
+                                    </div>
+                                </div>
+                                <div className='newEmp_img'>
+                                    {getTopNewEmployees.map((emp, i) => (
+                                        <div key={i} className='div_newEmp_img'>
+                                            <img src={emp.Image} alt={emp.name} />
+                                        </div>
+                                    ))}
+                                    <div className="img_add">
+                                        +
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="top_border"></div>
+                            <div className="Emp">
+                                {getTopNewEmployees.map((emp, i) => (
+                                    <div key={i} className='div_dob'>
+                                        <div className='img_dob_name'>
+                                            <img src={emp.Image} alt={emp.name} />
+                                            <div>
+                                                <h3>{emp.name}</h3>
+                                                <p> {emp.Roll}</p>
+                                            </div>
+                                        </div>
+                                        <p>{emp.phone}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="Right_cart">
+                        <div className="employeesOnLeave">
+                            <div className="newEmployee">
+                                <div className="header_newEmp">
+                                    <div className='number_new_hire'>
+                                        <h3> Employees On Leave </h3>
+                                        <div>
+                                            <p>Monday,15th April</p>
+                                        </div>
+                                    </div>
+                                    <button>See All</button>
+                                </div>
+                                <div className="top_border"></div>
+                                <div className="Emp">
+                                    {getTopNewEmployees.map((emp, i) => (
+                                        <div key={i} className='div_dob'>
+                                            <div className='img_dob_name'>
+                                                <img src={emp.Image} alt={emp.name} />
+                                                <div>
+                                                    <h3>{emp.name}</h3>
+                                                    {/* <p> {emp.Roll}</p> */}
+                                                    <p>15April-17April</p>
+                                                    <div><p className='content_dot_red'> Sick Leave </p></div>
+                                                </div>
+                                            </div>
+                                            <p> <FaChevronRight /> </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             {/* four div */}
@@ -231,7 +284,7 @@ const EmployeeDashboard = () => {
                 <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
                         <div>
@@ -244,51 +297,32 @@ const EmployeeDashboard = () => {
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month</p>
+                        <p>Last Month: <span>173</span></p>
                     </div>
                 </div>
                 <div className="box_">
                     <div className="head">
-                        <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        <p>New Employees</p>
+                        <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
                         <div>
                             <div><span> <RiUser6Line /></span></div>
-                            <h2>210</h2>
+                            <h2>27</h2>
                         </div>
                         <div className='up'>
                             <span> <IoMdTrendingUp /></span>
-                            <p>2%</p>
+                            <p>4%</p>
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month</p>
+                        <p>Last Month: <span>7</span></p>
                     </div>
                 </div>
                 <div className="box_">
                     <div className="head">
-                        <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
-                    </div>
-                    <div className="centerData">
-                        <div>
-                            <div><span> <RiUser6Line /></span></div>
-                            <h2>210</h2>
-                        </div>
-                        <div className='down'>
-                            <span> <IoMdTrendingDown /></span>
-                            <p>2%</p>
-                        </div>
-                    </div>
-                    <div className="bottom">
-                        <p>Last Month</p>
-                    </div>
-                </div>
-                <div className="box_">
-                    <div className="head">
-                        <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        <p>Resigned</p>
+                        <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
                         <div>
@@ -297,11 +331,30 @@ const EmployeeDashboard = () => {
                         </div>
                         <div className='down'>
                             <span> <IoMdTrendingDown /></span>
-                            <p>2%</p>
+                            <p>4%</p>
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month</p>
+                        <p>Last Month: <span>6</span></p>
+                    </div>
+                </div>
+                <div className="box_">
+                    <div className="head">
+                        <p>On Leave</p>
+                        <span> <CiMenuKebab /></span>
+                    </div>
+                    <div className="centerData">
+                        <div>
+                            <div><span> <RiUser6Line /></span></div>
+                            <h2>10</h2>
+                        </div>
+                        <div className='down'>
+                            <span> <IoMdTrendingDown /></span>
+                            <p>4%</p>
+                        </div>
+                    </div>
+                    <div className="bottom">
+                        <p>Last Month: <span>6</span></p>
                     </div>
                 </div>
 
@@ -410,4 +463,4 @@ const EmployeeDashboard = () => {
     );
 }
 
-export default EmployeeDashboard;
+export default AdminDashboard;

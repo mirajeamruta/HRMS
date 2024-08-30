@@ -152,8 +152,8 @@ const Designation = () => {
         setSelectedDepartmentDetails2(designation);
     };
     const navigate = useNavigate();
-    
-    const DesignationDetails=()=>{
+
+    const DesignationDetails = () => {
         navigate('/designationdeatils');
     }
     return (
@@ -167,7 +167,7 @@ const Designation = () => {
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={handleAddDesginationClick}>
-                                <p><span><IoMdAdd /></span> Add New Designation</p>
+                                <p><span><IoMdAdd /></span> AddNew Designation</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -318,7 +318,7 @@ const Designation = () => {
                                     <form>
                                         <div className="side-by-side">
                                             <div>
-                                                <label style={{color:"red"}}>Designation Name *</label>
+                                                <label style={{ color: "red" }}>Designation Name *</label>
                                                 <input type="text" id="designname" placeholder="Enter designation name" />
                                             </div>
                                             <div>
