@@ -10,7 +10,7 @@ import { RxReload } from "react-icons/rx";
 import { BiEditAlt } from "react-icons/bi";
 
 import { MdDeleteOutline } from "react-icons/md";
-
+import './EmployeeDetails.scss';
 const EmployeeDetails = () => {
     const [activeTab, setActiveTab] = useState('experience');
 

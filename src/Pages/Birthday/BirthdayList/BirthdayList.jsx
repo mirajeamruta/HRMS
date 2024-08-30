@@ -13,22 +13,18 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import './Department.scss';
+import './BirthdayList.scss';
 
 const Department = () => {
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
-        { deptName: "Manning", deptHead: "Sunil Bhadouriya", parentDept: "HSEQ" },
-        { deptName: "IT", deptHead: "Nandan Raikwar", parentDept: "Operations" },
-        { deptName: "HSEQ", deptHead: "Vikas Tiwari", parentDept: "IT" },
-        { deptName: "Operations", deptHead: "Paartho Ghosh", parentDept: "Manning" },
-        { deptName: "Engineering", deptHead: "Rahul Choudary", parentDept: "Engineering" },
-        { deptName: "Maintenance", deptHead: "Jayshri Tiwari", parentDept: "Operations" },
-        { deptName: "Operations", deptHead: "Shalini Jain", parentDept: "Maintenance" },
-        { deptName: "Human Resources", deptHead: "Viswas Patel", parentDept: "IT" },
-        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
-        { deptName: "Manning", deptHead: "Mamta Lodhi", parentDept: "Human Resources" },
-        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
+        { deptName: "001", deptHead: "Abc@gmail.com", parentDept: "Nandan",subparent:"akash" ,parent:"9876543456",parent1:"20-09-2024"},
+        { deptName: "002", deptHead: "Nandan@gmail.com", parentDept: "Rahul" ,subparent:"akash",parent:"9876543456" ,parent1:"20-09-2024"},
+        { deptName: "003", deptHead: "Vikas@gmail.com", parentDept: "Vikas" ,subparent:"akash",parent:"9876543456" ,parent1:"20-09-2024"},
+        { deptName: "004", deptHead: "Paartho@gmail.com", parentDept: "Rahul",subparent:"akash" ,parent:"9876543456" ,parent1:"20-09-2024"},
+        { deptName: "005", deptHead: "Rahul@gmail.com", parentDept: "Jayshri",subparent:"akash" ,parent:"9876543456",parent1:"20-09-2024" },
+        { deptName: "006", deptHead: "Jayshri@gmail.com", parentDept: "Abc",subparent:"akash" ,parent:"9876543456",parent1:"20-09-2024" },
+       
 
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -163,11 +159,11 @@ const Department = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Departments list <p>08 total</p>
+                            All Birthday List <p>08 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={handleAddDepartmentClick}>
-                                <p><span><IoMdAdd /></span> Add New Department</p>
+                                <p><span><IoMdAdd /></span> Add New Birthday</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -208,7 +204,7 @@ const Department = () => {
                             <input
                                 type="search"
                                 name="search"
-                                placeholder='Search Department name...'
+                                placeholder='Search Birthday name...'
                                 value={searchQuery}
                                 onChange={handleSearchChange}
                                 onKeyUp={handleFilterChange}
@@ -307,9 +303,14 @@ const Department = () => {
                         <thead>
                             <tr>
                                 <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
-                                <th> <div>Department Name<span><TiArrowUnsorted /></span></div></th>
-                                <th>Department Head</th>
-                                <th>Parent Department</th>
+                                <th> <div>Employee Id<span><TiArrowUnsorted /></span></div></th>
+                                <th>Email Id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Phone Number</th>
+                                <th>Date</th>
+
+
 
                             </tr>
                         </thead>
@@ -320,44 +321,15 @@ const Department = () => {
                                     <td>{emp.deptName}</td>
                                     <td>{emp.deptHead}</td>
                                     <td>{emp.parentDept}</td>
-
-
-
+                                   <td>{emp.subparent}</td>
+                                   <td>{emp.parent}</td>
+                                   <td>{emp.parent1}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
 
-                    {showPopup && (
-                        <div className="popup-overlay">
-                            <div className="popup">
-                                <div className="popup-header">
-                                    <h3>Add New Department</h3>
-                                    <button onClick={closePopup}><IoIosCloseCircleOutline /></button>
-                                </div>
-                                <div className="popup-body">
-                                    <form className='upfom'>
-                                        <label className='redcolor'>Department Name*</label>
-                                        <input type="text" placeholder="Enter Department Name" />
-                                        <label className='blackcolor1'>Department Head</label>
-                                        <input type="text" placeholder="Enter Department Head" />
-                                        <label className='blackcolor2'>Parent Department</label>
-                                        <select>
-                                            <option value="">Choose or search head</option>
-                                            <option value="department1">Department 1</option>
-                                            <option value="department2">Department 2</option>
-                                        
-                                        </select>
-                                        <div className='popupbtn'>
-                                            <button type="submit">Submit</button>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
+                
                     <div className="pagination">
                         <div className="rows-per-page">
                             <select value={rowsPerPage} onChange={handleRowsPerPageChange}>

@@ -12,7 +12,7 @@
     import { TiArrowUnsorted } from "react-icons/ti";
     import { MdDateRange } from "react-icons/md";
     import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-
+    import { useNavigate } from 'react-router-dom';
     import './AllEmployeeList.scss';
 
     const AllEmployeeList = () => {
@@ -38,12 +38,17 @@
         const [currentPage, setCurrentPage] = useState(1);
         const [rowsPerPage, setRowsPerPage] = useState(10);
         const [isOpen, setIsOpen] = useState(null);
+        const navigate = useNavigate();
         console.log(selectedDepartment)
-
+       
         const handleHidImport = () => {
             setHidImport(!hidImport);
         };
 
+
+        const AddEmployee=()=>{
+            navigate('/add-employee');
+        }
         
         const handleSelectAll = () => {
             const updatedEmployees = filteredEmployees.map(emp => ({
@@ -148,9 +153,10 @@
             setShowCustomDate(false);
             setShowEmploymentType(false);
         };
-
+     
+        
         return (
-            <div>
+            <div id='allEmp'>
                 <div className="EmpOn_main_container">
                     <div className="EmpOn_header">
                         <div className="top-bar">
@@ -159,7 +165,7 @@
                                 Add Employee <p>102 total</p>
                             </h2>
                             <div className="Emp_Head_Right">
-                                <div className="addEmp">
+                                <div className="addEmp" onClick={AddEmployee}>
                                     <p><span><IoMdAdd /></span> Add New Employee</p>
                                 </div>
                                 <div className="menu_head" onClick={handleHidImport}>
@@ -323,9 +329,7 @@
                 <div className="allEmployeeList">
                     {/* <div className="head">
                     </div> */}
-                    <div className="employee-table" >
-            
-                   
+                    <div className="employee-table" id="emptab" >
                         <table>
                             <thead>
                                 <tr>
@@ -351,19 +355,7 @@
                                         <td>{emp.phone}</td>
                                         <td>{emp.department}</td>
                                         <td>{emp.dateOfJoining}</td>
-                                        {/* <td>
-                                            <select value={emp.status} onChange={(e) => {
-                                                const updatedEmployees = [...employees];
-                                                updatedEmployees[index].status = e.target.value;
-                                                setEmployees(updatedEmployees);
-                                            }}>
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">Inactive</option>
-                                                <option value="Resigned">Resigned</option>
-                                                <option value="Terminated">Terminated</option>
-                                                <option value="Notice Period">Notice Period</option>
-                                            </select>
-                                        </td> */}
+                                       
                                         <td>
                                             <div className="status-dropdown">
                                                 <div key={index} className="status-container">
@@ -434,7 +426,7 @@
                     </div>
 
                 </div>
-            </div >
+            </div>
         );
     };
 
