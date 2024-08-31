@@ -28,7 +28,7 @@
 #img {
     background-image: url('../../assets/bgSignUP.png');
     width: 464px;
-    height: 743px;
+    height: 660px;
     border-radius: 11px;
     background-size: cover;
 
@@ -338,10 +338,10 @@ input:focus {
     #img {
         /* background-image: url('../../assets/bgSignUP.png'); */
         /* width: 464px; */
-        height: 600px !important;
+        height: 660px !important;
         /* border-radius: 11px;
         background-size: cover; */
-    border: 1px solid red !important;
+    /* border: 1px solid red !important; */
     }
     
     
@@ -353,7 +353,7 @@ input:focus {
         height: 600px !important;
         /* border-radius: 11px;
         background-size: cover; */
-    border: 1px solid red !important;
+    /* border: 1px solid red !important; */
     }
     
     
@@ -362,10 +362,10 @@ input:focus {
     #img {
         /* background-image: url('../../assets/bgSignUP.png'); */
         /* width: 464px; */
-        height: 600px !important;
+        height: 676px !important;
         /* border-radius: 11px;
         background-size: cover; */
-    border: 1px solid red !important;
+    /* border: 1px solid red !important; */
     }
     
     
@@ -603,6 +603,18 @@ option {
         /* border: 1px solid red ; */
         width: 500px !important;
         overflow: hidden;
+    }
+    .account11 {
+        text-align: center;
+        color: #797979;
+        font-size: 12px;
+        /* margin-top: 33px; */
+        /* margin-right: 170px; */
+        position: relative;
+        /* margin-right: 100px; */
+        /* border: 1px solid red; */
+        width: 423px;
+        top: -24px !important;
     }
 }
 

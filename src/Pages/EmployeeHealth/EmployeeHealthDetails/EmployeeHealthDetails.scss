@@ -431,3 +431,53 @@
     left: 168px;
     top: -23px;
 }
+
+
+  
+.Emp00 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: -6px;
+
+  .div_dob00 {
+    display: flex;
+    align-items: center;
+    padding: 9px;
+    /* border: 1px solid #ddd; */
+    border-radius: 5px;
+    width: 457px;
+    max-width: 400px;
+    margin-left: 82px;
+
+      .img_dob_name00 {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+
+          img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+          }
+
+          div {
+            .empname00 {
+                  margin: 0;
+                  font-size: 14px;
+              }
+
+              .emproll22 {
+                  margin: 0;
+                  font-size: 14px;
+                  color: #555;
+              }
+          }
+      }
+
+      #emproll00 {
+          margin-left: auto;
+          font-size: 14px;
+          color: #333;
+      }
+  }
+}

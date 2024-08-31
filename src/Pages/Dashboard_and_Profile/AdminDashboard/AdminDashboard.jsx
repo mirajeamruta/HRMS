@@ -11,13 +11,13 @@ import { MdOutlineInsertChart } from "react-icons/md";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { useNavigate } from 'react-router-dom';
 
 import './AdminDashboard.scss'
 const AdminDashboard = () => {
     const [time, setTime] = useState('');
     const [currentSlide, setCurrentSlide] = useState(0); // State to track current slide
-
+    const navigate = useNavigate();
     //   Live (*) time  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     useEffect(() => {
         const updateTime = () => {
@@ -106,7 +106,10 @@ const AdminDashboard = () => {
     };
     // 
     
-
+    const Birthdaypage=()=>{
+        navigate('/birthday');
+    }
+      
     return (
         <div className='ADMIN_EMP'>
             {/* header time */}
@@ -178,7 +181,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     <div className="left_Bottom_cart">
-                        <div className="header_Birthday">
+                        <div className="header_Birthday" onClick={Birthdaypage}>
                             <h3>Employee Birthday Today</h3>
                             <div>
                                 <LiaBirthdayCakeSolid />

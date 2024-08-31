@@ -100,14 +100,14 @@ const DepartmentDetails = () => {
                         <div className="card">
                        
                         <div className='contentInformation'>
-                            <div className="Emp">
+                            <div className="Emp22">
                                 {getTopNewEmployees.map((emp, i) => (
-                                    <div key={i} className='div_dob'>
-                                        <div className='img_dob_name'>
+                                    <div key={i} className='div_dob22'>
+                                        <div className='img_dob_name22'>
                                             <img src={emp.Image} alt={emp.name} />
                                             <div>
-                                                <h3>{emp.name}</h3>
-                                                <p> {emp.Roll}</p>
+                                                <h3 className='empname22'>{emp.name}</h3>
+                                                <p className='emproll22'> {emp.Roll}</p>
                                             </div>
                                         </div>
                                         <p>{emp.phone}</p>

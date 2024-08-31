@@ -11,7 +11,7 @@ import img_emp1 from '../../../assets/emp1.png';
 import './DesignationDetails.scss';
 import { MdDeleteOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-
+import '../../Employee_onboarding/EmployeeDetail/EmployeeDetails.scss';
 const DesignationDetails = () => {
     const [activeTab, setActiveTab] = useState('experience');
     const [employees, setEmployees] = useState([
@@ -103,14 +103,14 @@ const DesignationDetails = () => {
                             <h3><span><MdWorkHistory /></span>Employees in Designation</h3>
                         </div>
                         <div className='contentInformation'>
-                            <div className="Emp">
+                            <div className="Emp1">
                                 {getTopNewEmployees.map((emp, i) => (
-                                    <div key={i} className='div_dob'>
-                                        <div className='img_dob_name'>
+                                    <div key={i} className='div_dob1'>
+                                        <div className='img_dob_name1'>
                                             <img src={emp.Image} alt={emp.name} />
                                             <div>
-                                                <h3>{emp.name}</h3>
-                                                <p> {emp.Roll}</p>
+                                                <h3 className='empname'>{emp.name}</h3>
+                                                <p className='emproll'> {emp.Roll}</p>
                                             </div>
                                         </div>
                                         <p>{emp.phone}</p>
