@@ -1,3 +1,5 @@
+@import "../../../styles/variables.scss";
+
 .profile-page {
     // padding: 14px;
     background: #ededed8a;
@@ -423,12 +425,12 @@
   }
   
 
-  .Emp {
+  .Emp1 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 
-    .div_dob {
+    .div_dob1 {
       display: flex;
       align-items: center;
       padding: 9px;
@@ -438,7 +440,7 @@
       max-width: 400px;
       margin-left: 82px;
 
-        .img_dob_name {
+        .img_dob_name1 {
             display: flex;
             align-items: center;
             gap: 15px;
@@ -450,12 +452,12 @@
             }
 
             div {
-                h3 {
+              .empname {
                     margin: 0;
                     font-size: 16px;
                 }
 
-                p {
+                .emproll {
                     margin: 0;
                     font-size: 14px;
                     color: #555;

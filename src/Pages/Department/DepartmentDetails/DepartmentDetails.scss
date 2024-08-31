@@ -236,6 +236,53 @@
     }
   }
   
+  .Emp22 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .div_dob22 {
+      display: flex;
+      align-items: center;
+      padding: 9px;
+      /* border: 1px solid #ddd; */
+      border-radius: 5px;
+      width: 457px;
+      max-width: 400px;
+      margin-left: 82px;
+
+        .img_dob_name22 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+
+            div {
+              .empname22 {
+                    margin: 0;
+                    font-size: 16px;
+                }
+
+                .emproll22 {
+                    margin: 0;
+                    font-size: 14px;
+                    color: #555;
+                }
+            }
+        }
+
+        p {
+            margin-left: auto;
+            font-size: 14px;
+            color: #333;
+        }
+    }
+}
   // 
    .experience-grid {
             display: flex;
