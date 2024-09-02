@@ -398,7 +398,7 @@ const Designation = () => {
                             <div className="popup-content">
                                 <div className="add-designation-header">
                                     <h2>Add New Designation</h2>
-                                    <button className="close-button" onClick={closePopup}>
+                                    <button className="close_btn" onClick={closePopup}>
                                         <IoIosCloseCircleOutline />
                                     </button>
                                 </div>
