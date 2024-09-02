@@ -345,7 +345,7 @@
           }
   
   // 
-   .education {
+   .prjecttab {
           width: 95%;
           border: 1px solid rgba(153, 146, 146, 0.569);
           margin-top: 20px;
@@ -620,7 +620,14 @@
 
 // }
 
-#tableforlist{
-  margin-left: 30px;
-    width: 93%;
-}
+// #tableforlist{
+//   margin-left: 30px;
+//     width: 93%;
+// }
+
+// @media (max-width: 765px) {
+// #tableforlist {
+//   margin-left: 29px !important;
+//   width: 90% !important;
+// }
+// }
