@@ -5,6 +5,7 @@ import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+// import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import './AddEmployeeHealth.scss';
@@ -120,6 +121,12 @@ const AddEmployeeHealth = ({ onSubmit }) => {
     const AddEmployeeHealthDetails=()=>{
         navigate('/employeehealthdetails');
     }
+
+
+    const handleCloseButton1 = () => {
+        // Handle the close button click
+        navigate(-1); // Go back to the previous page
+    }
     return (
         <>
             <div className="" >
@@ -131,18 +138,9 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                                 Edit UI Designer Designation
                             </h2>
                             <div className="Emp_Head_Right">
-                                {/* <div className="addEmp" onClick={AddEmployee}>
-                                    <p><span><IoMdAdd /></span> Add New Employee</p>
-                                </div> */}
-                                {/* <div className="menu_head" onClick={handleHidImport}>
-                                    <div className="div_top"><CiMenuKebab /></div>
-                                    <div className={`bottom_import  ${hidImport ? 'bottom_import_hide' : ''}`}>
-                                        <AiOutlineCloudUpload /> Import
-                                        <input type="file" accept='image/*' />
-                                    </div>
-                                </div> */}
-                                 <div className='close_btn'>
-                        <IoMdCloseCircleOutline />
+                             
+                                 <div className='close_btn' id='closebtn22' onClick={handleCloseButton1}>
+                                 <IoMdCloseCircleOutline />
                     </div>
                             </div>
                             <div className="_div">
@@ -164,7 +162,7 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                     <div className='info1'> <h2>Personal Information</h2></div>
                
 
-                    <div className="from1">
+                    <div className="from1" id="personalnfo">
                       
                         <div className="form-group">
 
@@ -260,7 +258,7 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                     <div className='info2'>
                         <h2>Health Information</h2>
                     </div>
-                    <div className="from1 form2">
+                    <div className="from1 form2" id="healinfo">
 
 
                         <div className="form-group">
@@ -281,24 +279,7 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                             </div>
 
                         </div>
-                        {/* Designation Dropdown */}
-                        {/* <div className="form-group">
-                            <label>Designation</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('designation')}>
-                                    <div>{formData.designation || "Select designation"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.designation ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-
-                                </div>
-                                {dropdowns.designation && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Administration')}>Administration</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Developer')}>Developer</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Manager')}>Manager</div>
-                                    </div>
-                                )}
-                            </div>
-                        </div> */}
+                       
                         <div className="form-group">
                             <label>weight</label>
                             <input
@@ -461,84 +442,7 @@ const AddEmployeeHealth = ({ onSubmit }) => {
                                 </label>
                             </div>
                         </div>
-                        {/* Marital Status Dropdown */}
-                        {/* <div className="form-group">
-                            <label>Marital Status</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('maritalStatus')}>
-                                    <div>{formData.maritalStatus || "Select status"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.maritalStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-
-                                </div>
-                                {dropdowns.maritalStatus && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('maritalStatus', 'Single')}>Single</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('maritalStatus', 'Married')}>Married</div>
-                                    </div>
-                                )}
-                            </div>
-                        </div> */}
-                        {/* <div className="form-group">
-                            <label>Date of Exit</label>
-                            <input
-                                type="date"
-                                name="doe"
-                                value={formData.doe}
-                                onChange={handleChange}
-                            />
-                        </div> */}
-                        {/* Employment Type Dropdown */}
-                        {/* <div className="form-group">
-                            <label>Employment Type</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('employmentType')}>
-                                    <div>{formData.employmentType || "Select employment type"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.employmentType ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-                                </div>
-                                {dropdowns.employmentType && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Part-time')}>Part-time</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Full-time')}>Full-time</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Consultant')}>Consultant</div>
-                                    </div>
-                                )}
-                            </div>
-                        </div> */}
-                        {/* Employee Status Dropdown */}
-                        {/* <div className="form-group">
-                            <label>Employee Status</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('employeeStatus')}>
-                                    <div>{formData.employeeStatus || "Select status"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.employeeStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-                                </div>
-                                {dropdowns.employeeStatus && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Permanent')}>Permanent</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Probation')}>Probation</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Intern')}>Intern</div>
-                                    </div>
-                                )}
-                            </div>
-                        </div> */}
-                        {/* Source of Hire Dropdown */}
-                        {/* <div className="form-group">
-                            <label>Source of Hire</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('sourceOfHire')}>
-                                    <div>{formData.sourceOfHire || "Select source"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.sourceOfHire ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-
-                                </div>
-                                {dropdowns.sourceOfHire && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Referral')}>Referral</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Direct')}>Direct</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Campus')}>Campus</div>
-                                    </div>
-                                )}
-                            </div>
-                        </div> */}
+      
                     </div>
                     <div id='submitBtn_next_main'>
                         <div id='submitBtn' >

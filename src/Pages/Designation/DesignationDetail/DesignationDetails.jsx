@@ -7,6 +7,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdWorkHistory } from "react-icons/md";
 import { RxReload } from "react-icons/rx";
 import { BiEditAlt } from "react-icons/bi";
+import { TfiClose } from "react-icons/tfi";
 import img_emp1 from '../../../assets/emp1.png';
 import './DesignationDetails.scss';
 import { MdDeleteOutline } from "react-icons/md";
@@ -35,12 +36,18 @@ const DesignationDetails = () => {
     const EditUiDesignation=()=>{
         navigate('/editUidesignation');
     }
+
+    const handleCloseButton = () => {
+        // Handle the close button click
+        navigate(-1); // Go back to the previous page
+    }
+
     return (
         <div className="profile-page">
             <div className="details">
                 <div className="title_top">
                     <h2>Designation Details</h2>
-                    <div className='close_btn'><IoMdCloseCircleOutline /></div>
+                    <div className='close_btn' onClick={handleCloseButton}><IoMdCloseCircleOutline /></div>
                 </div>
                 <div className="profile_card">
                     <div className="img_card">
@@ -58,12 +65,12 @@ const DesignationDetails = () => {
                         <div><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
-                <div className="info-cards">
+                <div className="info-cards" id="wholecards">
                     <div className="card">
                         <div className='top_head'>
                             <h3><span><MdWorkHistory /></span>Designation Information</h3>
                         </div>
-                        <div className='contentInformation'>
+                        <div className='contentInformation' id="ConTInfoo">
                             <div>
                                 <h4>Level</h4>
                                 <p>Junior</p>

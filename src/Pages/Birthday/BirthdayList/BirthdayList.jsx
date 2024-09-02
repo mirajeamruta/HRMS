@@ -188,7 +188,7 @@ const Department = () => {
                     </div>
                 </div>
             </div>
-            <div className="EmpOn_Second_Head">
+            <div className="EmpOn_Second_Head" id="birthhead">
                 <div className="left">
 
                 </div>
@@ -294,7 +294,7 @@ const Department = () => {
                 </div>
             </div>
             {/* All Employee  List*/}
-            <div className="allEmployeeList">
+            <div className="allEmployeeList" id="bdaytab">
                 {/* <div className="head">
                 </div> */}
                 <div className="employee-table">

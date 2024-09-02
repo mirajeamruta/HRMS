@@ -13,6 +13,7 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import './Designation.scss';
 
 const Designation = () => {
@@ -156,6 +157,41 @@ const Designation = () => {
     const DesignationDetails = () => {
         navigate('/designationdeatils');
     }
+
+
+
+    const [dropdowns, setDropdowns] = useState({
+        Uidesign: false,
+
+    });
+
+
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        contactNumber: '',
+        jobOpening: '',
+        resume: '',
+        coverLetter: '',
+        country: '',
+        state: '',
+        city: '',
+        zipCode: '',
+        source: '',
+        availabilityDate: '',
+        expectedSalary: '',
+        referredPerson: ''
+    });
+    const toggleDropdown = (dropdown) => {
+        setDropdowns(prevState => ({
+            ...prevState,
+            [dropdown]: !prevState[dropdown]
+        }));
+    };
+
+
+
+
     return (
         <div>
             <div className="EmpOn_main_container">
@@ -192,7 +228,7 @@ const Designation = () => {
                     </div>
                 </div>
             </div>
-            <div className="EmpOn_Second_Head">
+            <div className="EmpOn_Second_Head" id='searchhead'>
                 <div className="left">
 
                 </div>
@@ -276,7 +312,7 @@ const Designation = () => {
                 </div>
             </div>
             {/* All Employee  List*/}
-            <div className="allEmployeeList">
+            <div className="allEmployeeList" id="allemployeetable">
                 {/* <div className="head">
                 </div> */}
                 <div className="employee-table">
@@ -321,13 +357,32 @@ const Designation = () => {
                                                 <label style={{ color: "red" }}>Designation Name *</label>
                                                 <input type="text" id="designname" placeholder="Enter designation name" />
                                             </div>
-                                            <div>
+
+                                            <div className="form-group" id="depart">
+                                                <label>Department</label>
+                                                <div className="dropdown10">
+                                                    <div className="dropdown-button10" onClick={() => toggleDropdown('Uidesign')}>
+                                                        <div className='choose1'>{formData.Uidesign || "Choose department"}</div>
+                                                        <span id='toggle_selectIcon'> {!dropdowns.Uidesign ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                                    </div>
+
+                                                    {dropdowns.Uidesign && (
+                                                        <div className="dropdown-menu10">
+                                                            <div className="dropdown-item10" onClick={() => selectOption('Uidesign', ' ')}></div>
+
+
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* <div>
                                                 <label>Department </label>
                                                 <input type="text" id="designname1" placeholder="Enter department" />
-                                            </div>
+                                            </div> */}
                                         </div>
-
-                                        <label>Description</label>
+                                        <div className='despt'>  <label>Description</label></div>
+                                      
                                         <textarea placeholder="Enter description"></textarea>
 
                                         <button type="submit">Submit</button>
