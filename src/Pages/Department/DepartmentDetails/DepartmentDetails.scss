@@ -247,9 +247,11 @@
       padding: 9px;
       /* border: 1px solid #ddd; */
       border-radius: 5px;
-      width: 457px;
-      max-width: 400px;
-      margin-left: 82px;
+      width: 437px;
+      max-width: 345px;
+      margin-left: 70px;
+      height: 35px;
+  }
 
         .img_dob_name22 {
             display: flex;
@@ -282,7 +284,7 @@
             color: #333;
         }
     }
-}
+
   // 
    .experience-grid {
             display: flex;
@@ -631,3 +633,28 @@
 //   width: 90% !important;
 // }
 // }
+
+// #DescriptionJOB p {
+//   width: 300px; /* Adjust the width as needed */
+//   line-height: 1.5; /* Adjust the line height for readability */
+//   word-wrap: break-word; /* Ensure long words break to fit within the width */
+// }
+
+
+#imagecard{
+  width: 474px;
+    height: 366px;
+
+}
+
+#DepINfo{
+  width: 872px;
+  height: 366px;
+top: 214px;
+left: 41px;
+gap: 0px;
+border-radius: 8px 8px 8px 8px;
+border: 1.01px 0px 0px 0px;
+opacity: 0px;
+
+}

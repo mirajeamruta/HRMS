@@ -383,7 +383,7 @@ const Department = () => {
                             <div className="popup">
                                 <div className="popup-header">
                                     <h3>Add New Department</h3>
-                                    <button onClick={closePopup}><IoIosCloseCircleOutline /></button>
+                                    <button className='colose' onClick={closePopup}><IoIosCloseCircleOutline /></button>
                                 </div>
                                 <div className="popup-body">
                                     <form className='upfom'>

@@ -914,6 +914,7 @@
   width: 329px;
   position: relative;
   height: 375px;
+  top: -92px;
 }
 
 
@@ -973,6 +974,12 @@
   font-size: 14px;
 }
 
+.colose{
+  &:hover {
+    color:red;
+      border-radius: 5px;
+    }
+}
 .popup-body form button {
   background-color: #400F6F;
   color: #FFFFFF;
@@ -1083,6 +1090,7 @@ input[type="text"] {
     overflow-y: auto; /* Enable vertical scrolling */
     overflow-x: hidden; /* Prevent horizontal scrolling (optional) */
     height: 200px;
+    font-size: 15px;
     .dropdown-item1 {
       overflow: visible;
       // padding: 10px;
@@ -1132,7 +1140,7 @@ input[type="text"] {
 
 
 #handlesearch {
-  width: 266px;
+  width: 262px;
   position: relative;
   top: 4px;
   left: 3px;
