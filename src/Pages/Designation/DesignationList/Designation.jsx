@@ -160,12 +160,6 @@ const Designation = () => {
 
 
 
-    const [dropdowns, setDropdowns] = useState({
-        Uidesign: false,
-
-    });
-
-
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -182,6 +176,56 @@ const Designation = () => {
         expectedSalary: '',
         referredPerson: ''
     });
+    const handleFileChange = (event) => {
+        const { name, files } = event.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: files[0] ? files[0].name : ''
+        }));
+    };
+    const [dropdowns, setDropdowns] = useState({
+        department: false
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        // Validate if file input is provided
+        // if (!formData.resume || !formData.coverLetter) {
+        //     alert("Please upload both Resume and Cover Letter");
+        //     return;
+        // }
+
+        console.log("add-applicant Form Data:", formData);
+
+        // Reset form after submission
+        setFormData({
+            fullName: '',
+            email: '',
+            contactNumber: '',
+            jobOpening: '',
+            resume: '',
+            coverLetter: '',
+            country: '',
+            state: '',
+            city: '',
+            zipCode: '',
+            source: '',
+            availabilityDate: '',
+            expectedSalary: '',
+            referredPerson: ''
+        });
+    };
+
+
     const toggleDropdown = (dropdown) => {
         setDropdowns(prevState => ({
             ...prevState,
@@ -189,8 +233,16 @@ const Designation = () => {
         }));
     };
 
-
-
+    const selectOption = (dropdown, value) => {
+        setFormData(prevState => ({
+            ...prevState,
+            [dropdown]: value
+        }));
+        setDropdowns(prevState => ({
+            ...prevState,
+            [dropdown]: false
+        }));
+    };
 
     return (
         <div>
@@ -353,25 +405,38 @@ const Designation = () => {
                                 <div className="add-designation-body">
                                     <form>
                                         <div className="side-by-side">
-                                            <div>
+                                            {/* <div>
                                                 <label style={{ color: "red" }}>Designation Name *</label>
                                                 <input type="text" id="designname" placeholder="Enter designation name" />
+                                            </div> */}
+
+                                            <div className="form-group">
+                                                <label className='starred'>Designation Name*</label>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter designation name "
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
                                             </div>
 
                                             <div className="form-group" id="depart">
                                                 <label>Department</label>
                                                 <div className="dropdown10">
-                                                    <div className="dropdown-button10" onClick={() => toggleDropdown('Uidesign')}>
-                                                        <div className='choose1'>{formData.Uidesign || "Choose department"}</div>
-                                                        <span id='toggle_selectIcon'> {!dropdowns.Uidesign ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                                    <div className="dropdown-button10" onClick={() => toggleDropdown('department')}>
+                                                        <div className='choose1'>{formData.department || "Choose department"}</div>
+                                                        <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                                     </div>
 
-                                                    {dropdowns.Uidesign && (
-                                                        <div className="dropdown-menu10">
-                                                            <div className="dropdown-item10" onClick={() => selectOption('Uidesign', ' ')}></div>
-
-
-                                                        </div>
+                                                    {dropdowns.department && (
+                                                         <div className="dropdown-menu10">
+                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department1')}>Department1</div>
+                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department2')}>Department2</div>
+                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department3')}>Department3</div>
+                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department4')}>Department4</div>
+                                        </div>
                                                     )}
                                                 </div>
                                             </div>
@@ -382,7 +447,7 @@ const Designation = () => {
                                             </div> */}
                                         </div>
                                         <div className='despt'>  <label>Description</label></div>
-                                      
+
                                         <textarea placeholder="Enter description"></textarea>
 
                                         <button type="submit">Submit</button>

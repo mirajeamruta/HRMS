@@ -43,6 +43,7 @@ const Department = () => {
     const [isOpen, setIsOpen] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [selectedDepartmentDetails, setSelectedDepartmentDetails] = useState(null);
+
     console.log(selectedDepartment)
     const navigate = useNavigate();
     const handleHidImport = () => {
@@ -121,9 +122,13 @@ const Department = () => {
     const [showEmploymentType, setShowEmploymentType] = useState(false);
     const [showDepartment, setShowDepartment] = useState(false);
     const [dropdowns, setDropdowns] = useState({
-        department: false
+        department1: false
     });
-
+    const [searchTerm, setSearchTerm] = useState('');
+      
+    const handleSearch = (e) => {
+      setSearchTerm(e.target.value);
+    };
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -147,6 +152,11 @@ const Department = () => {
             [dropdown]: !prevState[dropdown]
         }));
     };
+
+
+
+
+
     const showFilterHandle = () => {
         setShowFilter(!showFilter)
     }
@@ -181,9 +191,21 @@ const Department = () => {
         setSelectedDepartmentDetails(department);
     };
 
-    const DepartmentDetails=()=>{
+    const DepartmentDetails = () => {
         navigate('/departmentdetails');
     }
+
+    const selectOption = (dropdown, value) => {
+        setFormData(prev => ({ ...prev, department1: value }));
+        setSearchTerm(''); // Clear search term on select
+        toggleDropdown(dropdown); // Hide dropdown after selection
+      };
+    
+      const handleSubmit222 = () => {
+        // Your custom logic here
+        console.log("Button clicked!");
+    };
+
     return (
         <div>
             <div className="EmpOn_main_container">
@@ -244,7 +266,7 @@ const Department = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>    
+                        <div className='div_box' onClick={showFilterHandle}>
                             <span><IoFilterSharp /></span>
                         </div>
 
@@ -343,7 +365,7 @@ const Department = () => {
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index}  onClick={() => handleDepartmentClick1(DepartmentDetails)}>
+                                <tr key={index} onClick={() => handleDepartmentClick1(DepartmentDetails)}>
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td>{emp.deptName}</td>
                                     <td>{emp.deptHead}</td>
@@ -367,27 +389,41 @@ const Department = () => {
                                     <form className='upfom'>
                                         <label className='redcolor'>Department Name*</label>
                                         <input type="text" placeholder="Enter Department Name" />
-                                        <label className='blackcolor1'>Department Head</label>
+                                        <label className='blackcolor1'> Parent Department</label>
                                         <input type="text" placeholder="Enter Department Head" />
-                                          <div className="form-group">
-                                <label>parent Department</label>
-                                <div className="dropdown1">
-                                    <div className="dropdown-button1" onClick={() => toggleDropdown('department')}>
-                                        <div className='downbtn'>{formData.department || "Select Department"}</div>
-                                        <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-                                    </div>
 
-                                    {dropdowns.department && (
-                                        <div className="dropdown-menu1">
-                                            <div className="dropdown-item1" onClick={() => selectOption('department', ' ')}>Department1</div>
-                                            <div className="dropdown-item1" onClick={() => selectOption('department', '')}>Department2</div>
-                                          
+                                        <div className="form-group">
+                                            <label>Department Head</label>
+                                            <div className="dropdown1">
+                                                <div className="dropdown-button1" onClick={() => toggleDropdown('department1')}>
+                                                    <div className='downbtn'>{formData.department1 || "Choose or search head"}</div>
+                                                    <span id='toggle_selectIcon'> {!dropdowns.department1 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                                </div>
+
+                                                {dropdowns.department1 && (
+
+                                                    <div className="dropdown-menu1">
+                                                 
+                                                            <input
+                                                                type="text"
+                                                                className='search22'
+                                                                placeholder="Search head of Department"
+                                                                value={searchTerm}
+                                                                onChange={handleSearch}
+                                                                id="handlesearch"
+                                                            />
+                                                 
+                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Akash shinde ')}>Akash shinde</div>
+                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Rajat Munde')}>Rajat Munde</div>
+                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Arman Signh')}>Arman Signh</div>
+                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Rajat Munde')}>Rajat Munde</div>
+                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Arman Signh')}>Arman Signh</div>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
-                                    )}
-                                </div>
-                            </div>
-                                        <div className='popupbtn'>
-                                            <button type="submit">Submit</button>
+                                        <div className='popupbtn' id="popupbtnnnnn"  >
+                                            <button type="submit" onClick={handleSubmit222}>Submit</button>
                                         </div>
 
                                     </form>

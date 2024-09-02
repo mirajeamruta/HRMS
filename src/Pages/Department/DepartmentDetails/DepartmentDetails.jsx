@@ -134,7 +134,7 @@ const DepartmentDetails = () => {
                     </div>
                     </div>
                 </div>
-                <div className="education" id="tableforlist">
+                <div className="prjecttab" id="tableforlist">
                 <div className="section-header">
                     {/* <FaGraduationCap className="icon" /> */}
                     <img src={iconEdu} alt="" className='icon' />
