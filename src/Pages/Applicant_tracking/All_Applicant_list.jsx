@@ -108,13 +108,7 @@ const All_Applicant_list = () => {
     // const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
     // const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
 
-    const handleStatusChange = (index, newStatus) => {
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
-    };
-
+    
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };

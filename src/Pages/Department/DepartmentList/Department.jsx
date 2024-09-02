@@ -13,6 +13,8 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import './Department.scss';
 
 const Department = () => {
@@ -118,7 +120,33 @@ const Department = () => {
     const [showCustomDate, setShowCustomDate] = useState(false);
     const [showEmploymentType, setShowEmploymentType] = useState(false);
     const [showDepartment, setShowDepartment] = useState(false);
+    const [dropdowns, setDropdowns] = useState({
+        department: false
+    });
 
+
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        contactNumber: '',
+        jobOpening: '',
+        resume: '',
+        coverLetter: '',
+        country: '',
+        state: '',
+        city: '',
+        zipCode: '',
+        source: '',
+        availabilityDate: '',
+        expectedSalary: '',
+        referredPerson: ''
+    });
+    const toggleDropdown = (dropdown) => {
+        setDropdowns(prevState => ({
+            ...prevState,
+            [dropdown]: !prevState[dropdown]
+        }));
+    };
     const showFilterHandle = () => {
         setShowFilter(!showFilter)
     }
@@ -192,7 +220,7 @@ const Department = () => {
                     </div>
                 </div>
             </div>
-            <div className="EmpOn_Second_Head">
+            <div className="EmpOn_Second_Head" id="searchlist">
                 <div className="left">
 
                 </div>
@@ -298,7 +326,7 @@ const Department = () => {
                 </div>
             </div>
             {/* All Employee  List*/}
-            <div className="allEmployeeList">
+            <div className="allEmployeeList" id="departmentlist">
                 {/* <div className="head">
                 </div> */}
                 <div className="employee-table">
@@ -341,13 +369,23 @@ const Department = () => {
                                         <input type="text" placeholder="Enter Department Name" />
                                         <label className='blackcolor1'>Department Head</label>
                                         <input type="text" placeholder="Enter Department Head" />
-                                        <label className='blackcolor2'>Parent Department</label>
-                                        <select>
-                                            <option value="">Choose or search head</option>
-                                            <option value="department1">Department 1</option>
-                                            <option value="department2">Department 2</option>
-                                        
-                                        </select>
+                                          <div className="form-group">
+                                <label>parent Department</label>
+                                <div className="dropdown1">
+                                    <div className="dropdown-button1" onClick={() => toggleDropdown('department')}>
+                                        <div className='downbtn'>{formData.department || "Select Department"}</div>
+                                        <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    </div>
+
+                                    {dropdowns.department && (
+                                        <div className="dropdown-menu1">
+                                            <div className="dropdown-item1" onClick={() => selectOption('department', ' ')}>Department1</div>
+                                            <div className="dropdown-item1" onClick={() => selectOption('department', '')}>Department2</div>
+                                          
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                                         <div className='popupbtn'>
                                             <button type="submit">Submit</button>
                                         </div>

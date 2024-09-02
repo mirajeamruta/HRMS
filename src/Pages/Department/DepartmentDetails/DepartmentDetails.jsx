@@ -3,14 +3,18 @@ import './DepartmentDetails.scss';
 // import Experience from '../../Employee onboarding/EmployeeDetail/Experience.jsx';
 // import Education from '../../Employee onboarding/EmployeeDetail/Education.jsx';
 // import Documents from '../../Employee onboarding/EmployeeDetail/Documents.jsx';
+// import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 // import Img_user from '../../../assets/user.png'
 import { MdWorkHistory } from "react-icons/md";
 import { RxReload } from "react-icons/rx";
 import { BiEditAlt } from "react-icons/bi";
 import img_emp1 from '../../../assets/emp1.png';
+import { CiCircleChevRight } from "react-icons/ci";
+import { TfiClose } from "react-icons/tfi";
 import { MdDeleteOutline } from "react-icons/md";
 import iconEdu from '../../../assets/icons/edu.png'
+import { useNavigate } from 'react-router-dom';
 const DepartmentDetails = () => {
     const [employees, setEmployees] = useState([
         { name: "Akash Shinde", Roll: "UI/UX Designer", email: "Akashhrms@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2024-08-12' },
@@ -24,12 +28,23 @@ const DepartmentDetails = () => {
     ]);
     const [activeTab, setActiveTab] = useState('experience');
     const getTopNewEmployees = employees.slice(0, 4);
+
+
+    const navigate = useNavigate();
+
+    const handleCloseButton1 = () => {
+        // Handle the close button click
+        navigate(-1); // Go back to the previous page
+    }
+
+
     return (
         <div className="profile-page">
             <div className="details">
                 <div className="title_top">
                     <h2>Department Details</h2>
-                    <div className='close_btn'><IoMdCloseCircleOutline /></div>
+                    <div className='close_btn'onClick={handleCloseButton1}>
+                        <IoMdCloseCircleOutline /></div>
                 </div>
                 <div className="profile_card">
                     <div className="img_card">
@@ -49,7 +64,7 @@ const DepartmentDetails = () => {
                     </div>
                 </div>
                 <div className="info-cards">
-                    <div className="card">
+                    <div className="card" id="departmentcard">
                         <div className='top_head'> <h3> <span><MdWorkHistory /></span>Department Information</h3></div>
                         <div className='contentInformation'>
                             <div>
@@ -95,19 +110,19 @@ const DepartmentDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="card">
+                    <div className="card" id="emplooo">
                         <div className='top_head'> <h3> <span><MdWorkHistory /></span>Employees in Department</h3></div>
                         <div className="card">
                        
-                        <div className='contentInformation'>
+                        <div className='contentInformation' id="infoooo">
                             <div className="Emp22">
                                 {getTopNewEmployees.map((emp, i) => (
                                     <div key={i} className='div_dob22'>
                                         <div className='img_dob_name22'>
                                             <img src={emp.Image} alt={emp.name} />
-                                            <div>
+                                            <div className='totaldata'>
                                                 <h3 className='empname22'>{emp.name}</h3>
-                                                <p className='emproll22'> {emp.Roll}</p>
+                                                <p className='emproll22' id='dateofemppo'> {emp.Roll}</p>
                                             </div>
                                         </div>
                                         <p>{emp.phone}</p>
@@ -119,7 +134,7 @@ const DepartmentDetails = () => {
                     </div>
                     </div>
                 </div>
-                <div className="education">
+                <div className="education" id="tableforlist">
                 <div className="section-header">
                     {/* <FaGraduationCap className="icon" /> */}
                     <img src={iconEdu} alt="" className='icon' />

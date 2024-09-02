@@ -875,6 +875,11 @@
       justify-content: center;
       margin-bottom: -13px;
   }
+  #birthhead {
+    position: relative;
+    top: -22px !important;
+    left: 15px !important;
+}
 }
 
 
@@ -1006,4 +1011,10 @@ select {
   background-color: #fff;
   color: #838080;
   background: whitesmoke;
+}
+
+
+#bdaytab {
+  position: relative;
+  top: -22px;
 }

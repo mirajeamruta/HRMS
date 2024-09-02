@@ -875,6 +875,11 @@
       justify-content: center;
       margin-bottom: -13px;
   }
+  #headlist {
+    position: relative;
+    left: 17px !important;
+    top: -19px !important;
+}
 }
 
 
@@ -1006,4 +1011,9 @@ select {
   // background-color: #fff;
   color: #838080;
   // background: whitesmoke;
+}
+
+#emplhealthlist {
+  top: -22px;
+  position: relative;
 }

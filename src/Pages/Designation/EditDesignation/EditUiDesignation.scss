@@ -26,7 +26,14 @@
     margin: 0;
     color: #333;
   }
+
   
+  // .close_btn {
+  //   font-size: 1.7rem !important;
+  //   cursor: pointer;
+  // }
+
+
   // .close_btn {
   //   font-size: 24px;
   //   color: blck;
@@ -397,3 +404,10 @@
     }
   }
   
+
+  .close_btn1{
+    font-size: 27px;
+    cursor: pointer;
+    position: relative;
+    left: 179px;
+  }

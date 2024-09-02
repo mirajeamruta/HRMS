@@ -21,29 +21,67 @@ import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
-
-
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+import { useNavigate } from 'react-router-dom';
+
+const EditUiDesignation = () => {
+    const [activeTab, setActiveTab] = useState('experience');
+    const [hidImport, setHidImport] = useState(true);
+
 const handleHidImport = () => {
     setHidImport(!hidImport);
 };
 
+const navigate = useNavigate();
 
 
+const handleCloseButton00 = () => {
+    // Handle the close button click
+    navigate(-1); // Go back to the previous page
+}
 
 const AddEmployee=()=>{
     navigate('/add-employee');
 }
 
-const EditUiDesignation = () => {
-    const [activeTab, setActiveTab] = useState('experience');
-    const [hidImport, setHidImport] = useState(true);
+const [showFilter, setShowFilter] = useState(false);
+const [showCustomDate, setShowCustomDate] = useState(false);
+const [showEmploymentType, setShowEmploymentType] = useState(false);
+const [showDepartment, setShowDepartment] = useState(false);
+const [dropdowns, setDropdowns] = useState({
+    Uidesign: false,
+
+});
+
+
+const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    contactNumber: '',
+    jobOpening: '',
+    resume: '',
+    coverLetter: '',
+    country: '',
+    state: '',
+    city: '',
+    zipCode: '',
+    source: '',
+    availabilityDate: '',
+    expectedSalary: '',
+    referredPerson: ''
+});
+const toggleDropdown = (dropdown) => {
+    setDropdowns(prevState => ({
+        ...prevState,
+        [dropdown]: !prevState[dropdown]
+    }));
+};
+
     return (
 <div>
 <div className="EmpOn_main_container">
@@ -64,7 +102,7 @@ const EditUiDesignation = () => {
                                         <input type="file" accept='image/*' />
                                     </div>
                                 </div> */}
-                                 <div className='close_btn'>
+                                 <div className='close_btn1' onClick={handleCloseButton00}>
                         <IoMdCloseCircleOutline />
                     </div>
                             </div>
@@ -102,18 +140,53 @@ const EditUiDesignation = () => {
                                     placeholder="UI Designer"
                                 />
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label htmlFor="department">Department</label>
                                 <select id="department">
                                     <option>UI/UX Design</option>
                                 </select>
+                            </div> */}
+                                  <div className="form-group">
+                                <label>Department</label>
+                                <div className="dropdown1">
+                                    <div className="dropdown-button1" onClick={() => toggleDropdown('Uidesign')}>
+                                        <div>{formData.Uidesign || "Select UI/UX Design"}</div>
+                                        <span id='toggle_selectIcon'> {!dropdowns.Uidesign ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    </div>
+
+                                    {dropdowns.Uidesign && (
+                                        <div className="dropdown-menu1">
+                                            <div className="dropdown-item1" onClick={() => selectOption('Uidesign', ' ')}>UI/UX Design</div>
+                                       
+                                          
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
                             <div className="form-group">
+                                <label>Job Level</label>
+                                <div className="dropdown1">
+                                    <div className="dropdown-button1" onClick={() => toggleDropdown('joblevel')}>
+                                        <div>{formData.joblevel || "Entry Level"}</div>
+                                        <span id='toggle_selectIcon'> {!dropdowns.joblevel ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    </div>
+
+                                    {dropdowns.joblevel && (
+                                        <div className="dropdown-menu1">
+                                            <div className="dropdown-item1" onClick={() => selectOption('joblevel', ' ')}>Entry Level</div>
+                                            {/* <div className="dropdown-item1" onClick={() => selectOption('joblevel', '')}>Entry Level</div> */}
+                                          
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            {/* <div className="form-group">
                                 <label htmlFor="job-level">Job Level</label>
                                 <select id="job-level">
                                     <option>Entry Level</option>
                                 </select>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="form-row">
