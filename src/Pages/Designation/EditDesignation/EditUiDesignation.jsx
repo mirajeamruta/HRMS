@@ -175,8 +175,8 @@ const toggleDropdown = (dropdown) => {
                                     {dropdowns.joblevel && (
                                         <div className="dropdown-menu1">
                                             <div className="dropdown-item1" onClick={() => selectOption('joblevel', ' ')}>Entry Level</div>
-                                            {/* <div className="dropdown-item1" onClick={() => selectOption('joblevel', '')}>Entry Level</div> */}
-                                          
+                                            <div className="dropdown-item1" onClick={() => selectOption('joblevel', 'Entry Level1')}>Entry Level1</div>
+                                            <div className="dropdown-item1" onClick={() => selectOption('joblevel', 'Entry Level2')}>Entry Level2</div>
                                         </div>
                                     )}
                                 </div>
