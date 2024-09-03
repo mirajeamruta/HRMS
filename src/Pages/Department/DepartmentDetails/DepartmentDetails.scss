@@ -850,3 +850,42 @@ opacity: 0px;
 //   font-size: 14px;
 //   color: #666;
 // }
+
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #320b57; /* Button background color */
+  color: #fff; /* Button text color */
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px; /* Space between text and icon */
+}
+
+.submit-button img {
+  width: 13px; /* Adjust size according to your design */
+  height: 13px;
+}
+
+.submit-button:hover {
+  background-color: #4c2b75; /* Hover background color */
+}
+
+
+span.icon66 {
+  position: relative;
+  left: -73px;
+  top: -38px;
+  color: white;
+}
