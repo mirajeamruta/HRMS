@@ -17,14 +17,11 @@ import iconEdu from '../../../assets/icons/edu.png'
 import { useNavigate } from 'react-router-dom';
 const DepartmentDetails = () => {
     const [employees, setEmployees] = useState([
-        { name: "Akash Shinde", Roll: "UI/UX Designer", email: "Akashhrms@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2024-08-12' },
-        { name: "Ravi Kumar", Roll: "UI/UX Designer", email: "ravikumar@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2023-07-11' },
-        { name: "Sita Sharma", Roll: "UI/UX Designer", email: "sitasharma@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2024-08-12' },
-        { name: "Mohan Verma", Roll: "UI/UX Designer", email: "mohanverma@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2024-06-15' },
-        { name: "New Employee 1", Roll: "UI/UX Designer", email: "newemp1@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2024-08-10' },
-        { name: "New Employee 2", Roll: "UI/UX Designer", email: "newemp2@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2024-08-12' },
-        { name: "New Employee 3", Roll: "UI/UX Designer", email: "newemp3@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2024-08-18' },
-        { name: "New Employee 4", Roll: "UI/UX Designer", email: "newemp4@gmail.com", phone: "12-Jan-2024", Image: img_emp1, DOB: '2024-08-13' },
+        { name: "Akash Shinde", Roll: "Lead Design",  phone: "9876896754", Image: img_emp1, },
+        { name: "Ravi Kumar", Roll: "Senior UI/UX Designer",  phone: "9876896754", Image: img_emp1,  },
+        { name: "Sita Sharma", Roll: "UX Writer",  phone: "9876896754", Image: img_emp1, },
+        { name: "Mohan Verma", Roll: "Visual Designer",  phone: "9876896754", Image: img_emp1,  },
+      
     ]);
     const [activeTab, setActiveTab] = useState('experience');
     const getTopNewEmployees = employees.slice(0, 4);
@@ -144,16 +141,24 @@ const DepartmentDetails = () => {
                             <div id='DescriptionJOB'>
                                 <h4>Description</h4>
                                 <p className='paragra'>Lorem ipsum dolor sit amet consectetur. Ultrices nunc at sollicitudin leo nunc 
+                                Lorem ipsum dolor sit amet consectetur.  
                                    </p>
                             </div>
                         </div>
+                        {/* <div className='empcont'>
+                        <input 
+                        type="text" 
+                        placeholder="Employee Contact" 
+                        id="tagbox"
+                    />
+                    </div> */}
                     </div>
                     <div className="card" id="imagecard">
                         <div className='top_head'> <h3> <span><MdWorkHistory /></span>Employees in Department</h3></div>
 
 
                         <div className='contentInformation' id="infoooo">
-                            <div className="Emp22">
+                            <div className="Emp22" id="depart999">
                                 {getTopNewEmployees.map((emp, i) => (
                                     <div key={i} className='div_dob22'>
                                         <div className='img_dob_name22'>
@@ -163,12 +168,17 @@ const DepartmentDetails = () => {
                                                 <p className='emproll22' id='dateofemppo'> {emp.Roll}</p>
                                             </div>
                                         </div>
-                                        <p>{emp.phone}</p>
+                                        <p style={{color:"gray"}}>{emp.phone}</p>
                                     </div>
                                 ))}
                             </div>
 
                         </div>
+                    </div>
+                    
+
+                    <div>
+                   
                     </div>
                     {/* Personal information content */}
 

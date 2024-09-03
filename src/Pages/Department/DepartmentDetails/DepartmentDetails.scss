@@ -267,7 +267,7 @@
             div {
               .empname22 {
                     margin: 0;
-                    font-size: 16px;
+                    font-size: 14px;
                 }
 
                 .emproll22 {
@@ -359,15 +359,28 @@
             align-items: center;
             margin-bottom: 1rem;
             border-bottom: 1px solid rgba(153, 146, 146, 0.569);
-            padding-bottom: 10px;
+            padding-bottom: 9px;
+            background: #f6f6f6;
+            width: 103%;
+            height: 37px;
+            position: relative;
+            top: -15px;
+            left: -20px;
+            border-radius: 7px;
+        
   
             .icon {
               margin-right: 0.5rem;
+              position: relative;
+    left: 19px;
             }
   
             h2 {
-              font-size: 16px;
+              font-size: 14px;
               font-weight: bold;
+              left: 17px;
+              position: relative;
+          
             }
           }
   
@@ -382,7 +395,7 @@
             border-right: 1px dashed #ddd; // Apply dashed border to left
             border-top: 1px solid rgba(219, 209, 209, 0.755); // Optional border
             thead {
-              background-color: #e0d4e373; // Fixed header background color
+              background-color: rgb(241 241 241 / 45%); // Fixed header background color
   
               tr {
                 th {
@@ -641,15 +654,15 @@
 // }
 
 
-#imagecard{
-  width: 474px;
-    height: 366px;
+// #imagecard{
+//   width: 474px;
+//     height: 366px;
 
-}
+// }
 
 #DepINfo{
-  width: 872px;
-  height: 366px;
+  width: 787px;
+    height: 400px;
 top: 214px;
 left: 41px;
 gap: 0px;
@@ -658,3 +671,79 @@ border: 1.01px 0px 0px 0px;
 opacity: 0px;
 
 }
+
+.prjecttab {
+  width: 93%;
+  border: 1px solid rgba(153, 146, 146, 0.569);
+  margin-top: -15px;
+  border-radius: 10px;
+  padding: 15px 20px;
+  position: relative;
+  left: 28px;
+}
+
+#depart999 {
+  position: relative;
+  left: -67px;
+}
+
+#imagecard {
+  left: -53px;
+  position: relative;
+  width: 414px;
+  height: 398px;
+
+}
+
+#dateofemppo {
+  color: #b5b5b5;
+  font-size: 13px;
+}
+
+#DescriptionJOB .paragra {
+  width: 193%; /* Adjust this percentage to control the line break */
+  white-space: normal; /* Allows the text to wrap to the next line */
+} 
+
+@media (max-width: 1200px) {
+
+  #imagecard {
+    left: -1px !important;
+    position: relative;
+   
+  }
+}
+
+
+
+// .empcount{
+//   position: relative;
+//     top: -23%;
+//     left: 156%;
+//     width: 120px;
+// color: white;
+// }
+
+// #tagbox {
+//   width: 132px;
+//   height: 29px;
+
+//   top: -105px;
+//   left: 1224px;
+//   position: relative;
+//   gap: 0px;
+//   opacity: 0px;
+//   border: 1px;
+//   // color: white;
+//   border-radius: 617px 34px 12px 702px;
+//   background: #5b067feb;
+//   border-bottom-right-radius: -16px;
+//   border-bottom-left-radius: 170px;
+
+//   border-top-left-radius: 159px;
+//   padding-top: 3px;
+//   padding-right: -39px;
+//   padding-bottom: 2px;
+//   padding-left: 7px;
+
+// }
