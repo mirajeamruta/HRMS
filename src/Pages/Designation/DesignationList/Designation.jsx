@@ -14,6 +14,7 @@ import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { BiChevronRightCircle } from "react-icons/bi";
 import './Designation.scss';
 
 const Designation = () => {
@@ -451,6 +452,9 @@ const Designation = () => {
                                         <textarea placeholder="Enter description"></textarea>
 
                                         <button type="submit">Submit</button>
+                                        <span class="icon99">
+                                            <BiChevronRightCircle />
+                                            </span>
                                     </form>
                                 </div>
                             </div>

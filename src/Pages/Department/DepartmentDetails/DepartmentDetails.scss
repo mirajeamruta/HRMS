@@ -49,7 +49,7 @@
               font-weight: 600;
             }
             p {
-              color: #2a2a2a;
+              color: #b4aaaa;
               margin-bottom: 5px;
             }
             div {
@@ -661,7 +661,7 @@
 // }
 
 #DepINfo{
-  width: 787px;
+  width: 875px;
     height: 400px;
 top: 214px;
 left: 41px;
@@ -673,7 +673,7 @@ opacity: 0px;
 }
 
 .prjecttab {
-  width: 93%;
+  width: 91%;
   border: 1px solid rgba(153, 146, 146, 0.569);
   margin-top: -15px;
   border-radius: 10px;
@@ -688,9 +688,9 @@ opacity: 0px;
 }
 
 #imagecard {
-  left: -53px;
+  left: -6px;
   position: relative;
-  width: 414px;
+  width: 444px;
   height: 398px;
 
 }
@@ -712,38 +712,180 @@ opacity: 0px;
     position: relative;
    
   }
+  #DepINfo {
+    width: 792px;
+  }
 }
 
 
 
-// .empcount{
+
+.div_dob22 {
+  position: relative;
+  padding: 15px;
+  // border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  .hover-input {
+      display: none;
+      width: 133px; /* Adjust width as needed */
+      padding: 8px;
+      border: 1px solid #ddd;
+      position: absolute;
+      color: white;
+      font-size: 13px;
+      background-color: #320b57;
+      top: 4px; /* Adjust positioning */
+      left: 321px;
+
+      /* Border Radius for Cross-like Design */
+      border-top-left-radius: 78px;
+      border-top-right-radius: 9px;
+      border-bottom-left-radius: 92px;
+      border-bottom-right-radius: 7px;
+
+      /* Box Shadow for Better Visual Effect */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 10;
+  }
+
+  &:hover {
+      // background-color: #f9f9f9;
+
+      .hover-input {
+          display: block;
+      }
+  }
+}
+
+.img_dob_name22 {
+  display: flex;
+  align-items: center;
+}
+
+.img_dob_name22 img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.totaldata {
+  flex-grow: 1;
+}
+
+.empname22 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.emproll22 {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+
+
+// .div_dob22 {
 //   position: relative;
-//     top: -23%;
-//     left: 156%;
-//     width: 120px;
-// color: white;
+//   padding: 15px;
+//   // border: 1px solid #ccc;
+//   border-radius: 8px;
+//   transition: all 0.3s ease;
+//   cursor: pointer;
+
+//   .hover-input {
+//       display: none;
+//       width: 100%;
+//       margin-top: 10px;
+//       padding: 8px;
+//       border: 1px solid #ddd;
+//       border-radius: 4px;
+//       position: relative;
+//       color: white;
+//       font-size: 13px;
+//       border-top-left-radius: 27px;
+//     border-top-right-radius: 9px;
+//     border-bottom-left-radius: 25px;
+//     border-bottom-right-radius: 7px;
+//     left: 115px;
+//     background-color: #320b57;
+//   }
+
+//   &:hover {
+//       // background-color: #f9f9f9;
+
+//       .hover-input {
+//           display: block;
+//       }
+//   }
 // }
 
-// #tagbox {
-//   width: 132px;
-//   height: 29px;
-
-//   top: -105px;
-//   left: 1224px;
-//   position: relative;
-//   gap: 0px;
-//   opacity: 0px;
-//   border: 1px;
-//   // color: white;
-//   border-radius: 617px 34px 12px 702px;
-//   background: #5b067feb;
-//   border-bottom-right-radius: -16px;
-//   border-bottom-left-radius: 170px;
-
-//   border-top-left-radius: 159px;
-//   padding-top: 3px;
-//   padding-right: -39px;
-//   padding-bottom: 2px;
-//   padding-left: 7px;
-
+// .img_dob_name22 {
+//   display: flex;
+//   align-items: center;
 // }
+
+// .img_dob_name22 img {
+//   width: 50px;
+//   height: 50px;
+//   border-radius: 50%;
+//   margin-right: 15px;
+// }
+
+// .totaldata {
+//   flex-grow: 1;
+// }
+
+// .empname22 {
+//   margin: 0;
+//   font-size: 16px;
+// }
+
+// .emproll22 {
+//   margin: 0;
+//   font-size: 14px;
+//   color: #666;
+// }
+
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #320b57; /* Button background color */
+  color: #fff; /* Button text color */
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px; /* Space between text and icon */
+}
+
+.submit-button img {
+  width: 13px; /* Adjust size according to your design */
+  height: 13px;
+}
+
+.submit-button:hover {
+  background-color: #4c2b75; /* Hover background color */
+}
+
+
+span.icon66 {
+  position: relative;
+  left: -73px;
+  top: -38px;
+  color: white;
+}

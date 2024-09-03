@@ -15,6 +15,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import { BiChevronRightCircle } from "react-icons/bi";
 import './Department.scss';
 
 const Department = () => {
@@ -125,9 +126,9 @@ const Department = () => {
         department1: false
     });
     const [searchTerm, setSearchTerm] = useState('');
-      
+
     const handleSearch = (e) => {
-      setSearchTerm(e.target.value);
+        setSearchTerm(e.target.value);
     };
 
     const [formData, setFormData] = useState({
@@ -199,9 +200,9 @@ const Department = () => {
         setFormData(prev => ({ ...prev, department1: value }));
         setSearchTerm(''); // Clear search term on select
         toggleDropdown(dropdown); // Hide dropdown after selection
-      };
-    
-      const handleSubmit222 = () => {
+    };
+
+    const handleSubmit222 = () => {
         // Your custom logic here
         console.log("Button clicked!");
     };
@@ -403,16 +404,16 @@ const Department = () => {
                                                 {dropdowns.department1 && (
 
                                                     <div className="dropdown-menu1">
-                                                 
-                                                            <input
-                                                                type="text"
-                                                                className='search22'
-                                                                placeholder="Search head of Department"
-                                                                value={searchTerm}
-                                                                onChange={handleSearch}
-                                                                id="handlesearch"
-                                                            />
-                                                 
+
+                                                        <input
+                                                            type="text"
+                                                            className='search22'
+                                                            placeholder="Search head of Department"
+                                                            value={searchTerm}
+                                                            onChange={handleSearch}
+                                                            id="handlesearch"
+                                                        />
+
                                                         <div className="dropdown-item1" onClick={() => selectOption('department1', 'Akash shinde ')}>Akash shinde</div>
                                                         <div className="dropdown-item1" onClick={() => selectOption('department1', 'Rajat Munde')}>Rajat Munde</div>
                                                         <div className="dropdown-item1" onClick={() => selectOption('department1', 'Arman Signh')}>Arman Signh</div>
@@ -424,6 +425,9 @@ const Department = () => {
                                         </div>
                                         <div className='popupbtn' id="popupbtnnnnn"  >
                                             <button type="submit" onClick={handleSubmit222}>Submit</button>
+                                            <span class="icon66">
+                                            <BiChevronRightCircle />
+                                            </span>
                                         </div>
 
                                     </form>
