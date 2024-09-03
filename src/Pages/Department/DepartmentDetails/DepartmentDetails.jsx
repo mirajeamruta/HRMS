@@ -50,7 +50,7 @@ const DepartmentDetails = () => {
                         </div>
                         <div className="about_user">
                             <h3>UI/UX Designer</h3>
-                            <p>UI/UX Designer</p>
+                            <p style={{color:"#b8b8b8"}}>UI/UX Designer</p>
 
                         </div>
                     </div>
