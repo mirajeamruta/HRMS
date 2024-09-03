@@ -169,6 +169,7 @@ const DepartmentDetails = () => {
                                             </div>
                                         </div>
                                         <p style={{color:"gray"}}>{emp.phone}</p>
+                                        <input type="text" className="hover-input" placeholder="Employee Contact" />
                                     </div>
                                 ))}
                             </div>
