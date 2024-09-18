@@ -6,11 +6,22 @@ import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-
+// import { OutsideClick } from '../../../components/OutSideClick';
+import { OutsideClick } from './OutsideClick.jsx'
 const BasicDetailsForm = ({ onSubmit }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
     const [inconSelect, setInconSelect] = useState(false)
+    const { isOpen: isGenderOpen, ref: genderRef, buttonRef: genderButtonRef, handleToggle: toggleGender, setIsOpen: setGenderOpen } = OutsideClick();
+    const { isOpen: isReportingManagerOpen, ref: ReportingManagerRef, buttonRef: ReportingManagerButtonRef, handleToggle: toggleReportingManager, setIsOpen: setReportingManagerOpen } = OutsideClick();
+    const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick();
+    const { isOpen: isDesignationOpen, ref: designationRef, buttonRef: designationButtonRef, handleToggle: toggleDesignation, setIsOpen: setDesignationOpen } = OutsideClick();
+    const { isOpen: isMaritalStatusOpen, ref: maritalStatusRef, buttonRef: maritalStatusButtonRef, handleToggle: toggleMaritalStatus, setIsOpen: setMaritalStatusOpen } = OutsideClick();
+    const { isOpen: isEmploymentTypeOpen, ref: employmentTypeRef, buttonRef: employmentTypeButtonRef, handleToggle: toggleEmploymentType, setIsOpen: setEmploymentTypeOpen } = OutsideClick();
+    const { isOpen: isEmployeeStatusOpen, ref: employeeStatusRef, buttonRef: employeeStatusButtonRef, handleToggle: toggleEmployeeStatus, setIsOpen: setEmployeeStatusOpen } = OutsideClick();
+    const { isOpen: isSourceOfHireOpen, ref: sourceOfHireRef, buttonRef: sourceOfHireButtonRef, handleToggle: toggleSourceOfHire, setIsOpen: setSourceOfHireOpen } = OutsideClick();
+
+
 
     const [formData, setFormData] = useState({
         employeeId: '',
@@ -32,6 +43,10 @@ const BasicDetailsForm = ({ onSubmit }) => {
         employeeStatus: '',
         sourceOfHire: ''
     });
+    const [searchQuery_2, setSearchQuery_2] = useState('');
+    const handleSearchQueryChange_2 = (event) => {
+        setSearchQuery_2(event.target.value);
+    };
 
     const [dropdowns, setDropdowns] = useState({
         gender: false,
@@ -94,6 +109,17 @@ const BasicDetailsForm = ({ onSubmit }) => {
             ...prevState,
             [dropdown]: !prevState[dropdown]
         }));
+        setDropdowns({
+            gender: false,
+            reportingManager: false,
+            department: false,
+            designation: false,
+            maritalStatus: false,
+            employmentType: false,
+            employeeStatus: false,
+            sourceOfHire: false,
+            [dropdown]: !dropdowns[dropdown]
+        });
     };
 
     const selectOption = (dropdown, value) => {
@@ -105,7 +131,47 @@ const BasicDetailsForm = ({ onSubmit }) => {
             ...prevState,
             [dropdown]: false
         }));
+        setGenderOpen(false); // Option select hone ke baad dropdown close hoga
+        setReportingManagerOpen(false)
+        setDepartmentOpen(false)
+        setDesignationOpen(false)
+        setMaritalStatusOpen(false)
+        setEmployeeStatusOpen(false)
+        setSourceOfHireOpen(false)
+        setEmploymentTypeOpen(false)
     };
+
+    //
+    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
+    const [searchQueryDesignation, setSearchQueryDesignation] = useState('');
+    const [searchQueryReportingManager, setSearchQueryReportingManager] = useState('');
+    const [searchQuerySourceOfHire, setSearchQuerySourceOfHire] = useState('');
+    const [searchQueryEmploymentType, setSearchQueryEmploymentType] = useState('');
+    const [searchQueryEmployeeStatus, setSearchQueryEmployeeStatus] = useState('');
+
+
+    const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
+    const handleSearchQueryChangeDesignation = (e) => setSearchQueryDesignation(e.target.value);
+    const handleSearchQueryChangeReportingManager = (e) => setSearchQueryReportingManager(e.target.value);
+    const handleSearchQueryChangeSourceOfHire = (e) => setSearchQuerySourceOfHire(e.target.value);
+    const handleSearchQueryChangeEmploymentType = (e) => setSearchQueryEmploymentType(e.target.value);
+    const handleSearchQueryChangeEmployeeStatus = (e) => setSearchQueryEmployeeStatus(e.target.value);
+
+    const employmentTypeOptions = [
+     'Permanent', 'On Contract', 'Intern', 'Trainee'
+    ];
+
+    const employeeStatusOptions = [
+        'Active', 'Terminated', 'Resigned', 'Probation', 'Notice Period'
+    ];
+    const filteredEmploymentTypeOptions = employmentTypeOptions.filter(option =>
+        option.toLowerCase().includes(searchQueryEmploymentType.toLowerCase())
+    );
+
+    const filteredEmployeeStatusOptions = employeeStatusOptions.filter(option =>
+        option.toLowerCase().includes(searchQueryEmployeeStatus.toLowerCase())
+    );
+    // 
 
 
     return (
@@ -114,15 +180,21 @@ const BasicDetailsForm = ({ onSubmit }) => {
                 <form onSubmit={handleSubmit}>
                     <div className="from1">
                         <div className="form-group">
-                            <label>Employee ID</label>
-                            <input
-                                type="text"
-                                placeholder="Enter employee id"
-                                name="employeeId"
-                                value={formData.employeeId}
-                                onChange={handleChange}
-                                required
-                            />
+                            <label>Upload Profile Picture</label>
+                            <div className="file-upload">
+                                <input
+                                    type="file"
+                                    name='photo'
+                                    accept="image/*"
+                                    id="file"
+                                    onChange={handleFileChange}
+                                    required
+                                />
+                                <label htmlFor="file" className="custom-file-upload">
+                                    {!isUploaded && <GrCloudUpload size={20} />}
+                                    <span>{isUploaded ? fileName : 'Profile Picture'}</span>
+                                </label>
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>First Name</label>
@@ -171,13 +243,13 @@ const BasicDetailsForm = ({ onSubmit }) => {
                         <div className="form-group">
                             <label>Gender</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('gender')}>
-                                    <div>{formData.gender || "Select gender"}  </div> 
-                                    <span id='toggle_selectIcon'> {!dropdowns.gender ? <IoIosArrowDown /> : <IoIosArrowUp /> } </span>
+                                <div className="dropdown-button" ref={genderButtonRef} onClick={toggleGender}>
+                                    <div>{formData.gender || "Select gender"}</div>
+                                    <span id='toggle_selectIcon'>{!isGenderOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
                                 </div>
-                                
-                                {dropdowns.gender && (
-                                    <div className="dropdown-menu">
+
+                                {isGenderOpen && (
+                                    <div className="dropdown-menu" ref={genderRef}>
                                         <div className="dropdown-item" onClick={() => selectOption('gender', 'Male')}>Male</div>
                                         <div className="dropdown-item" onClick={() => selectOption('gender', 'Female')}>Female</div>
                                         <div className="dropdown-item" onClick={() => selectOption('gender', 'Other')}>Other</div>
@@ -211,59 +283,104 @@ const BasicDetailsForm = ({ onSubmit }) => {
                         <div className="form-group">
                             <label>Reporting Manager</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('reportingManager')}>
+                                {/* Dropdown button par `OutsideClick` ke `buttonRef` aur toggle function ka use */}
+                                <div className="dropdown-button" ref={ReportingManagerButtonRef} onClick={toggleReportingManager}>
                                     <div>{formData.reportingManager || "Select manager"} </div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.reportingManager ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    <span id='toggle_selectIcon'> {!isReportingManagerOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                 </div>
-                                {dropdowns.reportingManager && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('reportingManager', 'Johan Smith')}>Johan Smith</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('reportingManager', 'Ram Jain')}>Ram Jain</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('reportingManager', 'Yas Pall')}>Yas Pall</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('reportingManager', 'Deepak Ji')}>Deepak Ji</div>
+
+                                {/* Dropdown menu */}
+                                {isReportingManagerOpen && (
+                                    <div className="dropdown-menu" ref={ReportingManagerRef}>
+                                        <input
+                                            type="search"
+                                            className='search22'
+                                            placeholder="Search manager"
+                                            value={searchQueryReportingManager}
+                                            id='searchDepartmentHead'
+                                            onChange={handleSearchQueryChangeReportingManager}
+                                        />
+                                        <div className="dropdown_I">
+                                            {['Johan Smith', 'Ram Jain', 'Yas Pall', 'Deepak Ji']
+                                                .filter(option => option.toLowerCase().includes(searchQueryReportingManager.toLowerCase()))
+                                                .map(option => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('reportingManager', option)} key={option}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
                         </div>
                     </div>
 
+
                     <div className="from1 form2">
                         {/* Department Dropdown */}
                         <div className="form-group">
                             <label>Department</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
                                     <div>{formData.department || "Select department"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-
+                                    <span id='toggle_selectIcon'> {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                 </div>
-                                {dropdowns.department && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Management')}>Management</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Development')}>Development</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('department', 'HR')}>HR</div>
+                                {isDepartmentOpen && (
+                                    <div className="dropdown-menu" ref={departmentRef}>
+                                        <input
+                                            type="search"
+                                            className='search22'
+                                            placeholder="Search department"
+                                            value={searchQueryDepartment}
+                                            id='searchDepartmentHead'
+                                            onChange={handleSearchQueryChangeDepartment}
+                                        />
+                                        <div className="dropdown_I">
+                                            {['Management', 'Development', 'HR'].filter(option =>
+                                                option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
+                                            ).map(option => (
+                                                <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>
+                                                    {option}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
                         </div>
+
                         {/* Designation Dropdown */}
                         <div className="form-group">
                             <label>Designation</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('designation')}>
+                                <div className="dropdown-button" ref={designationButtonRef} onClick={toggleDesignation}>
                                     <div>{formData.designation || "Select designation"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.designation ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-
+                                    <span id='toggle_selectIcon'> {!isDesignationOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                 </div>
-                                {dropdowns.designation && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Administration')}>Administration</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Developer')}>Developer</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Manager')}>Manager</div>
+                                {isDesignationOpen && (
+                                    <div className="dropdown-menu" ref={designationRef}>
+                                        <input
+                                            type="search"
+                                            className='search22'
+                                            placeholder="Search designation"
+                                            value={searchQueryDesignation}
+                                            id='searchDepartmentHead'
+                                            onChange={handleSearchQueryChangeDesignation}
+                                        />
+                                        <div className="dropdown_I">
+                                            {['Administration', 'Developer', 'Manager'].filter(option =>
+                                                option.toLowerCase().includes(searchQueryDesignation.toLowerCase())
+                                            ).map(option => (
+                                                <div className="dropdown-item" onClick={() => selectOption('designation', option)} key={option}>
+                                                    {option}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
                         </div>
+
                         <div className="form-group">
                             <label>Date of Joining</label>
                             <input
@@ -274,34 +391,28 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
-                            <label>Upload Profile Picture</label>
-                            <div className="file-upload">
-                                <input
-                                    type="file"
-                                    name='photo'
-                                    accept="image/*"
-                                    id="file"
-                                    onChange={handleFileChange}
-                                    required
-                                />
-                                <label htmlFor="file" className="custom-file-upload">
-                                    {!isUploaded && <GrCloudUpload size={20} />}
-                                    <span>{isUploaded ? fileName : 'Upload photo'}</span>
-                                </label>
-                            </div>
+                            <label>Experience</label>
+                            <input
+                                type="text"
+                                placeholder="Enter experience"
+                                name="employeeId"
+                                value={formData.employeeId}
+                                onChange={handleChange}
+                                required
+                            />
                         </div>
                         {/* Marital Status Dropdown */}
                         <div className="form-group">
                             <label>Marital Status</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('maritalStatus')}>
+                                <div className="dropdown-button" ref={maritalStatusButtonRef} onClick={toggleMaritalStatus}>
                                     <div>{formData.maritalStatus || "Select status"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.maritalStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-
+                                    <span id='toggle_selectIcon'> {!isMaritalStatusOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                 </div>
-                                {dropdowns.maritalStatus && (
-                                    <div className="dropdown-menu">
+                                {isMaritalStatusOpen && (
+                                    <div className="dropdown-menu" ref={maritalStatusRef}>
                                         <div className="dropdown-item" onClick={() => selectOption('maritalStatus', 'Single')}>Single</div>
                                         <div className="dropdown-item" onClick={() => selectOption('maritalStatus', 'Married')}>Married</div>
                                     </div>
@@ -318,57 +429,112 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             />
                         </div>
                         {/* Employment Type Dropdown */}
+
+                        {/* Employment Type Dropdown */}
                         <div className="form-group">
                             <label>Employment Type</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('employmentType')}>
+                                <div className="dropdown-button" ref={employmentTypeButtonRef} onClick={toggleEmploymentType}>
                                     <div>{formData.employmentType || "Select employment type"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.employmentType ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    <span id='toggle_selectIcon'>
+                                        {!isEmploymentTypeOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                    </span>
                                 </div>
-                                {dropdowns.employmentType && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Part-time')}>Part-time</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Full-time')}>Full-time</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Consultant')}>Consultant</div>
+                                {isEmploymentTypeOpen && (
+                                    <div className="dropdown-menu" ref={employmentTypeRef}>
+                                        <input
+                                            type="search"
+                                            className="search22"
+                                            placeholder="Search employment type"
+                                            value={searchQueryEmploymentType}
+                                            onChange={handleSearchQueryChangeEmploymentType}
+                                            id="searchDepartmentHead"
+                                        />
+                                        <div className="dropdown_I">
+                                            {filteredEmploymentTypeOptions.map(option => (
+                                                <div
+                                                    key={option}
+                                                    className="dropdown-item"
+                                                    onClick={() => selectOption('employmentType', option)}
+                                                >
+                                                    {option}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
                         </div>
+
                         {/* Employee Status Dropdown */}
                         <div className="form-group">
                             <label>Employee Status</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('employeeStatus')}>
+                                <div className="dropdown-button" ref={employeeStatusButtonRef} onClick={toggleEmployeeStatus}>
                                     <div>{formData.employeeStatus || "Select status"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.employeeStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    <span id='toggle_selectIcon'>
+                                        {!isEmployeeStatusOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                    </span>
                                 </div>
-                                {dropdowns.employeeStatus && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Permanent')}>Permanent</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Probation')}>Probation</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Intern')}>Intern</div>
+                                {isEmployeeStatusOpen && (
+                                    <div className="dropdown-menu" ref={employeeStatusRef}>
+                                        <input
+                                            type="search"
+                                            className="search22"
+                                            placeholder="Search employee status"
+                                            value={searchQueryEmployeeStatus}
+                                            id="searchDepartmentHead"
+                                            onChange={handleSearchQueryChangeEmployeeStatus}
+                                        />
+                                        <div className="dropdown_I">
+                                            {filteredEmployeeStatusOptions.map(option => (
+                                                <div
+                                                    key={option}
+                                                    className="dropdown-item"
+                                                    onClick={() => selectOption('employeeStatus', option)}
+                                                >
+                                                    {option}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
                         </div>
+
                         {/* Source of Hire Dropdown */}
                         <div className="form-group">
                             <label>Source of Hire</label>
                             <div className="dropdown">
-                                <div className="dropdown-button" onClick={() => toggleDropdown('sourceOfHire')}>
+                                <div className="dropdown-button" ref={sourceOfHireButtonRef} onClick={toggleSourceOfHire}>
                                     <div>{formData.sourceOfHire || "Select source"}</div>
-                                    <span id='toggle_selectIcon'> {!dropdowns.sourceOfHire ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-
+                                    <span id='toggle_selectIcon'> {!isSourceOfHireOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                 </div>
-                                {dropdowns.sourceOfHire && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Referral')}>Referral</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Direct')}>Direct</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Campus')}>Campus</div>
+                                {isSourceOfHireOpen && (
+                                    <div className="dropdown-menu" ref={sourceOfHireRef}>
+                                        <input
+                                            type="search"
+                                            className="search22"
+                                            placeholder="Search source"
+                                            value={searchQuerySourceOfHire}
+                                            onChange={handleSearchQueryChangeSourceOfHire}
+                                            id="searchDepartmentHead"
+                                        />
+                                        <div className="dropdown_I">
+                                            {['Referral', 'Direct', 'Campus','Advertisement'].filter(option =>
+                                                option.toLowerCase().includes(searchQuerySourceOfHire.toLowerCase())
+                                            ).map(option => (
+                                                <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', option)} key={option}>
+                                                    {option}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
                         </div>
+
+
                     </div>
                     <div id='submitBtn_next_main'>
                         <div id='submitBtn' >
@@ -393,3 +559,4 @@ const BasicDetailsForm = ({ onSubmit }) => {
     );
 };
 export default BasicDetailsForm;
+// 

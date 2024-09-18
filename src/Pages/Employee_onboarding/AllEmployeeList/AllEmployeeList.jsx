@@ -13,28 +13,37 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import { OutsideClick } from '../../../components/OutSideClick';
+import OutsideClick4 from './OutSideClick4.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 
 import './AllEmployeeList.scss';
 
 const AllEmployeeList = () => {
-    
+    const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
+    // const [filteredEmployees, setFilteredEmployees] = useState(employees);
+    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
+
     const [hidImport, setHidImport] = useState(true);
     const [allDel, setAllDel] = useState(false);
     const [toggleLeft, setToggleLeft] = useState(false)
 
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "vijay.shah@example.com", phone: "+917555232340", department: "Maintenance", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "arjun.reddy@example.com", phone: "+918555079422", department: "Manning", dateOfJoining: "16-May-2024", status: "Resigned", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "aarti.pandey@example.com", phone: "+919955565042", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Terminated", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "priya.sharma@example.com", phone: "+918553613128", department: "Operations", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "kavita.agarwal@example.com", phone: "+918555234569", department: "Engineering", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "raj.malhotra@example.com", phone: "+918555205575", department: "Manning", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "rahul.mishra@example.com", phone: "+919255544527", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "meera.verma@example.com", phone: "+919555566270", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "manish.jain@example.com", phone: "+917555639758", department: "HSEQ", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "neha.patel@example.com", phone: "+919655516575", department: "IT", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false }
+        // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "vijay.shah@example.com", phone: "+917555232340", department: "Maintenance", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "arjun.reddy@example.com", phone: "+918555079422", department: "Manning", dateOfJoining: "16-May-2024", status: "Resigned", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "aarti.pandey@example.com", phone: "+919955565042", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Terminated", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "priya.sharma@example.com", phone: "+918553613128", department: "Operations", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "kavita.agarwal@example.com", phone: "+918555234569", department: "Engineering", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "raj.malhotra@example.com", phone: "+918555205575", department: "Manning", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "rahul.mishra@example.com", phone: "+919255544527", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "meera.verma@example.com", phone: "+919555566270", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "manish.jain@example.com", phone: "+917555639758", department: "HSEQ", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "neha.patel@example.com", phone: "+919655516575", department: "IT", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false }
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
@@ -48,6 +57,7 @@ const AllEmployeeList = () => {
 
     const handleHidImport = () => {
         setHidImport(!hidImport);
+        toggleFilter3()
     };
 
     const handleSelectAll = () => {
@@ -80,15 +90,24 @@ const AllEmployeeList = () => {
         setCurrentPage(1);
     };
 
+
     const statuses = ['Active', 'Inactive', 'Resigned', 'Terminated', 'Notice Period'];
     const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
     const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
-
+    // 
+    const [loading, setLoading] = useState(true);
+    const [sms, setSms] = useState('')
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
+    // 
+    // 
     const handleStatusChange = (index, newStatus) => {
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].status = newStatus;
         setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
+        // isFilterOpen4(null)
+        setSms('')
     };
 
     const handleSearchChange = (e) => {
@@ -158,17 +177,123 @@ const AllEmployeeList = () => {
         navigate('/add-employee')
     }
     const JobDetailsPage = () => {
-        navigate('/employee-details')
+        navigate(`/employee-details`)
     }
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
     const filter_leftClose = () => {
         setToggleLeft(false)
+        toggleFilter2()
     }
-    console.log('toggleLeft', toggleLeft)
+    // console.log('toggleLeft', toggleLeft)
+    const [fileName, setFileName] = useState('');
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name); // Set the file name in the state
+        }
+    };
+
+    // 
+
+    // api get6 list
+    const token = localStorage.getItem('access_token');
+    console.log('token:',token)
+
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/employee/list', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                // setEmployees(response.data.job_opening);
+                setEmployees(response.data.employee)
+                setFilteredEmployees(response.data.employee); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.employee);
+                // setLoading(false);
+                // setSms()
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+
+
+            });
+    }, []);
+    // update status
+
+
+    // useEffect(() => {
+
+    //     if (statusId && statusNew) {
+
+    //         axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
+    //             job_id: statusId,
+    //             job_status: statusNew
+    //         }, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`
+    //             }
+    //         })
+    //             .then(response => {
+    //                 console.log('🥳',response)
+    //                 // setUpdatingEmpId(statusId);
+    //                 setSms(`Status update successfully`)
+    //                 toast.success('Status update successfully.', {
+    //                     position: "top-right",
+    //                     autoClose: 3000,
+    //                     hideProgressBar: false,
+    //                     closeOnClick: true,
+    //                     pauseOnHover: true,
+    //                     draggable: true,
+    //                     progress: undefined,
+    //                     theme: "light",
+    //                 });
+    //                 if (response.data.success === true) {
+    //                     // setShowAlert(true)
+    //                     // setTimeout(() => {
+    //                     //     setShowAlert(false)
+    //                     // }, 4000);
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 // setSms('Status update Failed')
+    //                 // alert(error)
+    //                 toast.error('Status update Failed.', {
+    //                     position: "top-right",
+    //                     autoClose: 3000,
+    //                     hideProgressBar: false,
+    //                     closeOnClick: true,
+    //                     pauseOnHover: true,
+    //                     draggable: true,
+    //                     progress: undefined,
+    //                     theme: "light",
+    //                 });
+    //                 // setShowAlertError(true)
+    //                 // setTimeout(() => {
+    //                 //     setShowAlertError(false)
+    //                 // }, 4000);
+
+    //                 console.error("Error fetching data: ", error);
+    //             });
+    //     }
+    // }, [statusNew]);
+
+    // 
+
     return (
         <div id='allEmp'>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -180,11 +305,12 @@ const AllEmployeeList = () => {
                             <div className="addEmp" onClick={NewJobPage}>
                                 <p><span><IoMdAdd /></span> Add New Employee</p>
                             </div>
-                            <div className="menu_head" onClick={handleHidImport}>
+                            <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
-                                <div className={`bottom_import  ${hidImport ? 'bottom_import_hide' : ''}`}>
-                                    <AiOutlineCloudUpload /> Import
-                                    <input type="file" accept='image/*' />
+                                <div className={`bottom_import ${!isFilterOpen3 ? 'bottom_import_hide' : ''}`} ref={filterRef3}>
+                                    {fileName ? '' : <AiOutlineCloudUpload />}
+                                    <input type="file" accept="image/*" onChange={handleFileChange} />
+                                    {fileName ? fileName : 'Uploaded File'}
                                 </div>
                             </div>
                         </div>
@@ -204,7 +330,7 @@ const AllEmployeeList = () => {
                 </div>
             </div>
             <div className="EmpOn_Second_Head">
-                <div id='filter_left' onClick={filter_left}>
+                <div id='filter_left' onClick={toggleFilter2} ref={filterButtonRef2}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#7f7f7f" fill="none">
                         <path d="M7 21H16.9999C19.3569 21 20.5354 21 21.2677 20.2678C21.9999 19.5355 21.9999 18.357 21.9999 16C21.9999 13.643 21.9999 12.4645 21.2677 11.7322C20.5354 11 19.3569 11 16.9999 11H7C4.64302 11 3.46453 11 2.7323 11.7322C2.00007 12.4644 2.00005 13.6429 2 15.9999C1.99995 18.357 1.99993 19.5355 2.73217 20.2677C3.4644 21 4.64294 21 7 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M4 11C4.00005 9.59977 4.00008 8.89966 4.27263 8.36485C4.5123 7.89455 4.89469 7.51218 5.365 7.27253C5.89981 7 6.59993 7 8.00015 7H16C17.4001 7 18.1002 7 18.635 7.27248C19.1054 7.51217 19.4878 7.89462 19.7275 8.36502C20 8.8998 20 9.59987 20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -212,7 +338,7 @@ const AllEmployeeList = () => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div className={`left ${!toggleLeft ? 'filterLeftOpen' : 'filterLeftClose'}`}   >
+                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}  >
                     <div className="all">
                         <div className='listActive' onClick={filter_leftClose}>
                             <span> <FaList /></span>All
@@ -264,12 +390,12 @@ const AllEmployeeList = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>
+                        <div className='div_box' onClick={toggleFilter} ref={filterButtonRef}>
                             <span><IoFilterSharp /></span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen && (
+                            <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
                                     <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>
@@ -336,10 +462,6 @@ const AllEmployeeList = () => {
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         )}
 
                     </div>
@@ -403,34 +525,34 @@ const AllEmployeeList = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td onClick={JobDetailsPage}>{emp.id}</td>
-                                    <td onClick={JobDetailsPage} >{emp.firstName}</td>
-                                    <td onClick={JobDetailsPage}>{emp.lastName}</td>
-                                    <td onClick={JobDetailsPage}>{emp.email}</td>
-                                    <td onClick={JobDetailsPage}>{emp.phone}</td>
-                                    <td onClick={JobDetailsPage}>{emp.department}</td>
-                                    <td onClick={JobDetailsPage}>{emp.dateOfJoining}</td>
-                                   
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.first_name}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.last_name}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.email}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.phone_code +' '+ emp.mobile}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.department_id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.joining_date}</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
-                                                <div
-                                                    className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                >
-                                                    <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    ></span>
-                                                    <div>
-                                                        <div className="EmpS">
-                                                            {emp.status}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                                <div onClick={toggleFilter4} ref={filterButtonRef4}>
+                                                    <div
+                                                        className={`status-display ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                        onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                    >
+                                                        <span className={`left_dot ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                        <div>
+                                                            <div className="EmpS" >
+                                                                {emp.employee_status}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                <MdOutlineKeyboardArrowDown />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {isOpen === index && (
-                                                    <div className="status-options">
+                                                    <div className="status-options" ref={filterRef4}>
                                                         {statuses.map(status => (
                                                             <div
                                                                 key={status}
@@ -445,12 +567,49 @@ const AllEmployeeList = () => {
                                             </div>
                                         </div>
                                     </td>
-
-
+                                    {/* <td >
+                                        <div key={index} className="status-dropdown">
+                                            <div className="status-container">
+                                                <div onClick={() => toggleFilter4(index)} ref={filterButtonRef4}>
+                                                    <div
+                                                        className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                    >
+                                                        <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}></span>
+                                                        <div>
+                                                            <div className="EmpS">
+                                                                {emp.status}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                <MdOutlineKeyboardArrowDown />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {isFilterOpen4 === index && (
+                                                    <div className="status-options" ref={filterRef4}>
+                                                        {statuses.map(status => (
+                                                            <div
+                                                                key={status}
+                                                                className="status-option"
+                                                                onClick={() => handleStatusChange(index, status)}
+                                                            >
+                                                                {status}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </td> */}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">

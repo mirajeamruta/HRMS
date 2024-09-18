@@ -1,4 +1,4 @@
-import { useState, } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -17,51 +17,93 @@ import { FaRegClock } from "react-icons/fa";
 import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import './AllJobList.scss';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
+import { OutsideClick } from '../../../components/OutSideClick';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import LodinImg from '../../../assets/loding.gif'
+import { OutsideClickStatus } from './OutsideClickStatus.jsx'; // Adjust import path if necessary
 
 const AllJobList = () => {
+
+    const jobs = useSelector((state) => state.job.jobs);
+    // console.log('jobs', jobs)
+    const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
+    // const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatusDropdown } = OutsideClickStatus();
+
+
+    // 
+    const [loading, setLoading] = useState(true);
+    const [sms, setSms] = useState('')
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
+    // 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
     const [toggleLeft, setToggleLeft] = useState(false)
+    const [isOpen, setIsOpen] = useState(null);
+    // 
+
+    const [employees, setEmployees] = useState([
+        // { JobTitle: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
+        // { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
+        // { JobTitle: "Software Engineer", Department: "Office Administration", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
+        // { JobTitle: "IT Auditor", Department: "Operations", Positions: "10", ExperienceRequired: "07 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Cancelled", isChecked: false },
+        // { JobTitle: "Technical Writer", Department: "Executive Management", Positions: "10", ExperienceRequired: "02 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
+        // { JobTitle: "UI/UX Designer", Department: "Product", Positions: "10", ExperienceRequired: "2.6 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
+        // { JobTitle: "Database Administrator", Department: "UX", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
+        // { JobTitle: "Network Administrator", Department: "Finance", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
+        // { JobTitle: "QA Engineer", Department: "Sales", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
+
+    ]);
+    const [employees2, setEmployees2] = useState();
+
+    useEffect(() => {
+        // Employees ka data employees2 me set karna
+        setEmployees2(employees);
+    }, [employees]); // Jab bhi employees change hoga, yeh effect trigger hoga
+
 
     const DelThis = () => {
         setThisDel(!thisDel);
-        
+
     }
 
+    const toggleDropdown = (i) => {
+        setIsOpen(prev => (prev == i ? null : i));
+    };
+    // console.log('isOpen', isOpen)
+
+
+    // 
+
+    const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
-    const [employees, setEmployees] = useState([
-        { JobTitle: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
-        { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
-        { JobTitle: "Software Engineer", Department: "Office Administration", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
-        { JobTitle: "IT Auditor", Department: "Operations", Positions: "10", ExperienceRequired: "07 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Cancelled", isChecked: false },
-        { JobTitle: "Technical Writer", Department: "Executive Management", Positions: "10", ExperienceRequired: "02 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
-        { JobTitle: "UI/UX Designer", Department: "Product", Positions: "10", ExperienceRequired: "2.6 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
-        { JobTitle: "Database Administrator", Department: "UX", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
-        { JobTitle: "Network Administrator", Department: "Finance", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
-        { JobTitle: "QA Engineer", Department: "Sales", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
-
-    ]);
-    const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
     const [selectedStatus, setSelectedStatus] = useState('All');
     const [selectAll, setSelectAll] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [isOpen, setIsOpen] = useState(null);
 
+    // console.log('searchQuery', searchQuery)
+    
 
-    console.log(selectedDepartment)
+    // console.log(selectedDepartment)
 
     const handleHidImport = () => {
         setHidImport(!hidImport);
+        toggleFilter3()
     };
-
+    // table select checkbox
     const handleSelectAll = () => {
         setAllDel(!allDel)
         const updatedEmployees = filteredEmployees.map(emp => ({
@@ -76,16 +118,52 @@ const AllJobList = () => {
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].isChecked = !updatedEmployees[index].isChecked;
         setFilteredEmployees(updatedEmployees);
+
     };
+    // table select checkbox
+
+
+    // page index active
+    // Function to generate the pages to display
 
     const indexOfLastEmployee = currentPage * rowsPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - rowsPerPage;
     const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
     const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
+    // 
+    // setFilteredEmployees(currentEmployees)
+    // setSurrentEmployees2(currentEmployees)
+    // console.log('currentEmployees2', filteredEmployees)
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    const generatePages = () => {
+        let pages = [];
+
+        // If total pages <= 5, show all pages
+        if (totalPages <= 5) {
+            pages = [...Array(totalPages).keys()].map(pageIndex => pageIndex + 1);
+        }
+        // If total pages > 5
+        else {
+            if (currentPage <= 3) {
+                pages = [1, 2, 3, 4, 5];
+            } else if (currentPage >= totalPages - 2) {
+                pages = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+            } else {
+                pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+            }
+        }
+
+        return pages;
     };
+
+    // Function to handle page change
+    const handlePageChange = (page) => {
+        if (page !== '...') {
+            setCurrentPage(page);
+        }
+    };
+    // page index active
+    // 
 
     const handleRowsPerPageChange = (e) => {
         setRowsPerPage(Number(e.target.value));
@@ -93,25 +171,18 @@ const AllJobList = () => {
     };
 
     const statuses = ['Open', 'Draft', 'On hold', 'Filled', 'Cancelled'];
-    // const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
-    // const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
 
-    const handleStatusChange = (index, newStatus) => {
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
-    };
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-
+    // index page
     const handleFilterChange = (e) => {
+
         setSelectedDepartment(e.target.value);
         let updatedEmployees = employees;
-
+        console.log('updatedEmployees', updatedEmployees)
         if (searchQuery) {
             updatedEmployees = updatedEmployees.filter(emp =>
                 emp.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -131,7 +202,7 @@ const AllJobList = () => {
     };
 
 
-
+    // refresh all page
     const handleRefresh = () => {
         setFilteredEmployees(employees);
         setSearchQuery('');
@@ -177,13 +248,152 @@ const AllJobList = () => {
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
-    const filter_leftClose = () => {
-        setToggleLeft(false)
+    // const filter_leftClose = () => {
+    //     // setToggleLeft(false)
+    //     toggleFilter2()
+    // }
+    const [fileName, setFileName] = useState('');
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name); // Set the file name in the state
+        }
+    };
+
+
+    // console.log('updateId', statusId)
+    // console.log('status', statusId)
+
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
     }
 
+    // api get6 list
+    const token = localStorage.getItem('access_token');
+
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/jobopening/list', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+
+
+                setEmployees(response.data.job_opening);
+                setFilteredEmployees(response.data.job_opening); // filteredEmployees ko bhi sync karo
+                // console.log('response 🥳', response.data.job_opening);
+                setLoading(false);
+                // setSms()
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+
+
+            });
+    }, [statusId, statusNew, token, sms]);
+    // update status
+
+
+    useEffect(() => {
+
+        if (statusId && statusNew) {
+
+            axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
+                job_id: statusId,
+                job_status: statusNew
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setUpdatingEmpId(statusId);
+                    setSms(`Status update successfully`)
+                    toast.success('Status update successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    if (response.data.success === true) {
+                        // setShowAlert(true)
+                        // setTimeout(() => {
+                        //     setShowAlert(false)
+                        // }, 4000);
+                    }
+                })
+                .catch(error => {
+                    // setSms('Status update Failed')
+                    // alert(error)
+                    toast.error('Status update Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    // setShowAlertError(true)
+                    // setTimeout(() => {
+                    //     setShowAlertError(false)
+                    // }, 4000);
+
+                    console.error("Error fetching data: ", error);
+                });
+        }
+    }, [statusNew]);
+
+
+    const handleStatusChange = (index, newStatus) => {
+        setStatusNew(newStatus)
+        // console.log('status chenge:::', newStatus)
+        const updatedEmployees = [...filteredEmployees];
+        updatedEmployees[index].status = newStatus;
+        setFilteredEmployees(updatedEmployees);
+        setIsOpen(null);
+        // toast.info('Please Wait Status Updating...', {
+        //     position: "top-right",
+        //     autoClose: 2000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //     theme: "light",
+        // });
+        setSms('')
+    };
+    const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
+    // const filterRef2 = useRef(null);
+
+    const filter_leftClose = (filterType) => {
+        console.log(`${filterType} 👉`);
+        setActiveFilter(filterType); // Set the active filter
+        toggleFilter2()
+    };
+    // 
+  
+    
 
     return (
         <div id='allEmp'>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -195,11 +405,12 @@ const AllJobList = () => {
                             <div className="addEmp" onClick={NewJobPage}>
                                 <p><span><IoMdAdd /></span> Add New Job</p>
                             </div>
-                            <div className="menu_head" onClick={handleHidImport}>
+                            <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
-                                <div className={`bottom_import  ${hidImport ? 'bottom_import_hide' : ''}`}>
-                                    <AiOutlineCloudUpload /> Import
-                                    <input type="file" accept='image/*' />
+                                <div className={`bottom_import ${!isFilterOpen3 ? 'bottom_import_hide' : ''}`} ref={filterRef3}>
+                                    {fileName ? '' : <AiOutlineCloudUpload />}
+                                    <input type="file" accept="image/*" onChange={handleFileChange} />
+                                    {fileName ? fileName : 'import'}
                                 </div>
                             </div>
                         </div>
@@ -219,7 +430,7 @@ const AllJobList = () => {
                 </div>
             </div>
             <div className="EmpOn_Second_Head">
-                <div id='filter_left' onClick={filter_left}>
+                <div id='filter_left' onClick={toggleFilter2} ref={filterButtonRef2}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#7f7f7f" fill="none">
                         <path d="M7 21H16.9999C19.3569 21 20.5354 21 21.2677 20.2678C21.9999 19.5355 21.9999 18.357 21.9999 16C21.9999 13.643 21.9999 12.4645 21.2677 11.7322C20.5354 11 19.3569 11 16.9999 11H7C4.64302 11 3.46453 11 2.7323 11.7322C2.00007 12.4644 2.00005 13.6429 2 15.9999C1.99995 18.357 1.99993 19.5355 2.73217 20.2677C3.4644 21 4.64294 21 7 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M4 11C4.00005 9.59977 4.00008 8.89966 4.27263 8.36485C4.5123 7.89455 4.89469 7.51218 5.365 7.27253C5.89981 7 6.59993 7 8.00015 7H16C17.4001 7 18.1002 7 18.635 7.27248C19.1054 7.51217 19.4878 7.89462 19.7275 8.36502C20 8.8998 20 9.59987 20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -227,7 +438,8 @@ const AllJobList = () => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div className={`left ${!toggleLeft ? 'filterLeftOpen' : 'filterLeftClose'}`}   >
+
+                {/* <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2} >
                     <div className="all">
                         <div className='listActive' onClick={filter_leftClose}>
                             <span> <FaList /></span>All
@@ -258,7 +470,59 @@ const AllJobList = () => {
                             <span><IoIosCloseCircleOutline /></span>Cancelled
                         </div>
                     </div>
+                </div> */}
+
+                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
+                    <div className="all">
+                        <div
+                            className={`listActive ${activeFilter === 'all' ? 'listActive' : ''}`}
+                            onClick={() => filter_leftClose('all')}
+                        >
+                            <span><FaList /></span>All
+                        </div>
+                    </div>
+                    <div
+                        className={`active ${activeFilter === 'draft' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('draft')}
+                    >
+                        <div>
+                            <span><PiCheckSquare /></span>Draft
+                        </div>
+                    </div>
+                    <div
+                        className={`inactive ${activeFilter === 'open' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('open')}
+                    >
+                        <div>
+                            <span><MdWork /></span>Open
+                        </div>
+                    </div>
+                    <div
+                        className={`resigned ${activeFilter === 'onHold' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('onHold')}
+                    >
+                        <div>
+                            <span><FaRegClock /></span>On hold
+                        </div>
+                    </div>
+                    <div
+                        className={`terminated ${activeFilter === 'filled' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('filled')}
+                    >
+                        <div>
+                            <span><PiCheckSquare /></span>Filled
+                        </div>
+                    </div>
+                    <div
+                        className={`notice_period ${activeFilter === 'cancelled' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('cancelled')}
+                    >
+                        <div>
+                            <span><IoIosCloseCircleOutline /></span>Cancelled
+                        </div>
+                    </div>
                 </div>
+
                 <div className="right">
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
@@ -279,12 +543,12 @@ const AllJobList = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>
+                        <div className='div_box' onClick={toggleFilter} ref={filterButtonRef}>
                             <span><IoFilterSharp /></span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen && (
+                            <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
                                     {/* <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>
@@ -348,12 +612,7 @@ const AllJobList = () => {
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         )}
-
                     </div>
                 </div>
             </div>
@@ -389,6 +648,7 @@ const AllJobList = () => {
                             </tr>
                         </thead>
                         <tbody>
+
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index}  >
                                     <td>
@@ -404,25 +664,28 @@ const AllJobList = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td onClick={JobDetailsPage}>{emp.JobTitle}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Department}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Positions}</td>
-                                    <td onClick={JobDetailsPage}>{emp.ExperienceRequired}</td>
-                                    <td onClick={JobDetailsPage}>{emp.SkillsRequired}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.job_title}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.department}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.designation}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.experience}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
+                                    <td >
+                                        {/* <div className="status-dropdown" >
 
-                                    <td>
-                                        <div className="status-dropdown">
                                             <div key={index} className="status-container">
                                                 <div
-                                                    className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                    className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                    onClick={() => toggleDropdown(index)}
                                                 >
-                                                    {console.log(emp.status.toLowerCase().replace(' ', '-'))}
-                                                    <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    ></span>
-                                                    <div>
-                                                        <div className="">
-                                                            {emp.status}
+                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                    <div onClick={() => {
+                                                        UpdateStatusHndle(emp.id);
+                                                    }}>
+                                                        <div
+
+
+                                                        >
+                                                            {emp.job_status}
                                                         </div>
                                                         <div className="^wdown">
                                                             <MdOutlineKeyboardArrowDown />
@@ -430,27 +693,85 @@ const AllJobList = () => {
                                                     </div>
                                                 </div>
                                                 {isOpen === index && (
-                                                    <div className="status-options">
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
-                                                            </div>
-                                                        ))}
+                                                    <div>
+                                                        <div className="status-options" >
+                                                            {
+                                                                statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => {
+                                                                            handleStatusChange(index, status)
+                                                                        }
+                                                                        }
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                        </div>
+
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div> */}
+
+
+                                        <div className="status-dropdown" >
+                                            <div key={index} className="status-container" >
+                                                <div
+                                                    className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                    onClick={() => toggleDropdown(index)}
+                                                >
+                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                    <div onClick={() => {
+                                                        UpdateStatusHndle(emp.id);
+                                                    }}>
+                                                        <div
+                                                           
+                                                        >
+                                                            {emp.job_status}
+                                                        </div>
+                                                        <div className="^wdown">
+                                                            <MdOutlineKeyboardArrowDown />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {isOpen === index && (
+                                                    <div>
+                                                        <div className="status-options" >
+                                                            {
+                                                                statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => {
+                                                                            handleStatusChange(index, status)
+                                                                        }
+                                                                        }
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                        </div>
+
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
+
+
                                     </td>
-
-
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">
@@ -468,10 +789,11 @@ const AllJobList = () => {
                             {[...Array(totalPages)].map((_, pageIndex) => (
                                 <button
                                     key={pageIndex + 1}
-                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    className={currentPage === pageIndex + 1 ? 'activePageIndex' : ''}
                                     onClick={() => handlePageChange(pageIndex + 1)}
                                 >
                                     {pageIndex + 1}
+                                    {/* {console.log('currentPage', pageIndex + 1)} */}
                                 </button>
                             ))}
                         </div>

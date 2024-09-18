@@ -13,22 +13,25 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import './EmployeeHealth.scss';
+// import './EmployeeHealth.scss';
+import { OutsideClick } from '../../../components/OutSideClick';
 
 const EmployeeHealth = () => {
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
-        { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024",overall:"Healthy",allerig:"Soy",chorninc:"Lorem ipsum dolor sit amet c..."},
-        { deptName: "Nandan Raikwar", deptHead: "Operations", parentDept: "14-Apr-2024" ,overall:"Healthy",allerig:"Milk",chorninc   :"Lorem ipsum dolor sit amet c"},
-        { deptName: "Vishwas Patel", deptHead: "Operations", parentDept: "14-Apr-2024",overall:"UnHealthy",allerig:"Pollen",chorninc   :"Lorem ipsum dolor sit amet c" },
-        { deptName: "Paartho Ghosh", deptHead: "Engineering", parentDept: "14-Apr-2024" ,overall:"UnHealthy",allerig:"Latex",chorninc   :"Lorem ipsum dolor sit amet c"},
-        { deptName: "Vikas Tiwari", deptHead: "Maintenance", parentDept: "14-Apr-2024" ,overall:"UnHealthy",allerig:"Insect stings (e.g., bee stings)",chorninc   :"Lorem ipsum dolor sit amet c"},
-        { deptName: "Lalita Thakur", deptHead: "HSEQ", parentDept: "14-Apr-2024",overall:"Healthy",allerig:"Penicillin",chorninc   :"Lorem ipsum dolor sit amet c" },
-        { deptName: "Mamta Lodhi", deptHead: "Shalini Jain", parentDept: "14-Apr-2024",overall:"Healthy",allerig:"Sulfa drugs",chorninc   :"Lorem ipsum dolor sit amet c" },
-        { deptName: "M. S. Subramaniam", deptHead: "Human Resources", parentDept: "14-Apr-2024T",overall:"Healthy",allerig:"Pet dander",chorninc   :"Lorem ipsum dolor sit amet c" },
-        { deptName: "Amardeep Singh", deptHead: "IT", parentDept: "14-Apr-2024",overall:"Healthy",allerig:"Grass",chorninc   :"Lorem ipsum dolor sit amet c" },
-        { deptName: "Shalini Jain", deptHead: "IT", parentDept: "14-Apr-2024",overall:"Healthy" ,allerig:"Cockroach allergens",chorninc   :"Lorem ipsum dolor sit amet c"},
-      
+        { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Soy", chorninc: "Lorem ipsum dolor sit amet c..." },
+        { deptName: "Nandan Raikwar", deptHead: "Operations", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Milk", chorninc: "Lorem ipsum dolor sit amet c" },
+        { deptName: "Vishwas Patel", deptHead: "Operations", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Pollen", chorninc: "Lorem ipsum dolor sit amet c" },
+        { deptName: "Paartho Ghosh", deptHead: "Engineering", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Latex", chorninc: "Lorem ipsum dolor sit amet c" },
+        { deptName: "Vikas Tiwari", deptHead: "Maintenance", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Insect stings (e.g., bee stings)", chorninc: "Lorem ipsum dolor sit amet c" },
+        { deptName: "Lalita Thakur", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Penicillin", chorninc: "Lorem ipsum dolor sit amet c" },
+        { deptName: "Mamta Lodhi", deptHead: "Shalini Jain", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Sulfa drugs", chorninc: "Lorem ipsum dolor sit amet c" },
+        { deptName: "M. S. Subramaniam", deptHead: "Human Resources", parentDept: "14-Apr-2024T", overall: "Healthy", allerig: "Pet dander", chorninc: "Lorem ipsum dolor sit amet c" },
+        { deptName: "Amardeep Singh", deptHead: "IT", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Grass", chorninc: "Lorem ipsum dolor sit amet c" },
+        { deptName: "Shalini Jain", deptHead: "IT", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Cockroach allergens", chorninc: "Lorem ipsum dolor sit amet c" },
+
 
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -142,10 +145,12 @@ const EmployeeHealth = () => {
         setShowEmploymentType(false);
     };
 
+    const EmpHDetailsPage = () => {
+        navigate('/employeehealthdetails')
+    }
 
-   
 
-    const AddEmployeeHealth=()=>{
+    const AddEmployeeHealth = () => {
         navigate('/addemployeehealth');
     }
     return (
@@ -208,12 +213,12 @@ const EmployeeHealth = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>    
+                        <div className='div_box' onClick={toggleFilter2} ref={filterButtonRef2}>
                             <span><IoFilterSharp /></span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen2 && (
+                            <div className="filter-container" ref={filterRef2}>
                                 <div className="filter-options">
                                     <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>
@@ -280,12 +285,7 @@ const EmployeeHealth = () => {
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         )}
-
                     </div>
                 </div>
             </div>
@@ -312,20 +312,16 @@ const EmployeeHealth = () => {
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td>{emp.deptName}</td>
-                                    <td>{emp.deptHead}</td>
-                                    <td>{emp.parentDept}</td>
-                                    <td>{emp.overall}</td>
-                                    <td>{emp.allerig}</td>
-                                    <td>{emp.chorninc}</td>
-
-
-
+                                    <td onClick={EmpHDetailsPage}>{emp.deptName}</td>
+                                    <td onClick={EmpHDetailsPage}>{emp.deptHead}</td>
+                                    <td onClick={EmpHDetailsPage}>{emp.parentDept}</td>
+                                    <td onClick={EmpHDetailsPage}>{emp.overall}</td>
+                                    <td onClick={EmpHDetailsPage}>{emp.allerig}</td>
+                                    <td onClick={EmpHDetailsPage}>{emp.chorninc}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-
                     {/* {showPopup && (
                         <div className="popup-overlay">
                             <div className="popup">
@@ -355,42 +351,40 @@ const EmployeeHealth = () => {
                             </div>
                         </div>
                     )} */}
+                </div>
+                <div className="pagination">
+                    <div className="rows-per-page">
+                        <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                            <option value={5}>5 per page</option>
+                            <option value={10}>10 per page</option>
+                            <option value={30}>30 per page</option>
+                            <option value={50}>50 per page</option>
+                            <option value={70}>70 per page</option>
+                            <option value={100}>100 per page</option>
+                        </select>
+                    </div>
 
-                    <div className="pagination">
-                        <div className="rows-per-page">
-                            <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-                                <option value={5}>5 per page</option>
-                                <option value={10}>10 per page</option>
-                                <option value={30}>30 per page</option>
-                                <option value={50}>50 per page</option>
-                                <option value={70}>70 per page</option>
-                                <option value={100}>100 per page</option>
-                            </select>
+
+
+
+                    <div className="page-navigation">
+                        <div className="page-numbers">
+                            {[...Array(totalPages)].map((_, pageIndex) => (
+                                <button
+                                    key={pageIndex + 1}
+                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    onClick={() => handlePageChange(pageIndex + 1)}
+                                >
+                                    {pageIndex + 1}
+                                </button>
+                            ))}
                         </div>
-
-
-
-
-                        <div className="page-navigation">
-                            <div className="page-numbers">
-                                {[...Array(totalPages)].map((_, pageIndex) => (
-                                    <button
-                                        key={pageIndex + 1}
-                                        className={currentPage === pageIndex + 1 ? 'active' : ''}
-                                        onClick={() => handlePageChange(pageIndex + 1)}
-                                    >
-                                        {pageIndex + 1}
-                                    </button>
-                                ))}
-                            </div>
-                            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
-                            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
-                        </div>
+                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
+                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
                     </div>
                 </div>
-
             </div>
-        </div >
+        </div>
 
 
     );

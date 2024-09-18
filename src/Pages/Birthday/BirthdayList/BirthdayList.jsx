@@ -13,18 +13,20 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import './BirthdayList.scss';
+import { OutsideClick } from '../../../components/OutSideClick';
 
 const Department = () => {
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
-        { deptName: "001", deptHead: "Abc@gmail.com", parentDept: "Nandan",subparent:"akash" ,parent:"9876543456",parent1:"20-09-2024"},
-        { deptName: "002", deptHead: "Nandan@gmail.com", parentDept: "Rahul" ,subparent:"akash",parent:"9876543456" ,parent1:"20-09-2024"},
-        { deptName: "003", deptHead: "Vikas@gmail.com", parentDept: "Vikas" ,subparent:"akash",parent:"9876543456" ,parent1:"20-09-2024"},
-        { deptName: "004", deptHead: "Paartho@gmail.com", parentDept: "Rahul",subparent:"akash" ,parent:"9876543456" ,parent1:"20-09-2024"},
-        { deptName: "005", deptHead: "Rahul@gmail.com", parentDept: "Jayshri",subparent:"akash" ,parent:"9876543456",parent1:"20-09-2024" },
-        { deptName: "006", deptHead: "Jayshri@gmail.com", parentDept: "Abc",subparent:"akash" ,parent:"9876543456",parent1:"20-09-2024" },
-       
+        { deptName: "001", deptHead: "Abc@gmail.com", parentDept: "Nandan", subparent: "akash", parent: "9876543456", parent1: "20-09-2024" },
+        { deptName: "002", deptHead: "Nandan@gmail.com", parentDept: "Rahul", subparent: "akash", parent: "9876543456", parent1: "20-09-2024" },
+        { deptName: "003", deptHead: "Vikas@gmail.com", parentDept: "Vikas", subparent: "akash", parent: "9876543456", parent1: "20-09-2024" },
+        { deptName: "004", deptHead: "Paartho@gmail.com", parentDept: "Rahul", subparent: "akash", parent: "9876543456", parent1: "20-09-2024" },
+        { deptName: "005", deptHead: "Rahul@gmail.com", parentDept: "Jayshri", subparent: "akash", parent: "9876543456", parent1: "20-09-2024" },
+        { deptName: "006", deptHead: "Jayshri@gmail.com", parentDept: "Abc", subparent: "akash", parent: "9876543456", parent1: "20-09-2024" },
+
 
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -149,8 +151,8 @@ const Department = () => {
         setSelectedDepartmentDetails(department);
     };
 
-    const DepartmentDetails=()=>{
-        navigate('/departmentdetails');
+    const DepartmentDetails = () => {
+        // navigate('/departmentdetails');
     }
     return (
         <div>
@@ -161,7 +163,7 @@ const Department = () => {
                             <div className='span'><HiUserPlus /></div>
                             All Birthday List <p>08 total</p>
                         </h2>
-                        <div className="Emp_Head_Right">
+                        {/* <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={handleAddDepartmentClick}>
                                 <p><span><IoMdAdd /></span> Add New Birthday</p>
                             </div>
@@ -172,7 +174,7 @@ const Department = () => {
                                     <input type="file" accept='image/*' />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="_div">
                             <span className="1"></span>
                             <span className="2"></span>
@@ -212,12 +214,12 @@ const Department = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>    
+                        <div className='div_box' onClick={toggleFilter2} ref={filterButtonRef2}>
                             <span><IoFilterSharp /></span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen2 && (
+                            <div className="filter-container" ref={filterRef2}>
                                 <div className="filter-options">
                                     <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>
@@ -316,55 +318,53 @@ const Department = () => {
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index}  onClick={() => handleDepartmentClick1(DepartmentDetails)}>
+                                <tr key={index} onClick={() => handleDepartmentClick1(DepartmentDetails)}>
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td>{emp.deptName}</td>
                                     <td>{emp.deptHead}</td>
                                     <td>{emp.parentDept}</td>
-                                   <td>{emp.subparent}</td>
-                                   <td>{emp.parent}</td>
-                                   <td>{emp.parent1}</td>
+                                    <td>{emp.subparent}</td>
+                                    <td>{emp.parent}</td>
+                                    <td>{emp.parent1}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-
-                
-                    <div className="pagination">
-                        <div className="rows-per-page">
-                            <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-                                <option value={5}>5 per page</option>
-                                <option value={10}>10 per page</option>
-                                <option value={30}>30 per page</option>
-                                <option value={50}>50 per page</option>
-                                <option value={70}>70 per page</option>
-                                <option value={100}>100 per page</option>
-                            </select>
-                        </div>
-
-
-
-
-                        <div className="page-navigation">
-                            <div className="page-numbers">
-                                {[...Array(totalPages)].map((_, pageIndex) => (
-                                    <button
-                                        key={pageIndex + 1}
-                                        className={currentPage === pageIndex + 1 ? 'active' : ''}
-                                        onClick={() => handlePageChange(pageIndex + 1)}
-                                    >
-                                        {pageIndex + 1}
-                                    </button>
-                                ))}
-                            </div>
-                            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
-                            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
-                        </div>
-                    </div>
                 </div>
 
+                <div className="pagination">
+                    <div className="rows-per-page">
+                        <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                            <option value={5}>5 per page</option>
+                            <option value={10}>10 per page</option>
+                            <option value={30}>30 per page</option>
+                            <option value={50}>50 per page</option>
+                            <option value={70}>70 per page</option>
+                            <option value={100}>100 per page</option>
+                        </select>
+                    </div>
+
+
+
+
+                    <div className="page-navigation">
+                        <div className="page-numbers">
+                            {[...Array(totalPages)].map((_, pageIndex) => (
+                                <button
+                                    key={pageIndex + 1}
+                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    onClick={() => handlePageChange(pageIndex + 1)}
+                                >
+                                    {pageIndex + 1}
+                                </button>
+                            ))}
+                        </div>
+                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
+                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
+                    </div>
+                </div>
             </div>
-        </div >
+        </div>
 
 
     );

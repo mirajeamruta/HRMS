@@ -94,7 +94,7 @@ const EmployeeDashboard = () => {
         customPaging: (i) => (
             <div
                 style={{
-                    width: i === currentSlide ? "25px" : "10px",
+                    width: i === currentSlide ? "20px" : "15px",
 
                     height: "3px",
                     background: i === currentSlide ? "purple" : "gray",
@@ -115,7 +115,7 @@ const EmployeeDashboard = () => {
                 <div className="Left_admin_hello">
                     <img src={Admin_IMG} alt="Admin_image" />
                     <div>
-                        <h2>Hello Admin 👋</h2>
+                        <h2>Hello Admin <span className='wave'>👋</span></h2>
                         <p>Welcome back, Track your team progress here</p>
                     </div>
                 </div>
@@ -383,7 +383,7 @@ const EmployeeDashboard = () => {
                     <a href="#" className='a'>View All</a>
                 </div>
 
-                <div className=" quick-links">
+                <div className="quick-links">
                     <div className="header">
                         <h3>Quick Links</h3>
                         <a href="#" className='seeAll'>See All</a>

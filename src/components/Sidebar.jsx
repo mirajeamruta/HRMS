@@ -16,14 +16,26 @@ import FilledSalesIco from '../assets/FilledSalesIco.svg';
 import FilledPurchasesIco from '../assets/FilledPurchasesIco.svg';
 import FilledEwaybillsIco from '../assets/FilledEwaybillsIco.svg';
 import FilledAccountantIco from '../assets/FilledAccountantIco.svg';
-
+import { OutsideClick } from './OutSideClick';
 import '../styles/Sidebar.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSidebarW } from '../slices/userSlice';
+import { setLiHover } from '../slices/userSlice';
+
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+
+    // redux
+    const dispatch = useDispatch();
+    const sidebarW = useSelector((state) => state.user.sidebarW);
+    const liHover = useSelector((state) => state.user.liHover); // Redux से liHover state को select करें
+
+    // 
+    const { isOpen: isSideOpen, ref: sideRef, buttonRef: sideButtonRef, handleToggle: toggleSide } = OutsideClick();
     const [activeItem, setActiveItem] = useState(null);
-    const [activeItem2, setActiveItem2] = useState(true)
+    const [activeItem2, setActiveItem2] = useState(true);
     const [activeItem3, setActiveItem3] = useState(null);
-    ;
+
     const [isSubmenu, setIsSubmenu] = useState(false);
     const [showAddShorts, setShowAddShorts] = useState(false);
 
@@ -35,7 +47,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
     const handleClick = (index, path,) => {//isSubmenu = false
         handleShowActivespan()
-
+        dispatch(setSidebarW(!sidebarW));
         setActiveItem(index)
 
         if (!isSubmenu) {
@@ -46,13 +58,17 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             navigate(path);
         }
     };
+    const [sideW, setSideW] = useState(false)
     const combinedClickHandler = (index, path) => {
+        dispatch(setSidebarW(!sidebarW));
+        setSideW(!sideW)
         setIsSubmenu(true)
         handleClick(index);
         setActiveItem2(false)
         // console.log('span index ', index)
         // handleShowActivespan()  ise tab call karo jab li index and span index same ho
         if (activeItem == index) {
+
             handleShowActivespan()
         }
     };
@@ -67,20 +83,28 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     const menuItems = [
         {
             label: 'Home',
-            icon: <RiHome6Line />,
+            icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                <path d="M10 18L14 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2.35139 13.2135C1.99837 10.9162 1.82186 9.76763 2.25617 8.74938C2.69047 7.73112 3.65403 7.03443 5.58114 5.64106L7.02099 4.6C9.41829 2.86667 10.6169 2 12 2C13.3831 2 14.5817 2.86667 16.979 4.6L18.4189 5.64106C20.346 7.03443 21.3095 7.73112 21.7438 8.74938C22.1781 9.76763 22.0016 10.9162 21.6486 13.2135L21.3476 15.1724C20.8471 18.4289 20.5969 20.0572 19.429 21.0286C18.2611 22 16.5537 22 13.1388 22H10.8612C7.44633 22 5.73891 22 4.571 21.0286C3.40309 20.0572 3.15287 18.4289 2.65243 15.1724L2.35139 13.2135Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+            </svg>,
             submenu: [
                 { label: 'Admin Dashboard', path: '/admin-dashboard' },
                 { label: 'Employee Dashboard', path: '/employee-dashboard' },
                 { label: 'Admin Profile', path: '/admin-profile' },
                 { label: 'Employee Profile', path: '/Employee-profile' },
+                // { label: 'Setting', path: '/setting' },
                 // { label: 'Setting', path: '/setting' }
+
             ]
         },
         {
             label: 'Profile',
-            icon: <HiOutlineUser />,
+            icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                <path d="M6.57757 15.4816C5.1628 16.324 1.45336 18.0441 3.71266 20.1966C4.81631 21.248 6.04549 22 7.59087 22H16.4091C17.9545 22 19.1837 21.248 20.2873 20.1966C22.5466 18.0441 18.8372 16.324 17.4224 15.4816C14.1048 13.5061 9.89519 13.5061 6.57757 15.4816Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M16.5 6.5C16.5 8.98528 14.4853 11 12 11C9.51472 11 7.5 8.98528 7.5 6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5Z" stroke="currentColor" stroke-width="1.5" />
+            </svg>,
             submenu: [
-               
+
                 { label: 'All Job List', path: '/all-job-list' },
                 { label: 'All Employee List', path: '/all-employee-list' },
                 { label: 'All Applicant List', path: '/all-applicant-list' },
@@ -90,7 +114,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         },
         {
             label: 'Organization',
-            icon: <MdOutlineWorkOutline />,
+            icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                <path d="M12 15L12 16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3 11L3.15288 13.8633C3.31714 17.477 3.39927 19.2839 4.55885 20.3919C5.71843 21.5 7.52716 21.5 11.1446 21.5H12.8554C16.4728 21.5 18.2816 21.5 19.4412 20.3919C20.6007 19.2839 20.6829 17.477 20.8471 13.8633L21 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2.84718 10.4431C4.54648 13.6744 8.3792 15 12 15C15.6208 15 19.4535 13.6744 21.1528 10.4431C21.964 8.90056 21.3498 6 19.352 6H4.648C2.65023 6 2.03603 8.90056 2.84718 10.4431Z" stroke="currentColor" stroke-width="1.5" />
+                <path d="M15.9999 6L15.9116 5.69094C15.4716 4.15089 15.2516 3.38087 14.7278 2.94043C14.204 2.5 13.5083 2.5 12.1168 2.5H11.8829C10.4915 2.5 9.79575 2.5 9.27198 2.94043C8.7482 3.38087 8.52819 4.15089 8.08818 5.69094L7.99988 6" stroke="currentColor" stroke-width="1.5" />
+            </svg>,
             submenu: [
                 { label: 'Department', path: '/department' },
                 { label: 'Designation', path: '/designation' },
@@ -100,7 +129,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         },
         {
             label: 'Leave Tracker',
-            icon: <FiClock />,
+            icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                <path d="M12.0078 10.5082C11.1794 10.5082 10.5078 11.1798 10.5078 12.0082C10.5078 12.8366 11.1794 13.5082 12.0078 13.5082C12.8362 13.5082 13.5078 12.8366 13.5078 12.0082C13.5078 11.1798 12.8362 10.5082 12.0078 10.5082ZM12.0078 10.5082V6.99902M15.0147 15.0198L13.0661 13.0712" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>,
             submenu: [
                 { label: 'All Leave', path: '/all-leave' },
                 { label: 'Leave Master', path: '/Leave Master' },
@@ -111,7 +143,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         },
         {
             label: 'Attendance',
-            icon: <MdOutlineDateRange />,
+            icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                <path d="M18 2V4M6 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M11.9955 13H12.0045M11.9955 17H12.0045M15.991 13H16M8 13H8.00897M8 17H8.00897" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.5 8H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2.5 12.2432C2.5 7.88594 2.5 5.70728 3.75212 4.35364C5.00424 3 7.01949 3 11.05 3H12.95C16.9805 3 18.9958 3 20.2479 4.35364C21.5 5.70728 21.5 7.88594 21.5 12.2432V12.7568C21.5 17.1141 21.5 19.2927 20.2479 20.6464C18.9958 22 16.9805 22 12.95 22H11.05C7.01949 22 5.00424 22 3.75212 20.6464C2.5 19.2927 2.5 17.1141 2.5 12.7568V12.2432Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3 8H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>,
             submenu: [
                 { label: 'All Attendance List', path: '/all-Attendance-list' },
                 { label: 'Shift Management', path: '/shift-management' },
@@ -119,37 +157,82 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         }
     ];
 
+    const handleMouseEnter = () => {
+        dispatch(setLiHover(true));  // Redux में liHover state को true करें
+    };
+
+    // Mouse leave पर liHover state को false करें
+    const handleMouseLeave = () => {
+        dispatch(setLiHover(false));  // Redux में liHover state को false करें
+    };
+    const [mobileMenu, setMobileMenu] = useState(false);
+    const MobileMenuToggle = () => {
+        setMobileMenu(!mobileMenu)
+    }
     return (
         <>
-            <div className={`sidebar ${isOpen ? 'open' : 'close'}`}>
-                <div className="ul">
+    
+            <div className={`sidebar ${isOpen ? 'open' : 'close'} ${sideW ? 'sideW' : ''} ${!mobileMenu ? 'sidebarMobile' : ''} `}>
+                <div className="ul"
+                    onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+                >
                     <div id='top_bar' className="slide-btn">
-                        <button className="toggle-button" onClick={toggleSidebar}>
+                        <div id='MobileMenu' onClick={MobileMenuToggle}>
+                            {!mobileMenu ?
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                                    <path d="M2 12C2 8.3109 2 6.46633 2.81382 5.1588C3.1149 4.67505 3.48891 4.2543 3.91891 3.91557C5.08116 3.00003 6.72077 3.00003 10 3.00003H14C17.2792 3.00003 18.9188 3.00003 20.0811 3.91557C20.5111 4.2543 20.8851 4.67505 21.1862 5.1588C22 6.46633 22 8.3109 22 12C22 15.6892 22 17.5337 21.1862 18.8413C20.8851 19.325 20.5111 19.7458 20.0811 20.0845C18.9188 21 17.2792 21 14 21H10C6.72077 21 5.08116 21 3.91891 20.0845C3.48891 19.7458 3.1149 19.325 2.81382 18.8413C2 17.5337 2 15.6892 2 12Z" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M14.5 3.00003L14.5 21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                    <path d="M18 7.00006H19M18 10.0001H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                :
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                                    <path d="M2 12C2 8.31087 2 6.4663 2.81382 5.15877C3.1149 4.67502 3.48891 4.25427 3.91891 3.91554C5.08116 3 6.72077 3 10 3H14C17.2792 3 18.9188 3 20.0811 3.91554C20.5111 4.25427 20.8851 4.67502 21.1862 5.15877C22 6.4663 22 8.31087 22 12C22 15.6891 22 17.5337 21.1862 18.8412C20.8851 19.325 20.5111 19.7457 20.0811 20.0845C18.9188 21 17.2792 21 14 21H10C6.72077 21 5.08116 21 3.91891 20.0845C3.48891 19.7457 3.1149 19.325 2.81382 18.8412C2 17.5337 2 15.6891 2 12Z" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M9.5 3L9.5 21" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                    <path d="M5 7H6M5 10H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            }
+                        </div>
+
+                        <button onClick={toggleSidebar} className={`toggle-button ${!mobileMenu ? 'arrowMobile' : ''} `}>
                             {isOpen ? <FaAngleLeft /> : <FaChevronRight />}
                         </button>
+
                     </div>
                     <ul id='top-ul-hide'>
                         {menuItems.map((item, index) => (
-                            <li key={index} className={`${activeItem === index ? 'li' : ''}`}>
-                                {/* <span onClick={() => handleClick(index)}
-                                    // className={`${activeItem2 == false ? 'active_span_li' : ''}`}
-                                    // className={`${activeItem === index ? 'active_span_li' : ''}`}
-                                    // className={`${activeItem === index ? ' color_li' : ''}`}
+                            <li key={index} className={`${activeItem === index ? 'li' : ''}`}
+                            >
+                                <span onClick={toggleSide}>
 
-                                >
-                                    {item.icon}
-                                </span> */}
-                                <span
-                                    onClick={() => combinedClickHandler(index, item.submenu)}
-                                    className={`${activeItem === index ? ' color_li' : ''}`}
-                                >
-                                    {item.icon}
+                                    <span
+                                        onClick={() => combinedClickHandler(index, item.submenu)}
+                                        className={`${activeItem === index ? ' color_li' : ''}`}
+                                        ref={sideButtonRef}
+                                    >
+                                        {item.icon}
 
 
-                                    {activeItem2 && <p className={` ${isOpen ? 'openP' : 'closeP'}`}></p>} {isOpen ? '' : <div className='hover_P'><p>{item.label}</p> <div></div></div>}
+                                        {activeItem2 &&
+                                            <p className={` ${isOpen ? 'openP' : 'closeP'}`}>
+
+                                            </p>}
+                                        {isOpen ? '' :
+                                            <div className='hover_P'>
+                                                <p>
+                                                    {item.label}
+                                                </p>
+                                                <div>
+
+                                                </div>
+                                            </div>
+
+                                        }
+
+                                    </span>
                                 </span>
                                 {isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>{item.label}</p>}
-                                <div className={`hover_menu ${activeItem === index ? 'show' : ''} ${activeItem2 == true ? 'active_span_li ' : 'active_span_li_2'}`}>
+                                {/* {isSideOpen && ( */}
+                                <div className={`hover_menu ${activeItem === index ? 'show' : ''} ${activeItem2 == true || !liHover == true ? 'active_span_li ' : 'active_span_li_2'}`}>
                                     <div className='side_arrow'>
                                         {item.submenu.map((_, subIndex) => (
                                             <div className='leftArrow' key={subIndex}><div className='divL'></div></div>
@@ -157,9 +240,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                     </div>
                                     <div className="lineS"></div>
                                     <ul>
-                                        {/* {item.submenu.map((submenuItem, subIndex) => (
-                                            <li onClick={() => handleClick(index, submenuItem.path)} key={subIndex}>{submenuItem.label}</li>
-                                        ))} */}
+
                                         {item.submenu.map((submenuItem, subIndex) => (
                                             <li
                                                 onClick={() => {
@@ -173,6 +254,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                         ))}
                                     </ul>
                                 </div>
+                                {/* )} */}
                             </li>
                         ))}
                         <li><h5>MORE</h5></li>
@@ -181,11 +263,30 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     <div className={` ${isOpen ? '' : 'side'} `}>
                         <div className={` ${isOpen ? '' : 'sideLine'} `}>
                             <div className='dot'><div></div></div>
-                            <ul className='ul2'>
-                                <li><span><TbFileMinus /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Files</p>} {isOpen ? '' : <div className='hover_P'><p>Files</p> <div></div></div>}</li>
-                                <li><span><TbGraph /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Performance</p>}  {isOpen ? '' : <div className='hover_P'><p>Performance</p> <div></div></div>}</li>
-                                <li><span><TbFolderSymlink /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Onboarding</p>}  {isOpen ? '' : <div className='hover_P'><p>Onboarding</p> <div></div></div>}</li>
-                                <li><span><BsClipboardData /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Report</p>}  {isOpen ? '' : <div className='hover_P'><p>Report</p> <div></div></div>}</li>
+                            <ul className='ul2'
+                            // onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+
+                            >
+                                <li>
+                                    <span>
+                                        <span><TbFileMinus /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Files</p>} {isOpen ? '' : <div className='hover_P'><p>Files</p> <div></div></div>}
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <span><TbGraph /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Performance</p>}  {isOpen ? '' : <div className='hover_P'><p>Performance</p> <div></div></div>}
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <span><TbFolderSymlink /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Onboarding</p>}  {isOpen ? '' : <div className='hover_P'><p>Onboarding</p> <div></div></div>}
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <span><BsClipboardData /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Report</p>}  {isOpen ? '' : <div className='hover_P'><p>Report</p> <div></div></div>}
+                                    </span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -285,15 +386,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
 
 
-                                    {/* <li><Link to={"/"}><HiOutlineHome /></Link>Add Organization</li>
-              <li><Link to={"/"}><TfiMore /></Link>Create Items</li>
-              <li><Link to={"/"}><RiNotification3Line /></Link>Add Customer</li>
-              <li><Link to={"/"}><TfiMore /></Link>Invite User</li>
-              <li><Link to={"/"}><HiOutlineHome /></Link>Add Organization</li>
-              <li><Link to={"/"}><TfiMore /></Link>Create Items</li>
-              <li><Link to={"/"}><TfiMore /></Link>Create Items</li>
-              <li><Link to={"/"}><RiNotification3Line /></Link>Add Customer</li>
-              <li><Link to={"/"}><TfiMore /></Link>Invite User</li> */}
+
                                 </ul>
                             </div>
                         </div>

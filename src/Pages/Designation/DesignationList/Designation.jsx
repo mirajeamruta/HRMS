@@ -14,25 +14,58 @@ import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { BiChevronRightCircle } from "react-icons/bi";
 import './Designation.scss';
-
+import { OutsideClick } from '../../../components/OutSideClick';
+import axios from 'axios';
+import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2'
 const Designation = () => {
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
+
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
-        { deptName: "UI Designer", deptHead: "Application Development", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "UX Designer", deptHead: "UI/UX Design", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "Chief Financial Officer", deptHead: "Game Client", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "President", deptHead: "QC", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "Chief Operating Officer", deptHead: "Art", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "Head of HR", deptHead: "Game Client", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "Chief Technology Officer", deptHead: "UI/UX Design", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "Director", deptHead: "Backend", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "Project Manager", deptHead: "Backend", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-        { deptName: "Delivery Manager", deptHead: "Game Design", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
-
-
+        // { deptName: "UI Designer", deptHead: "Application Development", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { deptName: "UX Designer", deptHead: "UI/UX Design", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { deptName: "Chief Financial Officer", deptHead: "Game Client", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { deptName: "President", deptHead: "QC", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { deptName: "Chief Operating Officer", deptHead: "Art", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { deptName: "Head of HR", deptHead: "Game Client", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { deptName: "Chief Technology Officer", deptHead: "UI/UX Design", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { deptName: "Director", deptHead: "Backend", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { deptName: "Project Manager", deptHead: "Backend", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
+        // { designation_name: "Delivery Manager", department_id: "Game Design", description: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
     ]);
+    // const [designations, setDesignations] = useState([]);
+    const token = localStorage.getItem('access_token');
+    const [loading, setLoading] = useState(true);
+    
+    // console.log('employees::', employees)
+
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/designation/list', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setEmployees(response.data.designation);
+                setFilteredEmployees(response.data.designation); // filteredEmployees ko bhi sync karo
+                console.log('response', response.data.designation);
+                setLoading(false);
+
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+            });
+    }, []);
+
+
+
+
+
+    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
+
+
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -43,7 +76,7 @@ const Designation = () => {
     const [isOpen, setIsOpen] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [selectedDepartmentDetails2, setSelectedDepartmentDetails2] = useState(null);
-    console.log(selectedDepartment)
+    console.log('filteredEmployees', filteredEmployees)
 
     const handleHidImport = () => {
         setHidImport(!hidImport);
@@ -68,15 +101,46 @@ const Designation = () => {
     const indexOfFirstEmployee = indexOfLastEmployee - rowsPerPage;
     const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
     const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    // console.log('currentEmployees', indexOfLastEmployee)
+    // const handlePageChange = (pageNumber) => {
+    //     setCurrentPage(pageNumber);
+    // };
 
     const handleRowsPerPageChange = (e) => {
         setRowsPerPage(Number(e.target.value));
         setCurrentPage(1);
     };
+    // page index active
+
+    // Function to generate the pages to display
+    const generatePages = () => {
+        let pages = [];
+
+        // If total pages <= 5, show all pages
+        if (totalPages <= 5) {
+            pages = [...Array(totalPages).keys()].map(pageIndex => pageIndex + 1);
+        }
+        // If total pages > 5
+        else {
+            if (currentPage <= 3) {
+                pages = [1, 2, 3, 4, 5];
+            } else if (currentPage >= totalPages - 2) {
+                pages = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+            } else {
+                pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+            }
+        }
+
+        return pages;
+    };
+
+    // Function to handle page change
+    const handlePageChange = (page) => {
+        if (page !== '...') {
+            setCurrentPage(page);
+        }
+    };
+    // page index active
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -153,97 +217,101 @@ const Designation = () => {
     const handleDesignationclick2 = (designation) => {
         setSelectedDepartmentDetails2(designation);
     };
+
+
+
+    // 
     const navigate = useNavigate();
 
     const DesignationDetails = () => {
         navigate('/designationdeatils');
     }
+// 
 
 
 
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        contactNumber: '',
-        jobOpening: '',
-        resume: '',
-        coverLetter: '',
-        country: '',
-        state: '',
-        city: '',
-        zipCode: '',
-        source: '',
-        availabilityDate: '',
-        expectedSalary: '',
-        referredPerson: ''
-    });
-    const handleFileChange = (event) => {
-        const { name, files } = event.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: files[0] ? files[0].name : ''
-        }));
+
+
+    // popup
+    const initialFormData_3 = {
+        email_3: '',
+        department_3: '',
+        Description_3: '',
     };
-    const [dropdowns, setDropdowns] = useState({
-        department: false
+    const [formData_3, setFormData_3] = useState(initialFormData_3);
+    const [dropdowns_3, setDropdowns_3] = useState({
+        departmentOpen_3: false,
     });
+    console.log('department_3', formData_3.department_3)
 
-    const handleChange = (event) => {
+    const handleInputChange_3 = (event) => {
         const { name, value } = event.target;
-        setFormData(prevState => ({
+        setFormData_3((prevState) => ({
             ...prevState,
-            [name]: value
+            [name]: value,
         }));
     };
 
-    const handleSubmit = (event) => {
+    const toggleDropdown_3 = (dropdownKey) => {
+        setDropdowns_3((prevState) => ({
+            ...prevState,
+            [dropdownKey]: !prevState[dropdownKey],
+        }));
+    };
+
+    // const selectOption = (field, value) => {
+    //     setFormData_3((prevState) => ({
+    //         ...prevState,
+    //         [field]: value,
+    //     }));
+    //     // toggleDropdown_3('departmentOpen_3');
+    //     // alert(field)
+    // };
+    // Function to select an option and update the formDetails_2
+    const selectOption = (field, option) => {
+        setFormData_3((prevState) => ({
+            ...prevState,
+            [field]: option,
+        }));
+        setDepartmentOpen(false)
+    };
+
+    // const toggleDepartment = () => {
+    //     setIsDepartmentOpen(!isDepartmentOpen);
+    // };
+
+    const handleSubmitForm_3 = (event) => {
         event.preventDefault();
 
-        // Validate if file input is provided
-        // if (!formData.resume || !formData.coverLetter) {
-        //     alert("Please upload both Resume and Cover Letter");
-        //     return;
-        // }
-
-        console.log("add-applicant Form Data:", formData);
-
-        // Reset form after submission
-        setFormData({
-            fullName: '',
-            email: '',
-            contactNumber: '',
-            jobOpening: '',
-            resume: '',
-            coverLetter: '',
-            country: '',
-            state: '',
-            city: '',
-            zipCode: '',
-            source: '',
-            availabilityDate: '',
-            expectedSalary: '',
-            referredPerson: ''
-        });
+        // Sab fields bharne ke baad hi API ko call karo
+        axios.post('https://devstronauts.com/public/api/designation/create/update', {
+            designation_name: formData_3.email_3,  // Email ko formData se lo
+            department_id: formData_3.department_3, // Department ID ko formData se lo
+            description: formData_3.Description_3   // Description ko formData se lo
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                console.log(response);
+                // Data create/update ho gaya, ab loading false karo
+                setLoading(false);
+                // Employees ko update karo ya response ke according set karo
+                setEmployees(prevEmployees => [...prevEmployees, response.data.designation]);
+                // Optional: Form reset kar sakte ho
+                setFormData_3(initialFormData_3);
+            })
+            .catch(error => {
+                console.error("Error during create/update:", error);
+            });
     };
+    
+    const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
 
 
-    const toggleDropdown = (dropdown) => {
-        setDropdowns(prevState => ({
-            ...prevState,
-            [dropdown]: !prevState[dropdown]
-        }));
-    };
 
-    const selectOption = (dropdown, value) => {
-        setFormData(prevState => ({
-            ...prevState,
-            [dropdown]: value
-        }));
-        setDropdowns(prevState => ({
-            ...prevState,
-            [dropdown]: false
-        }));
-    };
+    
 
     return (
         <div>
@@ -305,12 +373,12 @@ const Designation = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>
+                        <div className='div_box' onClick={toggleFilter2} ref={filterButtonRef2}>
                             <span><IoFilterSharp /></span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen2 && (
+                            <div className="filter-container" ref={filterRef2}>
                                 <div className="filter-options">
                                     <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>
@@ -368,32 +436,44 @@ const Designation = () => {
             <div className="allEmployeeList" id="allemployeetable">
                 {/* <div className="head">
                 </div> */}
-                <div className="employee-table">
+                <div className="employee-table" id='Small_employee_table'>
 
-                    <table>
+                    <table id='Small_table' className='tableD'>
                         <thead>
                             <tr>
-                                <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
+                                <th id='inputD'><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
                                 <th> <div>Designation Name<span><TiArrowUnsorted /></span></div></th>
                                 <th>Department</th>
-                                <th>Description</th>
+                                <th >Description</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index} onClick={() => handleDesignationclick2(DesignationDetails)}>
+                                <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td>{emp.deptName}</td>
-                                    <td>{emp.deptHead}</td>
-                                    <td>{emp.parentDept}</td>
-
-
-
+                                    <td onClick={() => navigate(`/designationdeatils/${emp.id}`)}>{emp.deptName || emp.designation_name}</td>
+                                    <td onClick={() => navigate(`/designationdeatils/${emp.id}`)}>{emp.deptHead || emp.department_id}</td>
+                                    <td id='Description2' onClick={() => navigate(`/designationdeatils/${emp.id}`)}>{emp.parentDept || emp.description}</td>
                                 </tr>
                             ))}
+                            {/* {designations.map((designation, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td>{designation.designation_name}</td>
+                                    <td>{designation.department_id}</td>
+                                    <td>{new Date(designation.description || '-').toLocaleDateString()}</td>
+                                </tr>
+                            ))} */}
                         </tbody>
                     </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
                     {showPopup && (
                         <div className="popup-overlay">
                             <div className="popup-content">
@@ -404,94 +484,121 @@ const Designation = () => {
                                     </button>
                                 </div>
                                 <div className="add-designation-body">
-                                    <form>
+                                    <form onSubmit={handleSubmitForm_3}>
                                         <div className="side-by-side">
-                                            {/* <div>
-                                                <label style={{ color: "red" }}>Designation Name *</label>
-                                                <input type="text" id="designname" placeholder="Enter designation name" />
-                                            </div> */}
-
                                             <div className="form-group">
                                                 <label className='starred'>Designation Name*</label>
                                                 <input
                                                     type="text"
-                                                    placeholder="Enter designation name "
-                                                    name="email"
-                                                    value={formData.email}
-                                                    onChange={handleChange}
+                                                    placeholder="Enter designation name"
+                                                    name="email_3"
+                                                    value={formData_3.email_3}
+                                                    onChange={handleInputChange_3}
                                                     required
+                                                    className='imputaddD'
                                                 />
+                                               
                                             </div>
 
                                             <div className="form-group" id="depart">
-                                                <label>Department</label>
-                                                <div className="dropdown10">
-                                                    <div className="dropdown-button10" onClick={() => toggleDropdown('department')}>
-                                                        <div className='choose1'>{formData.department || "Choose department"}</div>
-                                                        <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                                <label className='Departmentlabel'>Department</label>
+                                               
+                                                <div className="dropdown3">
+                                                    <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
+                                                        <div>{formData_3.department_3 || "Select department"}</div>
+                                                        <span id='toggle_selectIcon'>
+                                                            {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                                        </span>
                                                     </div>
-
-                                                    {dropdowns.department && (
-                                                         <div className="dropdown-menu10">
-                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department1')}>Department1</div>
-                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department2')}>Department2</div>
-                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department3')}>Department3</div>
-                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department4')}>Department4</div>
-                                        </div>
+                                                    {isDepartmentOpen && (
+                                                        <div className="dropdown-menu" ref={departmentRef}>
+                                                            <input
+                                                                type="search"
+                                                                className='search22'
+                                                                placeholder="Search department"
+                                                                value={searchQueryDepartment}
+                                                                id='searchDepartmentHead'
+                                                                onChange={handleSearchQueryChangeDepartment}
+                                                            />
+                                                            <div className="dropdown_I">
+                                                                {['Management', 'Development', 'HR'].filter(option =>
+                                                                    option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
+                                                                ).map(option => (
+                                                                    <div className="dropdown-item" onClick={() => selectOption('department_3', option)} key={option}>
+                                                                        {option}
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
                                                     )}
                                                 </div>
                                             </div>
-
-                                            {/* <div>
-                                                <label>Department </label>
-                                                <input type="text" id="designname1" placeholder="Enter department" />
-                                            </div> */}
                                         </div>
-                                        <div className='despt'>  <label>Description</label></div>
 
-                                        <textarea placeholder="Enter description"></textarea>
+                                        <div className='despt'>
+                                            <label>Description</label>
+                                        </div>
 
-                                        <button type="submit">Submit</button>
-                                        <span class="icon99">
-                                            <BiChevronRightCircle />
-                                            </span>
+                                        <textarea
+                                            placeholder="Enter description"
+                                            name="Description_3" // Ensure name matches the form data key
+                                            value={formData_3.Description_3}
+                                            onChange={handleInputChange_3}
+                                        ></textarea>
+
+                                        <button type="submit">Submit
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
+                                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                                                <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        </button>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    <div className="pagination">
-                        <div className="rows-per-page">
-                            <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-                                <option value={5}>5 per page</option>
-                                <option value={10}>10 per page</option>
-                                <option value={30}>30 per page</option>
-                                <option value={50}>50 per page</option>
-                                <option value={70}>70 per page</option>
-                                <option value={100}>100 per page</option>
-                            </select>
+                </div>
+                <div className="pagination">
+                    <div className="rows-per-page">
+                        <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                            <option value={5}>5 per page</option>
+                            <option value={10}>10 per page</option>
+                            <option value={30}>30 per page</option>
+                            <option value={50}>50 per page</option>
+                            <option value={70}>70 per page</option>
+                            <option value={100}>100 per page</option>
+                        </select>
+                    </div>
+                    <div className="page-navigation">
+                        <div className="page-numbers">
+                            {generatePages().map((page, index) => (
+                                <button
+                                    key={index}
+                                    className={currentPage === page ? 'activePageIndex' : ''}
+                                    onClick={() => handlePageChange(page)}
+                                    disabled={page === '...'}
+                                >
+                                    {page}
+                                </button>
+                            ))}
                         </div>
-                        <div className="page-navigation">
-                            <div className="page-numbers">
-                                {[...Array(totalPages)].map((_, pageIndex) => (
-                                    <button
-                                        key={pageIndex + 1}
-                                        className={currentPage === pageIndex + 1 ? 'active' : ''}
-                                        onClick={() => handlePageChange(pageIndex + 1)}
-                                    >
-                                        {pageIndex + 1}
-                                    </button>
-                                ))}
-                            </div>
-                            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
-                            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
-                        </div>
+
+                        {/* Previous Button */}
+                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                            <FaAngleLeft />
+                        </button>
+
+                        {/* Next Button */}
+                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                            <FaAngleRight />
+                        </button>
                     </div>
                 </div>
 
             </div>
-        </div >
+        </div>
     );
 };
 
