@@ -39,7 +39,7 @@ const EmployeeDetails = () => {
             } else {
                 setEmployeeData(null);
             }
-            
+
             setLoading(false);
         })
         .catch(error => {
@@ -70,7 +70,11 @@ const EmployeeDetails = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div style={{textAlign:"center",display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize:"20px",
+            height: "100vh" /* Adjust the height based on your container */}}>Loading...</div>;
     }
 
     if (error) {
@@ -121,7 +125,7 @@ const EmployeeDetails = () => {
                             </div>
                             <div>
                                 <h4>Date of Joining</h4>
-                                <p>{employeeData?.joining_date|| "N/A"}</p>
+                                <p>{`${new Date(employeeData.joining_date).getDate()}-${new Date(employeeData.joining_date).toLocaleString('en-US', { month: 'short' })}-${new Date(employeeData.joining_date).getFullYear()}`}</p>
                             </div>
                             <div>
                                 <h4>Designation</h4>
@@ -166,7 +170,7 @@ const EmployeeDetails = () => {
                             </div>
                             <div>
                                 <h4>Date of Birth</h4>
-                                <p>{employeeData?.date_of_birth}</p>
+                                <p>{`${new Date(employeeData.date_of_birth).getDate()}-${new Date(employeeData.date_of_birth).toLocaleString('en-US', { month: 'short' })}-${new Date(employeeData.date_of_birth).getFullYear()}`}</p>
                             </div>
                             <div>
                                 <h4>Age</h4>
