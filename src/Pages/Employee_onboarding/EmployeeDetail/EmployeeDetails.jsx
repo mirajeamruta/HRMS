@@ -92,10 +92,10 @@ const EmployeeDetails = () => {
                 <div className="profile_card">
                     <div className="img_card">
                         <div className="progress-circle">
-                            <img src={employeeData?.profileImage || "default_image_url"} alt="" />
+                        <img src="https://w7.pngwing.com/pngs/564/690/png-transparent-computer-icons-web-browser-new-job-hand-business-silhouette-thumbnail.png" alt="" />
                         </div>
                         <div className="about_user">
-                            <h3>{employeeData?.last_name || "N/A"}</h3>
+                            <h3>{employeeData?.first_name || "N/A"}</h3>
                             <p>{employeeData?.position || "Position not available"}</p>
                             <div><h4></h4> <h5>{employeeData?.status || "Status not available"}</h5></div>
                         </div>
@@ -110,17 +110,71 @@ const EmployeeDetails = () => {
                     <div className="card">
                         <div className='top_head'><h3><span><MdWorkHistory /></span>Work Information</h3></div>
                         <div className='contentInformation'>
-                            <div><h4>Department</h4><p>{employeeData?.department_id || "N/A"}</p></div>
-                            <div><h4>Date of Joining</h4><p>{employeeData?.joining_date || "N/A"}</p></div>
+                        <div>
+                                <h4>Department</h4>
+                                <p>{employeeData?.department_id|| "N/A"}</p>
+                            </div>
+                            <div>
+                                <h4>Employment Status</h4>
+                                <p>{employeeData?.employee_status|| "N/A"}</p>
+                            </div>
+                            <div>
+                                <h4>Date of Joining</h4>
+                                <p>{employeeData?.joining_date|| "N/A"}</p>
+                            </div>
+                            <div>
+                                <h4>Designation</h4>
+                                <p>{employeeData?.designation_id|| "N/A"}</p>
+                            </div>
+                            <div>
+                                <h4>Reporting manager</h4>
+                                <p>{employeeData?.reporting_manager|| "N/A"}</p>
+                            </div>
+                            <div>
+                                <h4>Source of Hire</h4>
+                                <p>{employeeData?.source_of_hire|| "N/A"}</p>
+                            </div>
+                            <div>
+                                <h4>Employee Type</h4>
+                                <p>{employeeData?.employment_type|| "N/A"}</p>
+                            </div>
+                             <div>
+                                <h4>Work Mail</h4>
+                                <p>{employeeData?.email|| "N/A"}</p>
+                            </div>
+                            <div>
+                                <h4>Date of Exit</h4>
+                                <p>{employeeData?.date_of_exit || "N/A"}</p>
+                            </div>
                         </div>
                     </div>
                     <div className="card">
                         <div className='top_head'><h3><span><MdWorkHistory /></span>Personal Information</h3></div>
                         <div className='contentInformation'>
-                            <div><h4>Employee ID</h4><p>{employeeData?.employee_id || "N/A"}</p></div>
-                            <div><h4>Contact Number</h4><p>{employeeData?.mobile || "N/A"}</p></div>
-                            <div><h4>Email</h4><p>{employeeData?.email || "N/A"}</p></div>
-                            <div><h4>Date of Birth</h4><p>{employeeData?.date_of_birth || "N/A"}</p></div>
+                        <div>
+                                <h4>Employee ID</h4>
+                                <p>{employeeData?.employee_id}</p>
+                            </div>
+                            <div>
+                                <h4>Contact Number</h4>
+                                <p>{employeeData?.mobile}</p>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>{employeeData?.email}</p>
+                            </div>
+                            <div>
+                                <h4>Date of Birth</h4>
+                                <p>{employeeData?.date_of_birth}</p>
+                            </div>
+                            <div>
+                                <h4>Age</h4>
+                                <p>{employeeData?.age}</p>
+                            </div>
+                            <div>
+                                <h4>Gender</h4>
+                                <p>{employeeData?.gender}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
