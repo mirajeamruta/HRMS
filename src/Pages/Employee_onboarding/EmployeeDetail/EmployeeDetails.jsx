@@ -39,6 +39,7 @@ const EmployeeDetails = () => {
             } else {
                 setEmployeeData(null);
             }
+            
             setLoading(false);
         })
         .catch(error => {
