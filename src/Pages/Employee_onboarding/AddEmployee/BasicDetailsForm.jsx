@@ -25,7 +25,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
     const { isOpen: isEmployeeStatusOpen, ref: employeeStatusRef, buttonRef: employeeStatusButtonRef, handleToggle: toggleEmployeeStatus, setIsOpen: setEmployeeStatusOpen } = OutsideClick();
     const { isOpen: isSourceOfHireOpen, ref: sourceOfHireRef, buttonRef: sourceOfHireButtonRef, handleToggle: toggleSourceOfHire, setIsOpen: setSourceOfHireOpen } = OutsideClick();
 
-
+    const [sms, setSms] = useState('');
 
     const [formData, setFormData] = useState({
         employeeId: '',
@@ -130,7 +130,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
         axios.post(
             'https://devstronauts.com/public/api/employee/create/update',
             {
-                id: id,  // Replace this with dynamic if needed
+                // id: id,  // Replace this with dynamic if needed
                 employeeId: formData.employeeId,
                 firstName: formData.firstName,
                 lastName: formData.lastName,
