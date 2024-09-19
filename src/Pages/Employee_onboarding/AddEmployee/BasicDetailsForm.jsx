@@ -6,8 +6,12 @@ import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-// import { OutsideClick } from '../../../components/OutSideClick';
+// import { OutsideClick } from '../../../components/OutSideClick'
 import { OutsideClick } from './OutsideClick.jsx'
+
+import axios from 'axios';
+
+
 const BasicDetailsForm = ({ onSubmit }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
@@ -79,30 +83,125 @@ const BasicDetailsForm = ({ onSubmit }) => {
         }));
     };
 
+
+    // const token = localStorage.getItem('access_token');
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     console.log(formData);
+    //     setFormData({
+    //         employeeId: '',
+    //         firstName: '',
+    //         lastName: '',
+    //         dob: '',
+    //         age: '',
+    //         gender: '',
+    //         email: '',
+    //         contactNumber: '',
+    //         reportingManager: '',
+    //         department: '',
+    //         designation: '',
+    //         doj: '',
+    //         photo: '',
+    //         maritalStatus: '',
+    //         doe: '',
+    //         employmentType: '',
+    //         employeeStatus: '',
+    //         sourceOfHire: ''
+    //     });
+    // };
+
+
+    
+    const token = localStorage.getItem('access_token');
+
     const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(formData);
-        setFormData({
-            employeeId: '',
-            firstName: '',
-            lastName: '',
-            dob: '',
-            age: '',
-            gender: '',
-            email: '',
-            contactNumber: '',
-            reportingManager: '',
-            department: '',
-            designation: '',
-            doj: '',
-            photo: '',
-            maritalStatus: '',
-            doe: '',
-            employmentType: '',
-            employeeStatus: '',
-            sourceOfHire: ''
+        event.preventDefault();  // Prevent default form submission
+    
+        // Validate if the token exists
+        if (!token) {
+            console.error('Token not found');
+            return;
+        }
+    
+        // Ensure formData is correctly populated
+        console.log('Submitting form data:', formData);
+    
+        // Make the API request
+        axios.post(
+            'https://devstronauts.com/public/api/employee/create/update',
+            {
+                id: id,  // Replace this with dynamic if needed
+                employeeId: formData.employeeId,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                dob: formData.dob,
+                age: formData.age,
+                gender: formData.gender,
+                email: formData.email,
+                contactNumber: formData.contactNumber,
+                reportingManager: formData.reportingManager,
+                department: formData.department,
+                designation: formData.designation,
+                doj: formData.doj,
+                photo: formData.photo,
+                maritalStatus: formData.maritalStatus,
+                doe: formData.doe,
+                employmentType: formData.employmentType,
+                employeeStatus: formData.employeeStatus,
+                sourceOfHire: formData.sourceOfHire
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'  // Ensure the correct content type
+                }
+            }
+        )
+        .then(response => {
+            console.log('Job Data Updated successfully:', response.data);
+            setSms('Updated Job successfully');
+    
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 4000);
+    
+            // Clear the form after successful submission
+            setFormData({
+                employeeId: '',
+                firstName: '',
+                lastName: '',
+                dob: '',
+                age: '',
+                gender: '',
+                email: '',
+                contactNumber: '',
+                reportingManager: '',
+                department: '',
+                designation: '',
+                doj: '',
+                photo: '',
+                maritalStatus: '',
+                doe: '',
+                employmentType: '',
+                employeeStatus: '',
+                sourceOfHire: ''
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error.response ? error.response.data : error.message);
+            const errorMessage = error.response ? error.response.data.message : error.message;
+            setSms(`${errorMessage}`);
+            
+            setShowAlertError(true);
+            setTimeout(() => {
+                setShowAlertError(false);
+            }, 4000);
         });
     };
+    
+
+
 
     const toggleDropdown = (dropdown) => {
         setDropdowns(prevState => ({
@@ -121,6 +220,12 @@ const BasicDetailsForm = ({ onSubmit }) => {
             [dropdown]: !dropdowns[dropdown]
         });
     };
+
+
+
+
+
+
 
     const selectOption = (dropdown, value) => {
         setFormData(prevState => ({
@@ -172,6 +277,9 @@ const BasicDetailsForm = ({ onSubmit }) => {
         option.toLowerCase().includes(searchQueryEmployeeStatus.toLowerCase())
     );
     // 
+
+
+    
 
 
     return (
@@ -559,4 +667,3 @@ const BasicDetailsForm = ({ onSubmit }) => {
     );
 };
 export default BasicDetailsForm;
-// 

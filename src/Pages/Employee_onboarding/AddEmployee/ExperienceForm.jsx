@@ -6,10 +6,14 @@ import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import axios from 'axios'; // Make sure you have axios imported
 
 const ExperienceForm = ({ onSubmit }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+    const [showAlertError, setShowAlertError] = useState(false);
+    const [sms, setSms] = useState('');
     const [experienceForms, setExperienceForms] = useState([
         {
             employeeId: '',
@@ -23,7 +27,7 @@ const ExperienceForm = ({ onSubmit }) => {
             duration: ''  // Add duration field
         }
     ]);
-
+    const token = localStorage.getItem('access_token'); // Retrieve the token
     const handleFileChange = (index, event) => {
         const file = event.target.files[0];
         if (file) {
@@ -94,12 +98,82 @@ const ExperienceForm = ({ onSubmit }) => {
         setExperienceForms(newForms);
     };
 
-    const handleSubmit = (event) => {
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     console.log('experienceForms', experienceForms);  // Print the final forms with duration
+    //     // handle form submission logic here
+    //     // Reset forms or show a success message
+    // };
+
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('experienceForms', experienceForms);  // Print the final forms with duration
-        // handle form submission logic here
-        // Reset forms or show a success message
+
+        if (!token) {
+            console.error('Token not found');
+            return;
+        }
+
+        try {
+            // Prepare the data for submission
+            const formData = new FormData();
+            experienceForms.forEach((form, index) => {
+                formData.append(`experience[${index}][employeeId]`, form.employeeId);
+                formData.append(`experience[${index}][companyName]`, form.companyName);
+                formData.append(`experience[${index}][industry]`, form.industry);
+                formData.append(`experience[${index}][jobTitle]`, form.jobTitle);
+                formData.append(`experience[${index}][startDate]`, form.startDate);
+                formData.append(`experience[${index}][endDate]`, form.endDate);
+                formData.append(`experience[${index}][description]`, form.description);
+                formData.append(`experience[${index}][duration]`, form.duration);
+                if (form.photo) {
+                    formData.append(`experience[${index}][photo]`, form.photo);
+                }
+            });
+
+            // Make the API request
+            
+            const response = await axios.post('https://devstronauts.com/public/api/employee/create/update', formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+
+            // Handle success
+            console.log('Data submitted successfully:', response.data);
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 4300);
+
+            // Reset forms or show a success message
+            setExperienceForms([{
+                employeeId: '',
+                companyName: '',
+                industry: '',
+                jobTitle: '',
+                startDate: '',
+                endDate: '',
+                description: '',
+                photo: '',
+                duration: ''  // Add duration field for new form
+            }]);
+            setSameAsPresent(false);
+
+        } catch (error) {
+            // Handle error
+            console.error('Error submitting data:', error.response ? error.response.data : error.message);
+            const errorMessage = error.response ? error.response.data.message : error.message;
+            setSms(`Error: ${errorMessage}`);
+            setShowAlertError(true);
+            setTimeout(() => {
+                setShowAlertError(false);
+            }, 4000);
+        }
     };
+
 
     return (
         <div onSubmit={onSubmit}  id="Experience_form">

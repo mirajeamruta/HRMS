@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './AddEmloyee.scss';
+import axios from 'axios';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
@@ -40,7 +41,7 @@ const DocumentsForm = ({ onSubmit }) => {
     });
     // select
     const [selectedDocuments, setSelectedDocuments] = useState([]);
-    console.log('selectedDocuments', selectedDocuments)
+    // console.log('selectedDocuments', selectedDocuments)
     const [fileName, setFileName] = useState('');
    
     const { isOpen: isEmploymentTypeOpen, ref: employmentTypeRef, buttonRef: employmentTypeButtonRef, handleToggle: toggleEmploymentType, setIsOpen: setEmploymentTypeOpen } = OutsideClick();
@@ -55,7 +56,7 @@ const DocumentsForm = ({ onSubmit }) => {
     const [searchQueryEmploymentType, setSearchQueryEmploymentType] = useState('');
 
     const handleSearchQueryChangeEmploymentType = (e) => setSearchQueryEmploymentType(e.target.value);
-
+    const token = localStorage.getItem('authToken'); // Example of retrieving token from localStorage
     // 
     // img
     const [isUploaded, setIsUploaded] = useState(false);
@@ -181,6 +182,54 @@ const DocumentsForm = ({ onSubmit }) => {
         event.preventDefault();
         console.log(allDocumentsData); // All document data printed here
     };
+
+
+
+
+    // useEffect to handle form submission
+    useEffect(() => {
+        const submitForm = async () => {
+            // Validation
+            for (const form of educationForms) {
+                if (form.documentType === '' || form.number === '' || (!form.attachmentFront && !form.attachmentBack)) {
+                    console.error('Please fill all required fields');
+                    return;
+                }
+            }
+
+            try {
+                const formData = new FormData();
+
+                educationForms.forEach((form, index) => {
+                    formData.append(`documents[${index}][documentType]`, form.documentType);
+                    formData.append(`documents[${index}][number]`, form.number);
+                    if (form.attachmentFront) {
+                        formData.append(`documents[${index}][attachmentFront]`, form.attachmentFront);
+                    }
+                    if (form.attachmentBack) {
+                        formData.append(`documents[${index}][attachmentBack]`, form.attachmentBack);
+                    }
+                });
+
+                const response = await axios.post('https://devstronauts.com/public/api/employee/create/update', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                console.log('Response:', response.data);
+                if (onSubmit) onSubmit(response.data);
+            } catch (error) {
+                console.error('Error submitting data:', error);
+            }
+        };
+
+        // Trigger submission if educationForms or token changes
+        if (educationForms.length > 0 && token) {
+            submitForm();
+        }
+    }, [educationForms, token, onSubmit]); // Dependencies
 
     const documentOptions = ['Aadhaar', 'PAN', 'UAN', 'Other'];
 
@@ -324,7 +373,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                              
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -387,10 +436,10 @@ const DocumentsForm = ({ onSubmit }) => {
                                         <div className="file-upload">
                                             <input
                                                 type="file"
-                                                name='attachment'
+                                                name='attachmentFront'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                            
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -403,10 +452,10 @@ const DocumentsForm = ({ onSubmit }) => {
                                         <div className="file-upload">
                                             <input
                                                 type="file"
-                                                name='attachment'
+                                                name='attachmentBack'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                             
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -472,7 +521,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                              
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -537,7 +586,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                               
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -602,7 +651,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                               
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}

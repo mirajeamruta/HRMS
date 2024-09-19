@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './AddEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
@@ -6,10 +6,14 @@ import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
-
+import axios from 'axios';
 const EducationForm = ({ onSubmit }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
+    const [error, setError] = useState(''); // Ensure error state is defined
+    const [submitTriggered, setSubmitTriggered] = useState(false); // State to track submission
+   
+    const token = localStorage.getItem('access_token'); 
     const [educationForms, setEducationForms] = useState([
         {
             instituteName: '',
@@ -66,9 +70,60 @@ const EducationForm = ({ onSubmit }) => {
         // form submission logic yahan handle karein
     };
 
+  // Trigger submission when the submitTriggered state is true
+  useEffect(() => {
+    if (!submitTriggered) return; // Avoid running if submit not triggered
+
+    const submitForm = async () => {
+        setError(''); // Clear previous errors
+
+        const formData = new FormData();
+
+        educationForms.forEach((form, index) => {
+            formData.append(`education[${index}][instituteName]`, form.instituteName);
+            formData.append(`education[${index}][degree]`, form.degree);
+            formData.append(`education[${index}][specialization]`, form.specialization);
+            formData.append(`education[${index}][completionDate]`, form.completionDate);
+            formData.append(`education[${index}][fromDate]`, form.fromDate);
+            formData.append(`education[${index}][toDate]`, form.toDate);
+            if (form.attachment) {
+                formData.append(`education[${index}][attachment]`, form.attachment);
+            }
+        });
+
+        if (!token) {
+            console.error('Token not found');
+            return;
+        }
+
+        try {
+            const response = await axios.post('https://devstronauts.com/public/api/employee/create/update', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            console.log('Data submitted successfully', response.data);
+            if (onSubmit) onSubmit(response.data);
+        } catch (err) {
+            console.error('Error submitting data:', err);
+            setError(`Failed to submit data. Error: ${err.response?.data?.message || err.message}`);
+        } finally {
+            setSubmitTriggered(false); // Reset submit trigger state after submission
+        }
+    };
+
+    submitForm(); // Call the form submission function when submitTriggered is true
+
+}, [submitTriggered, educationForms, token, onSubmit]); // Dependencies that trigger the effect
+
+
+ 
+
+
     return (
         <div onSubmit={onSubmit} id="Education_form">
-            <form onSubmit={handleSubmit}>
+             <form onSubmit={handleSubmit}> 
                 {educationForms.map((form, index) => (
                     <div key={index} id='form' >
                         <div className='div_heading add_exp'>
@@ -207,8 +262,10 @@ const EducationForm = ({ onSubmit }) => {
                         <p>Next Page</p>
                         <span className='not_active'><IoIosArrowDropleft /></span>
                         <button type='submit'><IoIosArrowDropright /></button>
+                        {error && <p>{error}</p>}
                     </div>
                 </div>
+              
             </form>
         </div>
     );

@@ -6,6 +6,7 @@ import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import axios from 'axios'; // Make sure you have axios imported
 
 const ContactsForm = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -63,40 +64,134 @@ const ContactsForm = ({ onSubmit }) => {
         }));
     };
 
-    const handleSubmit = (event) => {
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     console.log(formData);
+
+    //     // Handle form submission
+    //     // Show success message or alert if needed
+    //     setShowAlert(true);
+    //     setTimeout(() => {
+    //         setShowAlert(false);
+    //     }, 4300);
+
+    //     // Reset form fields
+    //     setFormData({
+    //         country: '',
+    //         state: '',
+    //         city: '',
+    //         street1: '',
+    //         street2: '',
+    //         zipCode: '',
+    //         personalContactNumber: '',
+    //         emergencyContactNumber: '',
+    //         personalEmail: '',
+    //         permanentCountry: '',
+    //         permanentState: '',
+    //         permanentCity: '',
+    //         permanentStreet1: '',
+    //         permanentStreet2: '',
+    //         permanentZipCode: '',
+    //         permanentPersonalContactNumber: '',
+    //         permanentEmergencyContactNumber: '',
+    //         permanentPersonalEmail: ''
+    //     });
+    //     setSameAsPresent(false);
+    // };
+
+
+
+    const token = localStorage.getItem('access_token');
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(formData);
-
-        // Handle form submission
-        // Show success message or alert if needed
-        setShowAlert(true);
-        setTimeout(() => {
-            setShowAlert(false);
-        }, 4300);
-
-        // Reset form fields
-        setFormData({
-            country: '',
-            state: '',
-            city: '',
-            street1: '',
-            street2: '',
-            zipCode: '',
-            personalContactNumber: '',
-            emergencyContactNumber: '',
-            personalEmail: '',
-            permanentCountry: '',
-            permanentState: '',
-            permanentCity: '',
-            permanentStreet1: '',
-            permanentStreet2: '',
-            permanentZipCode: '',
-            permanentPersonalContactNumber: '',
-            permanentEmergencyContactNumber: '',
-            permanentPersonalEmail: ''
-        });
-        setSameAsPresent(false);
+    
+        // Check if the token exists
+        if (!token) {
+            console.error('Token not found');
+            return;
+        }
+    
+        // Define the endpoint URL
+        const endpointUrl = 'https://devstronauts.com/public/api/employee/create/update'; // Replace with your actual API endpoint
+    
+        // Create the request options
+        const requestOptions = {
+            method: 'POST',
+            url: endpointUrl,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            data: {
+                country: formData.country,
+                state: formData.state,
+                city: formData.city,
+                street1: formData.street1,
+                street2: formData.street2,
+                zipCode: formData.zipCode,
+                personalContactNumber: formData.personalContactNumber,
+                emergencyContactNumber: formData.emergencyContactNumber,
+                personalEmail: formData.personalEmail,
+                permanentCountry: formData.permanentCountry,
+                permanentState: formData.permanentState,
+                permanentCity: formData.permanentCity,
+                permanentStreet1: formData.permanentStreet1,
+                permanentStreet2: formData.permanentStreet2,
+                permanentZipCode: formData.permanentZipCode,
+                permanentPersonalContactNumber: formData.permanentPersonalContactNumber,
+                permanentEmergencyContactNumber: formData.permanentEmergencyContactNumber,
+                permanentPersonalEmail: formData.permanentPersonalEmail,
+            }
+        };
+    
+        try {
+            // Make the API request
+            const response = await axios(requestOptions);
+    
+            // Handle success
+            console.log('Data submitted successfully:', response.data);
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 4300);
+    
+            // Reset form fields
+            setFormData({
+                country: '',
+                state: '',
+                city: '',
+                street1: '',
+                street2: '',
+                zipCode: '',
+                personalContactNumber: '',
+                emergencyContactNumber: '',
+                personalEmail: '',
+                permanentCountry: '',
+                permanentState: '',
+                permanentCity: '',
+                permanentStreet1: '',
+                permanentStreet2: '',
+                permanentZipCode: '',
+                permanentPersonalContactNumber: '',
+                permanentEmergencyContactNumber: '',
+                permanentPersonalEmail: ''
+            });
+            setSameAsPresent(false);
+    
+        } catch (error) {
+            // Handle error
+            console.error('Error submitting data:', error.response ? error.response.data : error.message);
+            const errorMessage = error.response ? error.response.data.message : error.message;
+            setSms(`Error: ${errorMessage}`);
+            setShowAlertError(true);
+            setTimeout(() => {
+                setShowAlertError(false);
+            }, 4000);
+        }
     };
+
 
     return (
         <>
