@@ -11,49 +11,20 @@ import { GrAnnounce } from "react-icons/gr";
 import { LuSettings } from "react-icons/lu";
 import imgN from '../assets/user.png';
 import { TbLogout } from "react-icons/tb";
+import { OutsideClick } from './OutSideClick';
+
 
 const Navbar = ({ setIsLoggedIn }) => {
+    // Hook for Notifications Dropdown
+    const { isOpen: isNotificationsOpen, ref: notificationsRef, buttonRef: notificationsButtonRef, handleToggle: toggleNotifications } = OutsideClick();
+    const [showAlert, setShowAlert] = useState(false);
+
+    // Hook for Account Dropdown
+    const { isOpen: isAccountOpen, ref: accountRef, buttonRef: accountButtonRef, handleToggle: toggleAccount } = OutsideClick();
+
     const navigate = useNavigate();
-    const [showNotifications, setShowNotifications] = useState(false);
-    const [showAccount, setShowAccount] = useState(false);
     const [canGoBack, setCanGoBack] = useState(false);
     const [canGoForward, setCanGoForward] = useState(false);
-    const notificationRef = useRef(null);
-    const accountRef = useRef(null);
-
-    // Close pop-up if clicked outside
-    const handleClickOutside = (event) => {
-        
-        if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-            // setShowNotifications(false);
-        }
-        if (accountRef.current && !accountRef.current.contains(event.target)) {
-            setShowAccount(false);
-        }
-    };
-    
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        // document.addEventListener('click', handleClickOutside, true);
-        return () => {
-            // document.removeEventListener('click', handleClickOutside, true);
-            document.addEventListener("mousedown", handleClickOutside);
-
-        };
-    }, []);
-    
-    console.log('showNotifications', showNotifications)
-    const toggleNotifications = () => {
-            setShowNotifications(!showNotifications);
-        setShowAccount(false);
-    };
-
-    const toggleAccount = () => {
-        
-        setShowAccount(!showAccount);
-        setShowNotifications(false);
-    };
-    // 
 
     // Update navigation state
     useEffect(() => {
@@ -84,39 +55,43 @@ const Navbar = ({ setIsLoggedIn }) => {
     };
 
     const clickOut = () => {
-        setShowAccount(false);
+        localStorage.setItem('access_token', '');
+        setShowAlert(true)
         setIsLoggedIn(false);
         navigate('/');
+       
     };
 
     const handleClick = () => {
         navigate('/');
     };
 
-   
-
     const handleMyAccountClick = () => {
-        setShowAccount(false);
         navigate('/admin-dashboard');
+        toggleAccount()
     };
 
     const handleAnnouncementsClick = () => {
-        setShowAccount(false);
         navigate('/announcements');
     };
 
     const handleSettingsClick = () => {
-        setShowAccount(false);
         navigate('/settings');
     };
 
     const handleSeeAllNotifications = () => {
-        setShowNotifications(false);
         navigate('/notifications');
     };
+    const isNotificationsClose = () => {
+        toggleNotifications()
+    }
+    const isAccountClose = () => {
+        toggleAccount()
+    }
 
     return (
         <div className="navbar">
+            {showAlert ? <div> <div id='showAlert' ><p>LogOut Successfully</p></div> </div> : ''}
             <div className="navbar-left">
                 <div className="logo" onClick={handleClick}>
                     <img src={logo} alt="HRMS" />
@@ -142,38 +117,41 @@ const Navbar = ({ setIsLoggedIn }) => {
                     <span><CiSearch /></span>
                 </div>
                 <div className="iconRight">
-                    <IoIosNotificationsOutline className="icon" onClick={toggleNotifications} />
+                    <span onClick={toggleNotifications} ref={notificationsButtonRef}>
+                    <IoIosNotificationsOutline className="icon"   />
+                    </span>
                     <IoSettingsOutline className="icon" />
-                    <img src={user} alt="User" onClick={toggleAccount} />
+                    <img src={user} alt="User" onClick={toggleAccount} ref={accountButtonRef} />
                 </div>
             </div>
 
-            {showNotifications && (
-                <div className="notification-popup" ref={notificationRef}>
+            {/* Notifications Popup */}
+            {isNotificationsOpen && (
+                <div className="notification-popup" ref={notificationsRef}>
                     <h3>Notification</h3>
                     <ul>
-                        <li>
+                        <li onClick={isNotificationsClose}>
                             <img src={imgN} alt="User 1" />
                             <div>
                                 <p>Lorem Ipsum Dolor Sit Amet Consectetur.</p>
                                 <small>April, 2024 At 9:15 AM</small>
                             </div>
                         </li>
-                        <li>
+                        <li onClick={isNotificationsClose}>
                             <img src={imgN} alt="User 2" />
                             <div>
                                 <p>Lorem Ipsum Dolor Sit Amet Consectetur.</p>
                                 <small>April, 2024 At 9:15 AM</small>
                             </div>
                         </li>
-                        <li>
+                        <li onClick={isNotificationsClose}>
                             <img src={imgN} alt="User 3" />
                             <div>
                                 <p>Lorem Ipsum Dolor Sit Amet Consectetur.</p>
                                 <small>April, 2024 At 9:15 AM</small>
                             </div>
                         </li>
-                        <li>
+                        <li onClick={isNotificationsClose}>
                             <img src={imgN} alt="User 4" />
                             <div>
                                 <p>Lorem Ipsum Dolor Sit Amet Consectetur.</p>
@@ -181,15 +159,16 @@ const Navbar = ({ setIsLoggedIn }) => {
                             </div>
                         </li>
                     </ul>
-                    <div className='all_notifications'>
+                    <div className='all_notifications' onClick={isNotificationsClose}>
                         <p onClick={handleSeeAllNotifications}>See All Notifications</p>
                     </div>
                 </div>
             )}
 
-            {showAccount && (
+            {/* Account Popup */}
+            {isAccountOpen && (
                 <div className="account-popup" ref={accountRef}>
-                    <div className='img_user_profile'>
+                    <div className='img_user_profile' onClick={isAccountClose}>
                         <img src={user} alt="" />
                         <div>
                             <h2>Mr. Akash Shinde</h2>
@@ -218,6 +197,8 @@ const Navbar = ({ setIsLoggedIn }) => {
                     </ul>
                     <div className="out">
                         <span onClick={clickOut}><TbLogout /></span>
+                       
+
                         <h2 onClick={clickOut}>Sign Out</h2>
                     </div>
                 </div>

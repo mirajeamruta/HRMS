@@ -1,4 +1,4 @@
-import { useState, } from 'react';
+import { useState, useEffect } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -18,6 +18,7 @@ import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import './AllAttendanceList.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import axios from 'axios';
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 // import { GiBackstab, GiNotebook } from "react-icons/gi";
@@ -26,11 +27,19 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-const AllAttendanceList = () => {
+import NewAttendance from './addNewAttendance/NewAttendance.jsx';
+import { OutsideClick } from '../../components/OutSideClick.jsx';
+
+const AllAttendanceList = (ClosePop) => {
+    const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
+
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
     const [toggleLeft, setToggleLeft] = useState(false)
-
+    const [togglNewAdd, setTogglNewAdd] = useState(false)
+    const aa = '0'
     const DelThis = () => {
         setThisDel(!thisDel);
 
@@ -39,7 +48,7 @@ const AllAttendanceList = () => {
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        { EmployeeName: "Hillery Moses", Date: "17-Apr-2024", Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        { EmployeeName: "Hillery Moses", Date: aa, Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
         { EmployeeName: "Nandan Raikwar", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
         { EmployeeName: "Vishwas Patel", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
         { EmployeeName: "Paartho Ghosh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Half day", isChecked: false },
@@ -60,10 +69,11 @@ const AllAttendanceList = () => {
     const [isOpen, setIsOpen] = useState(null);
 
 
-    console.log(selectedDepartment)
+    // console.log(selectedDepartment)
 
     const handleHidImport = () => {
         setHidImport(!hidImport);
+        toggleFilter3()
     };
 
     const handleSelectAll = () => {
@@ -171,24 +181,78 @@ const AllAttendanceList = () => {
         setShowEmploymentType(false);
     };
 
-    const JobDetailsPage = () => {
-        navigate('/job-details')
+    const AttendanceDetailsPage = () => {
+        navigate('/attendance-details')
     }
-    const NewJobPage = () => {
-        navigate('/add-job')
+    const NewAttendanceClick = () => {
+        setTogglNewAdd(true)
     }
-
+    const NewAttendanceClosePop = () => {
+        setTogglNewAdd(false);
+    };
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
     const filter_leftClose = () => {
         setToggleLeft(false)
+        toggleFilter2()
     }
     const DateDropdowns = () => {
         setDropdowns(!dropdowns)
     }
+    const [fileName, setFileName] = useState('');
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name); // Set the file name in the state
+        }
+    };
+
+    // 
+
+    const [loading, setLoading] = useState(true);
+    const [AttendanceData, setJobJsonData] = useState([]);
+
+    const BIN_ID = '66dad0faad19ca34f8a0c6dd';
+    const MASTER_KEY = '$2a$10$/rHkEpcXQ78/XRNvCpPl4ehBkySOH2T6teIVgZEumbX/if6UWLRly';
+    const getEmpJson = async () => {
+        try {
+            const response = await axios.get(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                headers: {
+                    'X-Master-Key': MASTER_KEY
+                }
+            });
+            // Response data
+            setJobJsonData(response.data.record || []);
+            setLoading(false);
+            console.log('object:::', response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+
+    // Call the function to fetch data
+    useEffect(() => {
+        getEmpJson();
+
+    }, [])
+    const formattedData = AttendanceData.map(emp => ({
+        date: emp.date,
+        employeeName: emp.employeeName,
+        punchIn: emp.punchIn,
+        punchOut: emp.punchOut
+    }));
+
+    console.log('AttendanceData ✅🎂', AttendanceData)
+
+
+    // 
     return (
         <div id='allEmp'>
+            {togglNewAdd && <NewAttendance ClosePop={NewAttendanceClosePop} />}
+
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -197,14 +261,15 @@ const AllAttendanceList = () => {
                             All Attendance list <p>345 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={NewJobPage}>
-                                <p><span><IoMdAdd /></span> Add New Job</p>
+                            <div className="addEmp" onClick={NewAttendanceClick}>
+                                <p><span><IoMdAdd /></span> Add New Attendance</p>
                             </div>
-                            <div className="menu_head" onClick={handleHidImport}>
+                            <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
-                                <div className={`bottom_import  ${hidImport ? 'bottom_import_hide' : ''}`}>
-                                    <AiOutlineCloudUpload /> Import
-                                    <input type="file" accept='image/*' />
+                                <div className={`bottom_import ${!isFilterOpen3 ? 'bottom_import_hide' : ''}`} ref={filterRef3}>
+                                    {fileName ? '' : <AiOutlineCloudUpload />}
+                                    <input type="file" accept="image/*" onChange={handleFileChange} />
+                                    {fileName ? fileName : 'Uploaded File'}
                                 </div>
                             </div>
                         </div>
@@ -287,7 +352,7 @@ const AllAttendanceList = () => {
 
             </div>
             <div className="EmpOn_Second_Head">
-                <div id='filter_left' onClick={filter_left}>
+                <div id='filter_left' onClick={toggleFilter2} ref={filterButtonRef2}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#7f7f7f" fill="none">
                         <path d="M7 21H16.9999C19.3569 21 20.5354 21 21.2677 20.2678C21.9999 19.5355 21.9999 18.357 21.9999 16C21.9999 13.643 21.9999 12.4645 21.2677 11.7322C20.5354 11 19.3569 11 16.9999 11H7C4.64302 11 3.46453 11 2.7323 11.7322C2.00007 12.4644 2.00005 13.6429 2 15.9999C1.99995 18.357 1.99993 19.5355 2.73217 20.2677C3.4644 21 4.64294 21 7 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M4 11C4.00005 9.59977 4.00008 8.89966 4.27263 8.36485C4.5123 7.89455 4.89469 7.51218 5.365 7.27253C5.89981 7 6.59993 7 8.00015 7H16C17.4001 7 18.1002 7 18.635 7.27248C19.1054 7.51217 19.4878 7.89462 19.7275 8.36502C20 8.8998 20 9.59987 20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -295,7 +360,7 @@ const AllAttendanceList = () => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div className={`left ${!toggleLeft ? 'filterLeftOpen' : 'filterLeftClose'}`}   >
+                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose filterLeftCloseAtt'}`} ref={filterRef2} >
                     <div className="all">
                         <div className='listActive' onClick={filter_leftClose}>
                             <span> <FaList /></span>All
@@ -351,9 +416,9 @@ const AllAttendanceList = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>
+                        <div className='div_box' onClick={toggleFilter} ref={filterButtonRef}>
                             <span>
-                                {!showFilter ?
+                                {!isFilterOpen ?
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                         <path d="M3 7H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         <path d="M3 17H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -376,8 +441,8 @@ const AllAttendanceList = () => {
                             </span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen && (
+                            <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
                                     {/* <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>
@@ -438,21 +503,13 @@ const AllAttendanceList = () => {
                                                         <input type="radio" id="second" name="employmentType" className="custom-radio" />
                                                         <label htmlFor="second">Second</label>
                                                     </li>
-
-
                                                 </ul>
                                             </div>
                                         )}
                                     </div>
-
                                 </div>
                             </div>
-
-
-
-
                         )}
-
                     </div>
                 </div>
             </div>
@@ -489,20 +546,11 @@ const AllAttendanceList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentEmployees.map((emp, index) => (
+                            {/* {currentEmployees.map((emp, index) => (
                                 <tr key={index}  >
                                     <td>
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
-                                        {/* {emp.isChecked &&
-                                            <span id='deleteThis'>
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ff0000" fill="none">
-                                                    <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                    <path d="M9 11.7349H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                    <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                    <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                </svg>
-                                            </span>
-                                        } */}
+                                       
                                     </td>
                                     <td onClick={JobDetailsPage}>{emp.EmployeeName}</td>
                                     <td onClick={JobDetailsPage}>{emp.Date}</td>
@@ -551,9 +599,84 @@ const AllAttendanceList = () => {
 
 
                                 </tr>
-                            ))}
+                            ))} */}
+                                <>
+                                    {AttendanceData.map((data, index) => {
+                                        // PunchIn और PunchOut को JavaScript Date object में convert करें
+                                        const punchInTime = new Date(`1970-01-01T${data.punchIn}:00`);
+                                        const punchOutTime = new Date(`1970-01-01T${data.punchOut}:00`);
+
+                                        // Total time in milliseconds
+                                        const totalMilliseconds = punchOutTime - punchInTime;
+
+                                        // Convert milliseconds to hours and minutes
+                                        const totalHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
+                                        const totalMinutes = Math.floor((totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+
+                                        // Format as "HH:MM"
+                                        const totalTimeWorked = `${totalHours}h ${totalMinutes}m`;
+
+                                        return (
+                                            <tr key={index}>
+                                                <td>
+                                                    <input type="checkbox" checked={data.isChecked} onChange={() => handleCheckboxChange(index)} />
+                                                </td>
+                                                <td onClick={AttendanceDetailsPage}>{data.employeeName}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.date}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.shift}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.punchIn}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.punchOut}</td>
+                                                <td>{totalHours > 0 ? totalTimeWorked : '-'}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.overtime}</td>
+                                                <td>
+                                                    <div className="status-dropdown">
+                                                        <div key={index} className="status-container">
+                                                            <div
+                                                                className={`status-display ${data.status ? data.status.toLowerCase().replace(' ', '-') : ''}`}
+                                                                onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                            >
+                                                                {data.status && (
+                                                                    <>
+                                                                        <span className={`left_dot ${data.status.toLowerCase().replace(' ', '-')}`}></span>
+                                                                        <div>
+                                                                            <div className="">
+                                                                                {data.status}
+                                                                            </div>
+                                                                            <div className="^wdown">
+                                                                                <MdOutlineKeyboardArrowDown />
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                            {isOpen === index && (
+                                                                <div className="status-options">
+                                                                    {statuses.map(status => (
+                                                                        <div
+                                                                            key={status}
+                                                                            className="status-option"
+                                                                            onClick={() => handleStatusChange(index, status)}
+                                                                        >
+                                                                            {status}
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </>
+                          
                         </tbody>
                     </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">

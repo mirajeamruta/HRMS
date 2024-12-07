@@ -8,7 +8,7 @@ import { TfiClose } from "react-icons/tfi";
 import Confetti from 'react-confetti';
 import JobForm from './JobForm';
 import { useNavigate } from 'react-router-dom';
-
+import JobUpdateForm from '../UpdateJob/JobUpdateForm'
 
 const AddEmloyee = () => {
 
@@ -54,7 +54,7 @@ const AddEmloyee = () => {
 
     return (
         <>
-            {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div> : ''}
+            {/* {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div> : ''} */}
             <div className="employee-form">
                 <div className="top-bar">
                     <h2><div className='span'><HiUserPlus /></div>Add New Job</h2>
@@ -71,9 +71,10 @@ const AddEmloyee = () => {
                         <span className="9"></span>
                         <span className="10"></span>
                     </div>
-                </div>          
+                </div>
                 <div className="form-content">
                     <JobForm onSubmit={handleSubmit} />
+                    {/* <JobUpdateForm onSubmit={handleSubmit} /> */}
                 </div>
             </div>
         </>
